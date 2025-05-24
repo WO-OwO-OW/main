@@ -14,10 +14,10 @@
       <div class="logo">🌐 RERRL</div>
       <div class="burger" id="burger">&#9776;</div>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#about">О компании</a></li>
-        <li><a href="#services">Услуги</a></li>
-        <li><a href="#portfolio">Работы</a></li>
-        <li><a href="#contact">Контакты</a></li>
+        <li><a href="#home"><i class="fas fa-home" style="margin-right: 6px;"></i>Главная</a></li>
+        <li><a href="#services"><i class="fas fa-cogs" style="margin-right: 6px;"></i>Услуги</a></li>
+        <li><a href="#portfolio"><i class="fas fa-folder-open" style="margin-right: 6px;"></i>Наши работы</a></li>
+        <li><a href="#contact"><i class="fas fa-envelope" style="margin-right: 6px;"></i>Контакты</a></li>
       </ul>
       <div class="right-block">
         <div class="contact-number">+7 747 509 1236</div>
@@ -26,14 +26,15 @@
           <a href="https://instagram.com" class="social ig" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
           <a href="https://wa.me/77475091236" class="social wa" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
         </div>
+        <button class="theme-toggle" aria-label="Тёмная тема">🌙</button>
       </div>
     </div>
   </nav>
 
-  <header class="hero">
+  <header class="hero" id="home">
     <div class="container">
       <h1>Создание сайтов под заказ</h1>
-      <p>Профессионально, креативно, под ключ</p>
+      <p>Профессионально, Креативно и Красиво</p>
       <a href="#contact" class="btn">Оставить заявку</a>
     </div>
   </header>
@@ -49,18 +50,37 @@
     <div class="container">
       <h2>Наши услуги</h2>
       <div class="cards">
-        <div class="card">
+        <div class="card" onclick="openModal('modal-lending')">
           <h3>Лендинги</h3>
-          <p>Увеличьте продажи с помощью качественного одностраничника.</p>
+          <p>Увеличьте продажи с помощью качественного сайта.</p>
         </div>
-        <div class="card">
-          <h3>Сайты-визитки</h3>
-          <p>Покажите себя с лучшей стороны.</p>
+        <div class="card" onclick="openModal('modal-corp')">
+          <h3>Корпоративные сайты</h3>
+          <p>Создание солидного образа компании в интернете.</p>
         </div>
-        <div class="card">
+        <div class="card" onclick="openModal('modal-shop')">
           <h3>Интернет-магазины</h3>
-          <p>Функциональные и удобные площадки для продаж.</p>
+          <p>Платформы для онлайн-продаж с удобной навигацией и оплатой.</p>
         </div>
+      </div>
+
+      <!-- Модальные окна для услуг -->
+      <div id="modal-lending" class="modal">
+        <div class="modal-close" onclick="closeModal('modal-lending')">✖</div>
+        <h3>Лендинги</h3>
+        <p>Одностраничные сайты, которые превращают посетителей в клиентов. Адаптивность, скорость, эффективность.</p>
+      </div>
+
+      <div id="modal-corp" class="modal">
+        <div class="modal-close" onclick="closeModal('modal-corp')">✖</div>
+        <h3>Корпоративные сайты</h3>
+        <p>Удобные и стильные сайты для компаний и брендов. Функциональность и презентабельность.</p>
+      </div>
+
+      <div id="modal-shop" class="modal">
+        <div class="modal-close" onclick="closeModal('modal-shop')">✖</div>
+        <h3>Интернет-магазины</h3>
+        <p>Полноценные магазины с корзиной, оплатой и фильтрами товаров.</p>
       </div>
     </div>
   </section>
@@ -68,71 +88,60 @@
   <section id="portfolio" class="section bg3">
     <div class="container">
       <h2>Наши работы</h2>
-
-      <!-- Категории -->
       <div class="portfolio-categories">
         <button class="category-btn active" data-target="landing">Одностраничные сайты</button>
-        <button class="category-btn" data-target="business">Сайты-визитки</button>
+        <button class="category-btn" data-target="business">Многостраничные сайты</button>
         <button class="category-btn" data-target="shop">Интернет-магазины</button>
       </div>
-
-      <!-- Карусели -->
       <div class="portfolio-carousel-wrapper">
-        <!-- Одностраничные сайты -->
         <div class="portfolio-carousel active" id="landing">
-          <div class="portfolio-item">
-            <img src="images/site1.jpg" alt="Лендинг косметики" />
+          <div class="portfolio-item" onclick="openModal('modal-work1')">
+            <img src="images/site1.jpg" alt="Лендинг косметики">
             <div class="overlay">
-              <p>Лендинг косметики</p>
-              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+              <span>Лендинг косметики</span>
             </div>
           </div>
-          <div class="portfolio-item">
-            <img src="images/site4.jpg" alt="Лендинг курсов" />
-            <div class="overlay">
-              <p>Лендинг онлайн-курсов</p>
-              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
-            </div>
+          <div id="modal-work1" class="modal">
+            <div class="modal-close" onclick="closeModal('modal-work1')">✖</div>
+            <img src="images/site1.jpg" alt="Лендинг косметики">
+            <h3>Лендинг косметики</h3>
+            <p>Эффектный сайт для продвижения линии косметических средств.</p>
+            <a href="#" class="btn">Посмотреть сайт</a>
           </div>
         </div>
 
-        <!-- Сайты-визитки -->
         <div class="portfolio-carousel" id="business">
-          <div class="portfolio-item">
-            <img src="images/site2.jpg" alt="Портфолио дизайнера" />
+          <div class="portfolio-item" onclick="openModal('modal-work2')">
+            <img src="images/site2.jpg" alt="Сайт дизайнера">
             <div class="overlay">
-              <p>Портфолио дизайнера</p>
-              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+              <span>Сайт дизайнера</span>
             </div>
           </div>
-          <div class="portfolio-item">
-            <img src="images/site5.jpg" alt="Визитка для фотографа" />
-            <div class="overlay">
-              <p>Визитка фотографа</p>
-              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
-            </div>
+          <div id="modal-work2" class="modal">
+            <div class="modal-close" onclick="closeModal('modal-work2')">✖</div>
+            <img src="images/site2.jpg" alt="Сайт дизайнера">
+            <h3>Сайт дизайнера</h3>
+            <p>Персональное портфолио с галереей и отзывами клиентов.</p>
+            <a href="#" class="btn">Посмотреть сайт</a>
           </div>
         </div>
 
-        <!-- Интернет-магазины -->
         <div class="portfolio-carousel" id="shop">
-          <div class="portfolio-item">
-            <img src="images/site3.jpg" alt="Автосервис" />
+          <div class="portfolio-item" onclick="openModal('modal-work3')">
+            <img src="images/test1.jpg" alt="BeautyStore">
             <div class="overlay">
-              <p>Автосервис</p>
-              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+              <span>Интернет-магазин "BeautyStore"</span>
             </div>
           </div>
-          <div class="portfolio-item">
-            <img src="images/site6.jpg" alt="Интернет-магазин электроники" />
-            <div class="overlay">
-              <p>Интернет-магазин электроники</p>
-              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
-            </div>
+          <div id="modal-work3" class="modal">
+            <div class="modal-close" onclick="closeModal('modal-work3')">✖</div>
+            <img src="images/test1.jpg" alt="BeautyStore">
+            <h3>Интернет-магазин "BeautyStore"</h3>
+            <p>Магазин косметики с адаптивной версткой и функцией онлайн-оплаты.</p>
+            <a href="#" class="btn">Посмотреть сайт</a>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -150,55 +159,13 @@
 
   <footer>
     <div class="container footer-content">
-      <div class="footer-item">
-        <i class="fas fa-envelope"></i>
-        <span>esenamanaslan@gmail.com</span>
-      </div>
-      <div class="footer-item">
-        <i class="fas fa-phone"></i>
-        <span>+7 747 960 5900</span>
-      </div>
-      <div class="footer-item">
-        <i class="fas fa-phone"></i>
-        <span>+7 747 509 1236</span>
-      </div>
+      <div class="footer-item"><i class="fas fa-envelope"></i><span>esenamanaslan@gmail.com</span></div>
+      <div class="footer-item"><i class="fas fa-phone"></i><span>+7 747 960 5900</span></div>
+      <div class="footer-item"><i class="fas fa-phone"></i><span>+7 747 509 1236</span></div>
       <p>Мы всегда на связи — напишите или позвоните в любое время!</p>
     </div>
   </footer>
 
-  <script>
-    // Бургер меню
-    document.getElementById('burger').onclick = function () {
-      document.getElementById('nav-links').classList.toggle('active');
-    };
-
-    // Переключение категорий портфолио
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    const carousels = document.querySelectorAll('.portfolio-carousel');
-
-    categoryButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        categoryButtons.forEach(b => b.classList.remove('active'));
-        carousels.forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.target).classList.add('active');
-      });
-    });
-
-    // Раскрытие карточек портфолио при клике (увеличение)
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    portfolioItems.forEach(item => {
-      item.addEventListener('click', () => {
-        if (item.classList.contains('expanded')) {
-          item.classList.remove('expanded');
-        } else {
-          portfolioItems.forEach(i => i.classList.remove('expanded'));
-          item.classList.add('expanded');
-          // Прокрутка к элементу
-          item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
