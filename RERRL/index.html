@@ -2,92 +2,203 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RERRL — Создание сайтов под заказ</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RERRL — Создание сайтов</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <nav class="navbar">
     <div class="container nav-content">
       <div class="logo">🌐 RERRL</div>
-      <ul class="nav-links">
+      <div class="burger" id="burger">&#9776;</div>
+      <ul class="nav-links" id="nav-links">
         <li><a href="#about">О компании</a></li>
         <li><a href="#services">Услуги</a></li>
         <li><a href="#portfolio">Работы</a></li>
         <li><a href="#contact">Контакты</a></li>
       </ul>
       <div class="right-block">
-        <div class="contact-info">+7 777 888 9900</div>
-        <div class="social-top">
-          <a href="https://vk.com" target="_blank">VK</a>
-          <a href="https://t.me" target="_blank">TG</a>
-          <a href="https://instagram.com" target="_blank">IG</a>
+        <div class="contact-number">+7 747 509 1236</div>
+        <div class="social-links">
+          <a href="https://t.me" class="social tg" aria-label="Telegram" target="_blank" rel="noopener"><i class="fab fa-telegram-plane"></i></a>
+          <a href="https://instagram.com" class="social ig" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/77475091236" class="social wa" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
     </div>
   </nav>
 
-  <header id="about">
+  <header class="hero">
     <div class="container">
-      <h1 data-aos="fade-down">Создание сайтов под заказ</h1>
-      <p data-aos="fade-down" data-aos-delay="100">Профессионально, креативно, под ключ</p>
-      <a href="#contact" class="btn" data-aos="zoom-in" data-aos-delay="200">Оставить заявку</a>
+      <h1>Создание сайтов под заказ</h1>
+      <p>Профессионально, креативно, под ключ</p>
+      <a href="#contact" class="btn">Оставить заявку</a>
     </div>
   </header>
 
-  <section id="services" class="services container">
-    <h2 data-aos="fade-up">Наши услуги</h2>
-    <div class="service-list">
-      <div class="service" data-aos="flip-left">
-        <h3>Лендинги</h3>
-        <p>Увеличьте конверсии с мощным продающим лендингом.</p>
-      </div>
-      <div class="service" data-aos="flip-left" data-aos-delay="100">
-        <h3>Сайты-визитки</h3>
-        <p>Престиж и узнаваемость вашего бренда.</p>
-      </div>
-      <div class="service" data-aos="flip-left" data-aos-delay="200">
-        <h3>Интернет-магазины</h3>
-        <p>Функциональные решения для онлайн-продаж.</p>
+  <section id="about" class="section bg1">
+    <div class="container">
+      <h2>О компании</h2>
+      <p>Мы создаём сайты, которые продают и влюбляют. Опыт, качество, результат.</p>
+    </div>
+  </section>
+
+  <section id="services" class="section bg2">
+    <div class="container">
+      <h2>Наши услуги</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Лендинги</h3>
+          <p>Увеличьте продажи с помощью качественного одностраничника.</p>
+        </div>
+        <div class="card">
+          <h3>Сайты-визитки</h3>
+          <p>Покажите себя с лучшей стороны.</p>
+        </div>
+        <div class="card">
+          <h3>Интернет-магазины</h3>
+          <p>Функциональные и удобные площадки для продаж.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="portfolio" class="portfolio container">
-    <h2 data-aos="fade-up">Наши работы</h2>
-    <div class="portfolio-grid">
-      <div class="work-card" data-aos="zoom-in">
-        <img src="images/site1.jpg" alt="Пример работы 1">
-        <p>Магазин косметики — адаптивный дизайн</p>
+  <section id="portfolio" class="section bg3">
+    <div class="container">
+      <h2>Наши работы</h2>
+
+      <!-- Категории -->
+      <div class="portfolio-categories">
+        <button class="category-btn active" data-target="landing">Одностраничные сайты</button>
+        <button class="category-btn" data-target="business">Сайты-визитки</button>
+        <button class="category-btn" data-target="shop">Интернет-магазины</button>
       </div>
-      <div class="work-card" data-aos="zoom-in" data-aos-delay="100">
-        <img src="images/site2.jpg" alt="Пример работы 2">
-        <p>Портфолио для творческого специалиста</p>
+
+      <!-- Карусели -->
+      <div class="portfolio-carousel-wrapper">
+        <!-- Одностраничные сайты -->
+        <div class="portfolio-carousel active" id="landing">
+          <div class="portfolio-item">
+            <img src="images/site1.jpg" alt="Лендинг косметики" />
+            <div class="overlay">
+              <p>Лендинг косметики</p>
+              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img src="images/site4.jpg" alt="Лендинг курсов" />
+            <div class="overlay">
+              <p>Лендинг онлайн-курсов</p>
+              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Сайты-визитки -->
+        <div class="portfolio-carousel" id="business">
+          <div class="portfolio-item">
+            <img src="images/site2.jpg" alt="Портфолио дизайнера" />
+            <div class="overlay">
+              <p>Портфолио дизайнера</p>
+              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img src="images/site5.jpg" alt="Визитка для фотографа" />
+            <div class="overlay">
+              <p>Визитка фотографа</p>
+              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Интернет-магазины -->
+        <div class="portfolio-carousel" id="shop">
+          <div class="portfolio-item">
+            <img src="images/site3.jpg" alt="Автосервис" />
+            <div class="overlay">
+              <p>Автосервис</p>
+              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img src="images/site6.jpg" alt="Интернет-магазин электроники" />
+            <div class="overlay">
+              <p>Интернет-магазин электроники</p>
+              <a href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="work-card" data-aos="zoom-in" data-aos-delay="200">
-        <img src="images/site3.jpg" alt="Пример работы 3">
-        <p>Автосервис — посадочная страница с анимацией</p>
-      </div>
+
     </div>
   </section>
 
-  <section id="contact" class="contact container">
-    <h2 data-aos="fade-up">Связаться с нами</h2>
-    <form data-aos="fade-up" data-aos-delay="100">
-      <input type="text" placeholder="Ваше имя" required>
-      <input type="email" placeholder="Ваш email" required>
-      <textarea placeholder="Что вы хотите заказать?" required></textarea>
-      <button type="submit" class="btn">Отправить</button>
-    </form>
+  <section id="contact" class="section bg4">
+    <div class="container">
+      <h2>Связаться с нами</h2>
+      <form>
+        <input type="text" placeholder="Ваше имя" required />
+        <input type="email" placeholder="Ваш email" required />
+        <textarea placeholder="Ваше сообщение" required></textarea>
+        <button type="submit" class="btn">Отправить</button>
+      </form>
+    </div>
   </section>
 
-  <footer class="container" data-aos="fade-up">
-    <p>&copy; 2025 Все права защищены. Мы создаём сайты, которые влюбляют!</p>
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-item">
+        <i class="fas fa-envelope"></i>
+        <span>esenamanaslan@gmail.com</span>
+      </div>
+      <div class="footer-item">
+        <i class="fas fa-phone"></i>
+        <span>+7 747 960 5900</span>
+      </div>
+      <div class="footer-item">
+        <i class="fas fa-phone"></i>
+        <span>+7 747 509 1236</span>
+      </div>
+      <p>Мы всегда на связи — напишите или позвоните в любое время!</p>
+    </div>
   </footer>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
+  <script>
+    // Бургер меню
+    document.getElementById('burger').onclick = function () {
+      document.getElementById('nav-links').classList.toggle('active');
+    };
+
+    // Переключение категорий портфолио
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const carousels = document.querySelectorAll('.portfolio-carousel');
+
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryButtons.forEach(b => b.classList.remove('active'));
+        carousels.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target).classList.add('active');
+      });
+    });
+
+    // Раскрытие карточек портфолио при клике (увеличение)
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    portfolioItems.forEach(item => {
+      item.addEventListener('click', () => {
+        if (item.classList.contains('expanded')) {
+          item.classList.remove('expanded');
+        } else {
+          portfolioItems.forEach(i => i.classList.remove('expanded'));
+          item.classList.add('expanded');
+          // Прокрутка к элементу
+          item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
