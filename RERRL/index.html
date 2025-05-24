@@ -2,44 +2,73 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Создание сайтов под ключ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Создание сайтов под заказ</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>Создание сайтов под ключ</h1>
-    <p>HTML • CSS • Адаптивная верстка</p>
-    <a href="#contact" class="btn">Заказать сайт</a>
+    <div class="container">
+      <h1 data-aos="fade-down">Создание сайтов под заказ</h1>
+      <p data-aos="fade-down" data-aos-delay="100">Профессиональная разработка сайтов любой сложности</p>
+      <a href="#contact" class="btn" data-aos="zoom-in" data-aos-delay="200">Оставить заявку</a>
+    </div>
   </header>
 
-  <section id="services">
-    <h2>Услуги</h2>
-    <ul>
-      <li>Одностраничные сайты (Landing page)</li>
-      <li>Корпоративные сайты</li>
-      <li>Интернет-магазины</li>
-      <li>Адаптация под мобильные устройства</li>
-    </ul>
+  <section class="services container">
+    <h2 data-aos="fade-up">Наши услуги</h2>
+    <div class="service-list">
+      <div class="service" data-aos="fade-up">
+        <h3>Лендинги</h3>
+        <p>Эффективные страницы для продаж и продвижения.</p>
+      </div>
+      <div class="service" data-aos="fade-up" data-aos-delay="100">
+        <h3>Сайты-визитки</h3>
+        <p>Имиджевый сайт для вашей компании или услуг.</p>
+      </div>
+      <div class="service" data-aos="fade-up" data-aos-delay="200">
+        <h3>Интернет-магазины</h3>
+        <p>Полноценные магазины с корзиной и оплатой.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="about">
-    <h2>О нас</h2>
-    <p>Мы делаем быстрые, красивые и понятные сайты, которые работают на результат. Индивидуальный подход к каждому проекту.</p>
+  <section class="portfolio container">
+    <h2 data-aos="fade-up">Наши работы</h2>
+    <div class="portfolio-grid">
+      <div class="work-card" data-aos="fade-up">
+        <img src="images/site1.jpg" alt="Пример работы 1">
+        <p>Интернет-магазин косметики</p>
+      </div>
+      <div class="work-card" data-aos="fade-up" data-aos-delay="100">
+        <img src="images/site2.jpg" alt="Пример работы 2">
+        <p>Сайт-визитка для психолога</p>
+      </div>
+      <div class="work-card" data-aos="fade-up" data-aos-delay="200">
+        <img src="images/site3.jpg" alt="Пример работы 3">
+        <p>Лендинг для автосервиса</p>
+      </div>
+    </div>
   </section>
 
-  <section id="contact">
-    <h2>Связаться с нами</h2>
-    <form>
+  <section id="contact" class="contact container">
+    <h2 data-aos="fade-up">Связаться с нами</h2>
+    <form data-aos="fade-up" data-aos-delay="100">
       <input type="text" placeholder="Ваше имя" required>
       <input type="email" placeholder="Ваш email" required>
-      <textarea placeholder="Опишите ваш проект" required></textarea>
-      <button type="submit">Отправить</button>
+      <textarea placeholder="Что вы хотите заказать?" required></textarea>
+      <button type="submit" class="btn">Отправить</button>
     </form>
   </section>
 
-  <footer>
-    <p>© 2025. Все права защищены.</p>
+  <footer class="container" data-aos="fade-up">
+    <p>&copy; 2025 Все права защищены. Создание сайтов под заказ.</p>
   </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>
