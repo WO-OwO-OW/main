@@ -222,7 +222,7 @@
 }
 
 .offers_imd_1 {
-    background-image: url(img/offers_1.png);
+    background-image: url(../img/offers_1.png);
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -230,7 +230,7 @@
     z-index: 5;
 }
 .offers_imd_2 {
-    background-image: url(img/offers_2.png);
+    background-image: url(../img/offers_2.png);
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -238,7 +238,7 @@
     z-index: 5;
 }
 .offers_imd_3 {
-    background-image: url(img/offers_3.png);
+    background-image: url(../img/offers_3.png);
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -281,7 +281,7 @@
     
     background-image: 
         linear-gradient(to right,   #18171C 68%, rgba(0, 0, 0, 0.5)), /* Затемнение левой половины */
-        url(img/road.jpeg); /* Фоновое изображение */
+        url(../img/road.jpeg); /* Фоновое изображение */
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -357,19 +357,19 @@
 }
 
 .customers_1 {
-    background-image: url('img/clients-1.png');
+    background-image: url('../img/clients-1.png');
 }
 
 .customers_2 {
-    background-image: url('img/clients-2.png');
+    background-image: url('../img/clients-2.png');
 }
 
 .customers_3 {
-    background-image: url('img/clients-3.png');
+    background-image: url('../img/clients-3.png');
 }
 
 .customers_4 {
-    background-image: url('img/clients-4.png');
+    background-image: url('../img/clients-4.png');
 }
 
 
