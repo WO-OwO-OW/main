@@ -60,7 +60,7 @@
 
 .main_screen{
     margin: 0;
-    background-image: url(img/main_screen.jpg);
+    background-image: url(../img/main_screen.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
