@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Создание сайтов под заказ</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="background-overlay"></div>
-
   <nav class="navbar">
-    <div class="container nav-container">
-      <div class="logo">WEBSTUDIO</div>
+    <div class="container nav-content">
+      <div class="logo">🌐 WebMagic</div>
       <ul class="nav-links">
-        <li><a href="#services">Наши услуги</a></li>
         <li><a href="#about">О компании</a></li>
-        <li><a href="#portfolio">Наши работы</a></li>
-        <li><a href="#contact">Связаться</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#portfolio">Работы</a></li>
+        <li><a href="#contact">Контакты</a></li>
       </ul>
-      <div class="contact-info">
-        <span>+7 777 888 9900</span>
-        <div class="socials">
-          <a href="#"><img src="images/telegram.svg" alt="Telegram"></a>
-          <a href="#"><img src="images/whatsapp.svg" alt="WhatsApp"></a>
-        </div>
-      </div>
+      <div class="contact-info">+7 777 888 9900</div>
     </div>
   </nav>
 
-  <header>
+  <header id="about">
     <div class="container">
       <h1 data-aos="fade-down">Создание сайтов под заказ</h1>
       <p data-aos="fade-down" data-aos-delay="100">Профессионально, креативно, под ключ</p>
@@ -54,13 +46,6 @@
         <p>Функциональные решения для онлайн-продаж.</p>
       </div>
     </div>
-  </section>
-
-  <section id="about" class="about container">
-    <h2 data-aos="fade-up">О компании</h2>
-    <p data-aos="fade-up" data-aos-delay="100">
-      Мы — команда профессиональных веб-разработчиков с опытом создания современных, адаптивных и эффективных сайтов. Мы не просто создаём сайты, мы создаём впечатления, которые влюбляют клиентов в ваш бизнес.
-    </p>
   </section>
 
   <section id="portfolio" class="portfolio container">
@@ -89,6 +74,11 @@
       <textarea placeholder="Что вы хотите заказать?" required></textarea>
       <button type="submit" class="btn">Отправить</button>
     </form>
+    <div class="socials" data-aos="fade-up" data-aos-delay="200">
+      <a href="#">VK</a>
+      <a href="#">Telegram</a>
+      <a href="#">Instagram</a>
+    </div>
   </section>
 
   <footer class="container" data-aos="fade-up">
@@ -96,8 +86,6 @@
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
+  <script>AOS.init();</script>
 </body>
 </html>

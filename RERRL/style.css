@@ -1,100 +1,143 @@
-/* Общие стили */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(to right top, #1e1e2f, #2b2e4a, #333b6c);
   color: #fff;
-  background: url('https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-}
-
-.background-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(20, 20, 20, 0.85);
-  z-index: -1;
 }
 
 .container {
   width: 90%;
   max-width: 1200px;
-  margin: auto;
-  padding: 60px 0;
+  margin: 0 auto;
 }
 
-/* Шапка */
-header {
-  text-align: center;
-  padding: 120px 20px 60px;
+.navbar {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-header h1 {
-  font-size: 3rem;
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.5rem;
   font-weight: 800;
+  color: #00e0ff;
 }
 
-header p {
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #00e0ff;
+}
+
+.contact-info {
+  font-weight: 600;
+  color: #00e0ff;
+}
+
+header {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: url('images/bg-header.jpg') center/cover no-repeat;
+  position: relative;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+header .container {
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+p {
   font-size: 1.2rem;
-  margin-top: 20px;
-  font-weight: 400;
-  opacity: 0.9;
+  margin-bottom: 2rem;
 }
 
 .btn {
-  display: inline-block;
-  margin-top: 30px;
-  padding: 12px 30px;
-  background: #00b894;
-  color: #fff;
+  background-color: #00e0ff;
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-weight: bold;
   text-decoration: none;
-  border-radius: 30px;
-  font-weight: 600;
-  transition: 0.3s;
+  transition: background 0.3s;
 }
 
 .btn:hover {
-  background: #00cec9;
+  background-color: #00bcd4;
 }
 
-/* Услуги */
-.services h2,
-.portfolio h2,
-.contact h2 {
+section {
+  padding: 60px 0;
+}
+
+h2 {
   text-align: center;
-  font-size: 2.5rem;
   margin-bottom: 40px;
+  font-size: 2rem;
+  color: #00e0ff;
 }
 
 .service-list {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 20px;
-  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .service {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 30px;
-  border-radius: 15px;
-  flex: 1 1 250px;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease;
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 250px;
+  transition: transform 0.3s;
 }
 
 .service:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
 }
 
-/* Портфолио */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -102,76 +145,58 @@ header p {
 }
 
 .work-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
+  background-color: #222;
+  border-radius: 10px;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
   text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.work-card:hover {
-  transform: scale(1.02);
 }
 
 .work-card img {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
+  display: block;
 }
 
-.work-card p {
-  padding: 15px;
-  font-size: 1rem;
-}
-
-/* Контактная форма */
 .contact form {
   display: flex;
   flex-direction: column;
   gap: 15px;
   max-width: 600px;
-  margin: auto;
+  margin: 0 auto;
 }
 
-.contact input,
-.contact textarea {
-  padding: 15px;
+input, textarea {
+  padding: 12px;
+  border-radius: 5px;
   border: none;
-  border-radius: 10px;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  resize: none;
 }
 
-.contact textarea {
-  min-height: 120px;
+textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-.contact button {
-  align-self: center;
+.socials {
+  margin-top: 20px;
+  text-align: center;
 }
 
-/* Подвал */
+.socials a {
+  margin: 0 10px;
+  color: #00e0ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.socials a:hover {
+  text-decoration: underline;
+}
+
 footer {
   text-align: center;
-  padding: 30px 10px;
-  background: rgba(0, 0, 0, 0.5);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 60px;
-  font-size: 0.9rem;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 2rem;
-  }
-
-  .services,
-  .portfolio,
-  .contact {
-    padding: 40px 0;
-  }
+  padding: 20px 0;
+  background-color: #111;
+  margin-top: 40px;
+  border-top: 1px solid #333;
 }
