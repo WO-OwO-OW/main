@@ -200,3 +200,60 @@ footer {
   margin-top: 40px;
   border-top: 1px solid #333;
 }
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #00e0ff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #00e0ff;
+}
+
+.right-block {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  font-weight: 600;
+  color: #00e0ff;
+  white-space: nowrap;
+}
+
+.social-top a {
+  margin: 0 5px;
+  color: #00e0ff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.social-top a:hover {
+  text-decoration: underline;
+}
