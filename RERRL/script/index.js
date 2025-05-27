@@ -1,123 +1,102 @@
-// Переключение темы сайта
-function toggleTheme() {
-  const body = document.body;
-  if (body.classList.contains('dark')) {
-    body.classList.remove('dark');
-    body.classList.add('light');
-  } else {
-    body.classList.remove('light');
-    body.classList.add('dark');
-  }
-}
+// ============================
+// Переключение темной/светлой темы
+// ============================
+const themeToggle = document.getElementById("theme-toggle");
+const body = document.body;
 
-// Открытие модального окна с содержимым проекта
-function openModal(projectId) {
-  const modal = document.getElementById('modal');
-  const modalBody = document.getElementById('modal-body');
+// По умолчанию темная тема
+body.classList.add("dark-mode");
+updateThemeColors();
 
-  // Здесь можно добавить контент в зависимости от projectId
-  modalBody.innerHTML = `
-    <h2>Подробности проекта ${projectId}</h2>
-    <p>Описание проекта и галерея изображений...</p>
-    <img src="https://via.placeholder.com/500x300" alt="Пример изображения">
-  `;
-
-  modal.style.display = 'flex';
-}
-
-// Закрытие модального окна
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
-}
-
-// Закрытие модального окна при клике вне содержимого
-document.getElementById('modal').addEventListener('click', function (e) {
-  if (e.target === this) {
-    closeModal();
-  }
+// Переключение темы при клике
+themeToggle.addEventListener("click", () => {
+  body.classList.toggle("dark-mode");
+  body.classList.toggle("light-mode");
+  updateThemeColors();
 });
 
-// Обработка формы отправки
-const contactForm = document.getElementById('contact-form');
-const formStatus = document.getElementById('form-status');
+// Обновление цветов шрифтов и фонов в зависимости от темы
+function updateThemeColors() {
+  const isLight = body.classList.contains("light-mode");
+  document.documentElement.style.setProperty('--text-color', isLight ? '#222' : '#fff');
+  document.documentElement.style.setProperty('--bg-color', isLight ? '#fff' : '#111');
+  document.documentElement.style.setProperty('--card-bg', isLight ? '#f9f9f9' : '#222');
+  document.documentElement.style.setProperty('--card-border', isLight ? '#ccc' : '#333');
+}
 
-contactForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(contactForm);
-  const object = Object.fromEntries(formData);
-
-  try {
-    // Здесь должна быть серверная часть, например PHP/Python или внешняя форма как Formspree
-    const response = await fetch("https://formspree.io/f/your_form_id", {
-      method: "POST",
-      headers: { 'Accept': 'application/json' },
-      body: formData
-    });
-
-    if (response.ok) {
-      formStatus.textContent = "Сообщение отправлено успешно!";
-      contactForm.reset();
-    } else {
-      formStatus.textContent = "Ошибка при отправке сообщения.";
-    }
-  } catch (error) {
-    formStatus.textContent = "Произошла ошибка при отправке.";
-  }
-});
-
-// Переключение категорий работ
-const projectCategories = document.querySelectorAll('.project-category');
-const projectTitles = document.querySelectorAll('.project-category h3');
-
-projectTitles.forEach(title => {
-  title.style.cursor = 'pointer';
-  title.addEventListener('click', () => {
-    projectCategories.forEach(category => {
-      category.style.display = 'none';
-    });
-    title.parentElement.style.display = 'block';
-  });
-});
-
-// Переключение категорий
-const tabs = document.querySelectorAll('.tab');
-const projectCards = document.querySelectorAll('.project-card');
-
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    // Удалить класс active у всех вкладок
-    tabs.forEach(t => t.classList.remove('active'));
-    // Добавить класс active к текущей вкладке
-    tab.classList.add('active');
-
-    const category = tab.getAttribute('data-category');
-    projectCards.forEach(card => {
-      if (card.getAttribute('data-category') === category) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
+// ============================
+// Анимация появления элементов при скролле
+// ============================
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fade-in");
       }
     });
+  },
+  {
+    threshold: 0.1,
+  }
+);
+
+document.querySelectorAll("section, .service-card, .portfolio-item").forEach((el) => {
+  observer.observe(el);
+});
+
+// ============================
+// Модальные окна для примеров работ
+// ============================
+const modal = document.getElementById("modal");
+const modalGallery = document.getElementById("modal-gallery");
+const modalDesc = document.getElementById("modal-desc");
+const modalClose = document.getElementById("modal-close");
+
+function openModal(images, description) {
+  modalGallery.innerHTML = images.map(src => `<img src="${src}" alt="preview">`).join("");
+  modalDesc.textContent = description;
+  modal.classList.remove("hidden");
+}
+
+function closeModal() {
+  modal.classList.add("hidden");
+}
+
+modalClose.addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+
+// ============================
+// Фильтрация работ по категориям
+// ============================
+const filterButtons = document.querySelectorAll(".filter-btn");
+const portfolioItems = document.querySelectorAll(".portfolio-item");
+
+filterButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelector(".filter-btn.active")?.classList.remove("active");
+    btn.classList.add("active");
+    const filter = btn.getAttribute("data-filter");
+
+    portfolioItems.forEach((item) => {
+      const match = item.getAttribute("data-category") === filter || filter === "all";
+      item.style.display = match ? "block" : "none";
+    });
   });
 });
 
-// Открытие модального окна
-function openModal(projectId) {
-  const modal = document.getElementById('modal');
-  const modalBody = document.getElementById('modal-body');
+// ============================
+// Маска для телефона
+// ============================
+const phoneInput = document.getElementById("form-phone");
 
-  // Здесь можно добавить динамическое содержимое в зависимости от projectId
-  modalBody.innerHTML = `
-    <h2>Детали проекта ${projectId}</h2>
-    <p>Подробное описание проекта.</p>
-    <img src="preview_${projectId}.jpg" alt="Проект ${projectId}" style="width:100%; height:auto; border-radius:5px;">
-  `;
-
-  modal.style.display = 'flex';
-}
-
-// Закрытие модального окна
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
-}
+phoneInput.addEventListener("input", (e) => {
+  let value = e.target.value.replace(/\D/g, "");
+  if (value.length > 0) value = "+7 (" + value;
+  if (value.length > 6) value = value.slice(0, 6) + ") " + value.slice(6);
+  if (value.length > 11) value = value.slice(0, 11) + "-" + value.slice(11);
+  if (value.length > 14) value = value.slice(0, 14) + "-" + value.slice(14);
+  if (value.length > 17) value = value.slice(0, 17);
+  e.target.value = value;
+});
