@@ -1,0 +1,63 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #eee;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #e14343;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 19px;
+  transition: color 0.3s;
+}
+
+.back-link:hover {
+  color: #ff6f6f;
+}
+
+.item-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.item-card h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 2em;
+  color: #e14343;
+}
+
+.item-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.item-card .category {
+  font-style: italic;
+  color: #bbb;
+  margin-bottom: 15px;
+}
+
+.item-card p {
+  line-height: 1.5;
+  font-size: 1.1em;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
