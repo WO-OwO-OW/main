@@ -60,7 +60,7 @@ input[type="text"] {
   flex: 1;
 
   padding: 12px 16px;
-  font-size: 16px;
+  font-size: 19px;
   border-top-left-radius:8px ;
   border-bottom-left-radius:8px ;
   border: none;
@@ -72,16 +72,14 @@ input[type="text"] {
 
 
 
-/* Убираем скругление нижних углов input, если есть результаты */
-.search-wrapper.show-results input[type="text"] {
+/* Сброс скругления, если открыт список */
+.search-wrapper.open input[type="text"] {
   border-bottom-left-radius: 0;
 }
 
-/* Также кнопку поиска выравниваем */
-.search-wrapper.show-results .search-btn {
+.search-wrapper.open .search-btn {
   border-bottom-right-radius: 0;
 }
-
 
 
 
@@ -91,14 +89,26 @@ ul#results {
   padding: 0;
   margin: 0;
   background: #1a1a1a;
-  border-bottom-left-radius:8px ;
-  border-bottom-right-radius:8px ;
-  max-height: 300px;
-  overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  max-height: 0;
+  opacity: 0;
+  overflow-y: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 1;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  pointer-events: none;
 }
+
+/* Активное состояние — при наличии результатов */
+ul#results.active {
+  max-height: 300px;
+  opacity: 1;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
 ul#results li {
   padding: 12px;
   border-bottom: 1px solid #333;
@@ -133,7 +143,7 @@ ul#results li:hover {
   left: 50%;
   width: 16px;
   height: 16px;
-  border: 3px solid white;
+  border: 3px solid #babdc3;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: border-color 0.3s;
@@ -146,7 +156,7 @@ ul#results li:hover {
   right:  -9px;
   width: 10px;
   height: 3px;
-  background: white;
+  background: #babdc3;
   transform: rotate(45deg);
   transform-origin: top left;
   border-radius: 2px;
@@ -154,18 +164,44 @@ ul#results li:hover {
 }
 
 .search-btn:hover {
-  background-color: #babdc3; /* новый цвет при наведении */
+  background-color: #2e2e2f; /* новый цвет при наведении */
 }
 
 .search-btn:hover .icon {
-  border-color: #222; /* жёлтая лупа */
+  border-color: #e14343; /* жёлтая лупа */
 }
 
 .search-btn:hover .icon::after {
-  background-color: #222;
+  background-color: #e14343;
 }
 
 
 
 
+/* Стилизация ползунка для WebKit (Chrome, Edge, Safari) */
+ul#results::-webkit-scrollbar {
+  width: 10px;
+}
+
+ul#results::-webkit-scrollbar-track {
+  background: #111; 
+  border-radius: 8px;
+}
+
+ul#results::-webkit-scrollbar-thumb {
+  background: #444; 
+  border-radius: 8px;
+  border: 2px solid #111; /* эффект "впадины" */
+  transition: background 0.3s;
+}
+
+ul#results::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Для Firefox */
+ul#results {
+  scrollbar-width: thin;
+  scrollbar-color: #444 #111;
+}
 

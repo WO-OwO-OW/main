@@ -1,34 +1,38 @@
 const items = [
-  "Hydroid Prime Blueprint",
-  "Forma Blueprint",
-  "Nekros Prime Systems",
-  "Orokin Cell",
-  "Ceres - Gabii (миссия)",
-  "Neo N13 (реликвия)",
-  "Soma Prime (оружие)",
-  "Plastids (ресурс)",
-  "Argon Crystal (ресурс)",
-  "Draco (прокачка)",
-  "Sanctuary Onslaught (прокачка)",
-  "Kuva Bramma (оружие)",
+  { name: "Hydroid Prime Blueprint", category: "prime" },
+  { name: "Forma Blueprint", category: "prime" },
+  { name: "Nekros Prime Systems", category: "prime" },
+  { name: "Orokin Cell", category: "resource" },
+  { name: "Ceres - Gabii (миссия)", category: "mission" },
+  { name: "Neo N13 (реликвия)", category: "relic" },
+  { name: "Soma Prime (оружие)", category: "prime" },
+  { name: "Plastids (ресурс)", category: "resource" },
+  { name: "Argon Crystal (ресурс)", category: "resource" },
+  { name: "Draco (прокачка)", category: "mission" },
+  { name: "Sanctuary Onslaught (прокачка)", category: "mission" },
+  { name: "Kuva Bramma (оружие)", category: "prime" },
 ];
+
 
 const searchInput = document.getElementById("search");
 const resultsList = document.getElementById("results");
-const searchWrapper = document.querySelector(".search-wrapper"); // добавлено
 
 searchInput.addEventListener("input", () => {
   const value = searchInput.value.toLowerCase().trim();
   resultsList.innerHTML = "";
 
   if (value.length === 0) {
-    searchWrapper.classList.remove("show-results"); // убираем класс
+    resultsList.classList.remove("active");
+    document.querySelector(".search-wrapper").classList.remove("open");
     return;
   }
 
   const filtered = items.filter(item =>
-    item.toLowerCase().includes(value)
+    item.name.toLowerCase().includes(value)
   );
+
+  resultsList.classList.add("active");
+  document.querySelector(".search-wrapper").classList.add("open");
 
   if (filtered.length === 0) {
     const li = document.createElement("li");
@@ -37,15 +41,12 @@ searchInput.addEventListener("input", () => {
   } else {
     filtered.forEach(item => {
       const li = document.createElement("li");
-      li.textContent = item;
+      li.textContent = item.name;
+      li.addEventListener("click", () => {
+        localStorage.setItem("selectedItem", JSON.stringify(item));
+        window.location.href = "pages/item.html";
+      });
       resultsList.appendChild(li);
     });
-  }
-
-  // Показываем или скрываем класс в зависимости от результата
-  if (filtered.length > 0 || value.length > 0) {
-    searchWrapper.classList.add("show-results");
-  } else {
-    searchWrapper.classList.remove("show-results");
   }
 });
