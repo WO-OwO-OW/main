@@ -11,8 +11,14 @@ if (!data) {
       .replace(/[^a-zA-Z0-9]/g, "_")
       .toLowerCase();
 
-  const imgFileName = simplifyName(data.name) + ".png";
-  const imgSrc = `../img/${imgFileName}`;
+ 
+  const basePath = window.location.pathname.includes("/pages/")
+  ? "../img/"
+  : "img/";
+
+  const imgSrc = `${basePath}${imgFileName}`;
+
+
 
   // Ищем описание из базы
   const itemFromDB = items.find(item => item.name === data.name);
