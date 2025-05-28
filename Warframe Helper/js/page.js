@@ -11,12 +11,10 @@ if (!data) {
       .replace(/[^a-zA-Z0-9]/g, "_")
       .toLowerCase();
 
- 
-  const basePath = window.location.pathname.includes("/pages/")
-  ? "../img/"
-  : "img/";
+  const imgFileName = simplifyName(data.name) + ".png";
+  const imgSrc = `../img/${imgFileName}`;
 
-  const imgSrc = `${basePath}${imgFileName}`;
+  
 
 
 
