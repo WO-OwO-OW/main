@@ -12,11 +12,7 @@ if (!data) {
       .toLowerCase();
 
   const imgFileName = simplifyName(data.name) + ".png";
-  const imgSrc = `../img/${imgFileName}`;
-
-  
-
-
+  const imgSrc = `/main/Warframe%20Helper/img/${imgFileName}`;
 
   // Ищем описание из базы
   const itemFromDB = items.find(item => item.name === data.name);
