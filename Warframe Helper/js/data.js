@@ -54,104 +54,104 @@ const items = [
   // Варфреймы (Prime)
   {
     name: "Excalibur Prime",
-    category: "prime",
+    category: "warframe",
     description: "Эксклюзивный варфрейм, недоступен для получения с 2013 года."
   },
   {
     name: "Frost Prime",
-    category: "prime",
+    category: "warframe",
     description: "Усиленная версия варфрейма Frost. Имеет улучшенные характеристики защиты."
   },
   {
     name: "Rhino Prime",
-    category: "prime",
+    category: "warframe",
     description: "Мощная версия Rhino, обладающая высокой бронёй и силой."
   },
   {
     name: "Mag Prime",
-    category: "prime",
+    category: "warframe",
     description: "Prime-версия Mag с улучшенными параметрами энергии и скорости."
   },
   {
     name: "Loki Prime",
-    category: "prime",
+    category: "warframe",
     description: "Легендарный варфрейм-обманщик. Повышенная ловкость и энергия."
   },
   {
     name: "Volt Prime",
-    category: "prime",
+    category: "warframe",
     description: "Prime-версия Volt с улучшенной бронёй и энергией."
   },
   {
     name: "Trinity Prime",
-    category: "prime",
+    category: "warframe",
     description: "Поддерживающий варфрейм, лечит и усиливает союзников."
   },
   {
     name: "Nekros Prime",
-    category: "prime",
+    category: "warframe",
     description: "Prime-версия призывающего мертвеца Nekros. Отличный фармер."
   },
   {
     name: "Nova Prime",
-    category: "prime",
+    category: "warframe",
     description: "Мастер антиматерии. Идеальна для массового урона и контроля."
   },
   {
     name: "Hydroid Prime",
-    category: "prime",
+    category: "warframe",
     description: "Морской варфрейм с контролем врагов с помощью воды."
   },
 
-  // Оружие
+  // Оружие (Prime и уникальное)
   {
     name: "Soma Prime",
-    category: "prime",
+    category: "weapon",
     description: "Prime-версия автоматической винтовки с большим магазином и критами."
   },
   {
     name: "Boltor Prime",
-    category: "prime",
+    category: "weapon",
     description: "Метает болты, пробивающие броню. Повышенный урон и скорострельность."
   },
   {
     name: "Paris Prime",
-    category: "prime",
+    category: "weapon",
     description: "Prime-арбалет с высоким уроном и пробиваемостью."
   },
   {
     name: "Lex Prime",
-    category: "prime",
+    category: "weapon",
     description: "Мощный прайм-пистолет с высоким критом."
   },
   {
     name: "Braton Prime",
-    category: "prime",
+    category: "weapon",
     description: "Классическая винтовка с балансом урона и точности."
   },
   {
     name: "Kronen Prime",
-    category: "prime",
+    category: "weapon",
     description: "Элегантное ближнее оружие с высокой скоростью атаки."
   },
   {
     name: "Orthos Prime",
-    category: "prime",
+    category: "weapon",
     description: "Двуручное древковое оружие с огромной дальностью удара."
   },
   {
     name: "Kuva Bramma",
-    category: "prime",
+    category: "weapon",
     description: "Кува-лук с взрывающимися стрелами. Огромный урон по площади."
   },
   {
     name: "Ignis Wraith",
-    category: "prime",
+    category: "weapon",
     description: "Улучшенный огнемёт с конусом пламени и высоким уроном."
   },
   {
     name: "Phantasma Prime",
-    category: "prime",
+    category: "weapon",
     description: "Энергетическое оружие ближнего боя. Пушки-бластеры с высоким уроном."
   }
 ];

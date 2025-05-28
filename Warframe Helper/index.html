@@ -9,20 +9,39 @@
 </head>
 <body>
   <div class="container">
- 
-  <div class="search-wrapper">
-  <input type="text" id="search" placeholder="Ищи: ресурсы, оружие, миссии..." />
-  <button class="search-btn">
-    <span class="icon"></span>
+
+    <!-- КНОПКИ КАТЕГОРИЙ -->
+   <div class="filter-buttons">
+  <button class="filter-button" data-filter="resource" >
+    <span class="icon icon_resource"></span> Ресурсы
   </button>
+  <button class="filter-button" data-filter="warframe">
+    <span class="icon icon_warframe"></span> Варфреймы
+  </button>
+  <button class="filter-button" data-filter="weapon">
+    <span class="icon icon_weapon"></span> Оружие
+  </button>
+ </div>
+
+
+    <!-- ПОИСК -->
+   <div class="container">
+  <div class="search-wrapper">
+    <input type="text" id="search" placeholder="Поиск...">
+    <button class="search-btn"><span class="icon"></span></button>
+    <ul id="results"></ul>
+  </div>
 </div>
 
-<div class="results-wrapper">
-  <ul id="results"></ul>
-</div>
+
+    <!-- РЕЗУЛЬТАТЫ -->
+    <div class="results-wrapper">
+      <ul id="results"></ul>
+    </div>
 
   </div>
- 
+
   <script src="js/ind.js"></script>
+  <script src="js/categoryButtons.js"></script>
 </body>
 </html>
