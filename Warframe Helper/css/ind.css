@@ -30,45 +30,86 @@ body::before {
 }
 
 .container {
-  position: relative;
-  z-index: 1;
-  width: 100%;
+  position: relative; /* Нужно, чтобы абсолютный список не вылезал за пределы экрана */
   max-width: 600px;
+  width: 100%;
+  margin: 5% auto;
   box-sizing: border-box;
-  
 }
 
-
-
-
+/* Обёртка */
 .search-wrapper {
+  position: relative; /* Это важно для позиционирования списка */
   display: flex;
-  position: relative;
   z-index: 2;
 }
 
-/* Обёртка над результатами, чтобы позиционировать список отдельно */
-.results-wrapper {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
+/* Сам input */
 input[type="text"] {
   flex: 1;
-
   padding: 12px 16px;
   font-size: 19px;
-  border-top-left-radius:8px ;
-  border-bottom-left-radius:8px ;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   border: none;
   outline: none;
   background-color: #222;
   color: #fff;
-  transition: 0.3s;
 }
+
+/* Кнопка */
+.search-btn {
+  width: 48px;
+  height: 48px;
+  background-color: #222;
+  border: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Выпадающий список */
+ul#results {
+  position: absolute;
+  top: 100%;         /* прямо под input'ом */
+  left: 0;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #1a1a1a;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  max-height: 0;
+  overflow-y: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  z-index: 10;
+}
+
+/* Показ списка */
+ul#results.active {
+  max-height: 300px;
+  opacity: 1;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+/* Элементы */
+ul#results li {
+  padding: 12px;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+ul#results li:hover {
+  background-color: #2c2c2c;
+}
+
+
+
+
 
 
 
@@ -80,49 +121,6 @@ input[type="text"] {
 .search-wrapper.open .search-btn {
   border-bottom-right-radius: 0;
 }
-
-
-
-/* Стили самого списка */
-ul#results {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  background: #1a1a1a;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  max-height: 0;
-  opacity: 0;
-  overflow-y: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 1;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  pointer-events: none;
-}
-
-/* Активное состояние — при наличии результатов */
-ul#results.active {
-  max-height: 300px;
-  opacity: 1;
-  overflow-y: auto;
-  pointer-events: auto;
-}
-
-ul#results li {
-  padding: 12px;
-  border-bottom: 1px solid #333;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-ul#results li:hover {
-  background-color: #2c2c2c;
-}
-
-
-
-
 
 
 .search-btn {
@@ -205,3 +203,65 @@ ul#results {
   scrollbar-color: #444 #111;
 }
 
+
+
+
+
+/**********************************************************************************/ /*КНОПКИ КАТЕГОРИЙ*/
+                                         
+ /* Центрируем обёртку */
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+  margin-top: 20px;
+}
+
+/* Стили кнопок */
+.filter-button {
+  background-color: #1e1e2f;
+  color: #ffffff;
+  border: 1px solid #444;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+   white-space: nowrap;       /* Не переносить текст */
+  padding: 10px 16px;        /* Можно немного уменьшить padding, чтобы компенсировать большую иконку */
+}
+
+.filter-button:hover {
+  background-color: #2a2a40;
+  transform: translateY(-2px);
+}
+
+/* Иконки */
+.icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: visible; /* Важно! Позволяет иконке выходить за границы */
+}
+
+/* 👇 Добавь сюда пути к изображениям */
+.icon_resource {
+  background-image: url('../img/icon_resource.png');
+  
+}
+.icon_warframe {
+  background-image: url('../img/icon_warframe.png');
+}
+.icon_weapon {
+  background-image: url('../img/icon_weapon.png');
+}
+
+/**********************************************************************************/

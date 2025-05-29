@@ -1,0 +1,98 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #0c0c0c;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+}
+
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #e14343;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 19px;
+  transition: color 0.3s;
+}
+
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffd700;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.filter-button {
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 2px solid #444;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.filter-button:hover {
+  background-color: #333;
+}
+
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+  background-size: cover;
+}
+
+.icon_resource { background-image: url('../img/icon_resource.png'); }
+.icon_warframe { background-image: url('../img/icon_warframe.png'); }
+.icon_weapon { background-image: url('../img/icon_weapon.png'); }
+.icon_all { background-image: url('../img/icon_all.png'); }
+
+.items-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.item-card {
+  background: #1a1a1a;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  transition: transform 0.2s;
+}
+
+.item-card:hover {
+  transform: scale(1.03);
+}
+
+.item-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.item-description {
+  font-size: 14px;
+  line-height: 1.4;
+}
