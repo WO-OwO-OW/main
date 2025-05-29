@@ -260,7 +260,7 @@ function setupSmoothScrolling() {
   });
 }
 
-// 7. Мобильное меню (добавь HTML-структуру в header)
+// 7. Мобильное меню 
 function setupMobileMenu() {
   const menuToggle = document.createElement('button');
   menuToggle.className = 'mobile-menu-toggle';
