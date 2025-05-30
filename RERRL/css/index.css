@@ -707,7 +707,6 @@ footer {
   .phone {
     font-size: 14px;
     white-space: nowrap;
-    display: none; /* Скрываем номер на очень маленьких экранах */
   }
   
   .social-icons {
@@ -732,7 +731,7 @@ footer {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 450px) {
   .phone-text {
     display: none;
   }
