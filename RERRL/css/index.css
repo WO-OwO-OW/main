@@ -163,7 +163,7 @@ img {
   transform: translateY(-2px);
 }
 
-/* Герой секция */
+/* Hero секция */
 .hero {
   height: 100vh;
   min-height: 700px;
@@ -652,103 +652,91 @@ footer {
   transform: translateY(0);
 }
 
-/* Адаптация */
+/* Навигация для мобильных */
 @media (max-width: 992px) {
-  .about-content {
-    flex-direction: column;
+  .navbar {
+    padding: 12px 0;
   }
   
-  .about-image {
-    order: -1;
-    margin-bottom: 30px;
-  }
-}
-
-@media (max-width: 768px) {
   .navbar .container {
-    flex-direction: column;
-    gap: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    align-items: center;
   }
   
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
+  .logo {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-right: auto;
   }
   
-  .hero h1 {
-    font-size: 36px;
-  }
-  
-  .hero p {
-    font-size: 18px;
-  }
-  
-  .project-cards {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  }
-  
-  #request-form {
-    padding: 30px 20px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero {
-    min-height: 600px;
-  }
-  
-  .hero h1 {
-    font-size: 30px;
-  }
-  
-  .hero p {
-    font-size: 16px;
-  }
-  
-  .service-cards {
-    grid-template-columns: 1fr;
-  }
-  
-  .project-filters {
-    gap: 10px;
-  }
-  
-  .project-filters button {
-    padding: 8px 15px;
-    font-size: 14px;
-  }
-  
-  .modal-body {
-    padding: 30px 20px;
-  }
-}
-
-.mobile-menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
   .mobile-menu-toggle {
     display: block;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 0 10px;
+    order: 1;
   }
   
   .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
+    position: fixed;
     top: 70px;
     left: 0;
     width: 100%;
     background: #333;
-    padding: 20px;
+    padding: 15px 20px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
   }
   
   .nav-links.active {
     display: flex;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  
+  .phone {
+    font-size: 14px;
+    white-space: nowrap;
+    display: none; /* Скрываем номер на очень маленьких экранах */
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .cta-button {
+    display: none; /* Скрываем CTA на мобильных */
+  }
+}
+
+/* Планшетная версия */
+@media (min-width: 577px) and (max-width: 992px) {
+  .phone {
+    display: flex; /* Показываем номер на планшетах */
+    font-size: 15px;
+  }
+  
+  .social-icons a {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .phone-text {
+    display: none;
+  }
+  .phone-icon {
+    display: block;
   }
 }

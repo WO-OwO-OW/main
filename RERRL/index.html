@@ -21,7 +21,10 @@
         <a href="#contact" class="cta-button"><i class="fas fa-paper-plane"></i> Оставить заявку</a>
       </nav>
       <div class="nav-right">
-        <a href="tel:+77475091236" class="phone"><i class="fas fa-phone"></i> +7 747 509 12 36</a>
+        <a href="tel:+77475091236" class="phone">
+          <i class="fas fa-phone phone-icon"></i>
+          <span class="phone-text">+7 747 509 12 36</span>
+        </a>
         <div class="social-icons">
           <a href="https://wa.me/77475091236" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
           <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
@@ -111,16 +114,25 @@
       </div>
       <div class="project-cards">
         <!-- Лендинги -->
-        <div class="project-card" data-category="landing">
-          <div class="project-image">
-            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" alt="Лендинг для строительной компании">
-          </div>
-          <div class="project-info">
-            <h3>Строительная компания</h3>
-            <p>Лендинг для компании по ремонту квартир</p>
-            <button class="view-project" data-id="1">Подробнее</button>
-          </div>
-        </div>
+        <!-- Удаляем модальное окно (целиком удаляем этот блок) -->
+<!-- Оставляем только карточки проектов с полной информацией -->
+
+<!-- Пример переработанной карточки проекта -->
+<div class="project-card" data-category="landing">
+  <div class="project-image">
+    <img src="image.jpg" alt="Проект">
+  </div>
+  <div class="project-info">
+    <h3>Название проекта</h3>
+    <p class="project-type"><strong>Тип:</strong> Лендинг</p>
+    <p class="project-time"><strong>Сроки:</strong> 2 недели</p>
+    <p class="project-tech"><strong>Технологии:</strong> HTML, CSS, JS</p>
+    <p class="project-description">Описание проекта...</p>
+    <div class="project-actions">
+      <a href="#" class="project-link" target="_blank">Перейти на сайт</a>
+    </div>
+  </div>
+</div>
         
         <div class="project-card" data-category="landing">
           <div class="project-image">
