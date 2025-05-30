@@ -112,27 +112,34 @@
         <button data-category="corporate">Корпоративные</button>
         <button data-category="ecommerce">Магазины</button>
       </div>
-      <div class="project-cards">
-        <!-- Лендинги -->
-        <!-- Удаляем модальное окно (целиком удаляем этот блок) -->
-<!-- Оставляем только карточки проектов с полной информацией -->
-
-<!-- Пример переработанной карточки проекта -->
-<div class="project-card" data-category="landing">
-  <div class="project-image">
-    <img src="image.jpg" alt="Проект">
-  </div>
-  <div class="project-info">
-    <h3>Название проекта</h3>
-    <p class="project-type"><strong>Тип:</strong> Лендинг</p>
-    <p class="project-time"><strong>Сроки:</strong> 2 недели</p>
-    <p class="project-tech"><strong>Технологии:</strong> HTML, CSS, JS</p>
-    <p class="project-description">Описание проекта...</p>
-    <div class="project-actions">
-      <a href="#" class="project-link" target="_blank">Перейти на сайт</a>
+      <div class="project-carousel">
+      <div class="carousel-container">
+      <div class="carousel-track"></div>
+      </div>
+      <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    
+      <div class="carousel-dots"></div>
     </div>
-  </div>
-</div>
+      <div class="project-cards">
+        <div class="project-card" data-category="landing">
+          <div class="project-image">
+            <img src="image.jpg" alt="Проект">
+          </div>
+          <div class="project-info">
+            <h3>Название проекта</h3>
+            <p class="project-type"><strong>Тип:</strong> Лендинг</p>
+            <p class="project-time"><strong>Сроки:</strong> 2 недели</p>
+            <p class="project-tech"><strong>Технологии:</strong> HTML, CSS, JS</p>
+            <p class="project-description">Описание проекта...</p>
+            <div class="project-actions">
+              <a href="#" class="project-link" target="_blank">
+                Перейти на сайт <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+        </div>
+      </div>
         
         <div class="project-card" data-category="landing">
           <div class="project-image">

@@ -327,6 +327,76 @@ img {
 }
 
 /* Секция проектов */
+.project-carousel {
+  position: relative;
+  margin: 40px 0;
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+  gap: 30px;
+}
+
+.carousel-prev, .carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #000;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-prev:hover, .carousel-next:hover {
+  background: var(--secondary);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+  left: -25px;
+}
+
+.carousel-next {
+  right: -25px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--card-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: var(--primary);
+  transform: scale(1.2);
+}
+
+
 .projects {
   padding: 100px 0;
   background-color: var(--dark-light);
@@ -414,20 +484,54 @@ img {
   font-size: 15px;
 }
 
-.view-project {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: var(--primary);
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #000;
   font-weight: 600;
-  border-radius: 4px;
+  border-radius: 30px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  margin-top: 15px;
 }
 
-.view-project:hover {
-  background-color: var(--secondary);
+.project-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.project-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 168, 255, 0.4);
+}
+
+.project-link:hover::before {
+  left: 100%;
+}
+
+.project-link i {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.project-link:hover i {
+  transform: translateX(3px);
 }
 
 /* Секция контактов */
@@ -651,7 +755,7 @@ footer {
   }
   
   .about-image {
-    order: -1; /* Перемещаем изображение вверх */
+    order: -1; 
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
@@ -700,7 +804,6 @@ footer {
   }
 }
 
-/* Адаптация подвала для мобильных */
 @media (max-width: 768px) {
   footer {
     padding: 30px 0;
@@ -721,5 +824,24 @@ footer {
   
   .footer-social a {
     font-size: 20px;
+  }
+
+  .carousel-prev, .carousel-next {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .carousel-prev {
+    left: -15px;
+  }
+  
+  .carousel-next {
+    right: -15px;
+  }
+
+  .project-link {
+    padding: 8px 16px;
+    font-size: 13px;
   }
 }
