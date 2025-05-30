@@ -84,6 +84,16 @@ img {
   align-items: center;
 }
 
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
 .logo {
   font-size: 28px;
   font-weight: 700;
@@ -133,7 +143,7 @@ img {
 }
 
 .social-icons a {
-  font-size: 20px;
+  font-size: 22px;
   transition: color 0.3s ease;
 }
 
@@ -206,7 +216,7 @@ img {
 
 /* Секция "О нас" */
 .about {
-  padding: 100px 0;
+  padding: 80px 0;
   background-color: var(--dark-light);
 }
 
@@ -257,6 +267,8 @@ img {
 }
 
 .about-image img {
+  width: 100%;
+  height: auto;
   transition: transform 0.5s ease;
 }
 
@@ -489,153 +501,54 @@ img {
   box-shadow: 0 5px 15px rgba(0, 168, 255, 0.3);
 }
 
-/* Модальное окно */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.modal.active {
-  display: flex;
-  opacity: 1;
-}
-
-.modal-content {
-  background-color: var(--dark-light);
-  width: 90%;
-  max-width: 800px;
-  max-height: 90vh;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  transform: translateY(-50px);
-  transition: transform 0.3s ease;
-}
-
-.modal.active .modal-content {
-  transform: translateY(0);
-}
-
-.close-modal {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 30px;
-  color: var(--text);
-  cursor: pointer;
-  transition: color 0.3s ease;
-  z-index: 1;
-}
-
-.close-modal:hover {
-  color: var(--primary);
-}
-
-.modal-body {
-  padding: 40px;
-  overflow-y: auto;
-  max-height: calc(90vh - 80px);
-}
-
-.modal-body h3 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: var(--primary);
-}
-
-.modal-image {
-  margin-bottom: 20px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.modal-image img {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-}
-
-.modal-info p {
-  margin-bottom: 10px;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-.modal-info p strong {
-  color: var(--primary);
-}
-
 /* Подвал */
 footer {
   background-color: #000;
   padding: 50px 0 20px;
-  border-top: 1px solid var(--card-border);
 }
 
 .footer-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-  gap: 30px;
+  text-align: center;
 }
 
 .footer-logo {
   font-size: 28px;
   font-weight: 700;
   color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.footer-contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
 }
 
 .footer-contacts p {
-  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.footer-contacts a {
-  transition: color 0.3s ease;
-}
-
-.footer-contacts a:hover {
-  color: var(--primary);
+  gap: 8px;
 }
 
 .footer-social {
   display: flex;
+  justify-content: center;
   gap: 15px;
+  margin-top: 20px;
 }
 
 .footer-social a {
   font-size: 24px;
-  transition: color 0.3s ease;
-}
-
-.footer-social .whatsapp:hover {
-  color: #25D366;
-}
-
-.footer-social .instagram:hover {
-  color: #E1306C;
-}
-
-.footer-social .telegram:hover {
-  color: #0088cc;
 }
 
 .footer-bottom {
   text-align: center;
+  margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid var(--card-border);
 }
@@ -655,58 +568,51 @@ footer {
 /* Навигация для мобильных */
 @media (max-width: 992px) {
   .navbar {
-    padding: 12px 0;
+    padding: 10px 0;
   }
   
   .navbar .container {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 15px;
     align-items: center;
+    padding: 0 15px;
   }
   
   .logo {
-    font-size: 24px;
-    flex-shrink: 0;
+    font-size: 22px;
     margin-right: auto;
   }
   
   .mobile-menu-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin-left: 15px;
+    order: 3;
     background: none;
     border: none;
     color: white;
     font-size: 24px;
-    padding: 0 10px;
-    order: 1;
-  }
-  
-  .nav-links {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background: #333;
-    padding: 15px 20px;
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .nav-links.active {
-    display: flex;
+    cursor: pointer;
   }
   
   .nav-right {
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
+    gap: 12px;
+    order: 2;
   }
   
   .phone {
-    font-size: 14px;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-size: 0;
+  }
+  
+  .phone i {
+    font-size: 18px;
   }
   
   .social-icons {
@@ -714,28 +620,106 @@ footer {
     gap: 12px;
   }
   
-  .cta-button {
-    display: none; /* Скрываем CTA на мобильных */
+  .social-icons a {
+    font-size: 22px;
+  }
+  
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: var(--dark-light);
+    padding: 15px 20px;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 999;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+
+  .about {
+    padding: 60px 0;
+  }
+  
+  .about-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .about-image {
+    order: -1; /* Перемещаем изображение вверх */
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .about-text {
+    text-align: center;
+  }
+  
+  .about-text ul {
+    text-align: left;
+    max-width: 500px;
+    margin: 30px auto 0;
   }
 }
 
-/* Планшетная версия */
-@media (min-width: 577px) and (max-width: 992px) {
-  .phone {
-    display: flex; /* Показываем номер на планшетах */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 22px;
+  }
+  
+  .mobile-menu-toggle {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .phone i,
+  .social-icons a {
+    font-size: 22px;
+  }
+
+  .about {
+    padding: 40px 0;
+  }
+  
+  .about-text h2 {
+    font-size: 28px;
+  }
+  
+  .about-text p {
+    font-size: 16px;
+  }
+  
+  .about-image {
+    border-radius: 8px;
+  }
+}
+
+/* Адаптация подвала для мобильных */
+@media (max-width: 768px) {
+  footer {
+    padding: 30px 0;
+  }
+  
+  .footer-content {
+    gap: 15px;
+  }
+  
+  .footer-logo {
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+  
+  .footer-contacts p {
     font-size: 15px;
   }
   
-  .social-icons a {
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 450px) {
-  .phone-text {
-    display: none;
-  }
-  .phone-icon {
-    display: block;
+  .footer-social a {
+    font-size: 20px;
   }
 }
