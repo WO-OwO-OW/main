@@ -15,7 +15,7 @@ jobs:
             CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
           };" > ./js/config.js
           
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
