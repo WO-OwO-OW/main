@@ -212,23 +212,64 @@ function setupProjectCarousel() {
   });
 }
 
-async function sendToTelegram(formData) {
-  const botToken = '7578279966:AAFBTym2L5mWB18toYbHDnfXk6qOKPD3fmM';
-  const chatId = '7578279966';
-  
-  const text = `📌 Новая заявка!\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nУслуга: ${formData.service}\nСообщение: ${formData.message || '—'}`;
+// Импорт конфига (создается автоматически при деплое)
+import { TELEGRAM } from './config.js';
 
+// Форма
+const form = document.getElementById('request-form');
+
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Получаем данные формы
+    const formData = {
+      name: form.querySelector('[name="name"]').value.trim(),
+      phone: form.querySelector('[name="phone"]').value.trim(),
+      service: form.querySelector('[name="service"]').value,
+      message: form.querySelector('[name="message"]').value.trim()
+    };
+
+    // Валидация телефона
+    if (formData.phone.replace(/\D/g, '').length !== 11) {
+      alert('Введите корректный номер телефона');
+      return;
+    }
+
+    // Отправка в Telegram
+    const isSent = await sendToTelegram(formData);
+    
+    if (isSent) {
+      alert('✅ Заявка отправлена!');
+      form.reset();
+    } else {
+      alert('❌ Ошибка отправки. Попробуйте позже.');
+    }
+  });
+}
+
+// Функция отправки в Telegram
+async function sendToTelegram(data) {
   try {
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    const text = `
+    📌 Новая заявка!
+    ──────────────
+    Имя: ${data.name}
+    Телефон: ${data.phone}
+    Услуга: ${data.service}
+    Сообщение: ${data.message || '—'}
+    `;
+
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM.BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: chatId,
+        chat_id: TELEGRAM.CHAT_ID,
         text: text,
-        parse_mode: 'HTML'
+        parse_mode: 'Markdown'
       })
     });
-    
+
     return response.ok;
   } catch (error) {
     console.error('Ошибка:', error);
