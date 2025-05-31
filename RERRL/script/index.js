@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setupSmoothScrolling();
   setupMobileMenu();
   setupProjectCarousel();
+  sendToTelegram(formData);
 });
 
 function initMaskedInput() {
@@ -63,68 +64,30 @@ function setupProjectFilters() {
 function setupFormValidation() {
   const form = document.getElementById('request-form');
   
-  if (form) {
-    const phoneInput = document.getElementById('phone');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
     
-    // Валидация в реальном времени
-    phoneInput.addEventListener('input', function() {
-      const phoneNumber = this.value.replace(/\D/g, '');
-      if (phoneNumber.length === 11) {
-        this.classList.remove('invalid');
-        this.classList.add('valid');
-      } else {
-        this.classList.remove('valid');
-        this.classList.add('invalid');
-      }
-    });
+    const formData = {
+      name: form.elements['name'].value.trim(),
+      phone: form.elements['phone'].value,
+      service: form.elements['service'].value,
+      message: form.elements['message'].value.trim()
+    };
+
+    if (formData.phone.replace(/\D/g, '').length !== 11) {
+      alert('Введите корректный номер телефона');
+      return;
+    }
+
+    const isSent = await sendToTelegram(formData);
     
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      // Проверка всех полей
-      const name = form.elements['name'].value.trim();
-      const email = form.elements['email'].value.trim();
-      const phone = form.elements['phone'].value.replace(/\D/g, '');
-      const service = form.elements['service'].value;
-      
-      if (!name || !email || phone.length !== 11 || !service) {
-        alert('Пожалуйста, заполните все поля корректно');
-        return;
-      }
-      
-      try {
-        // Здесь должна быть реальная отправка данных
-        // Например, через fetch:
-        /*
-        const response = await fetch('/send-form', {
-          method: 'POST',
-          body: JSON.stringify({
-            name,
-            email,
-            phone,
-            service,
-            message: form.elements['message'].value.trim()
-          }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        if (!response.ok) throw new Error('Ошибка отправки');
-        */
-        
-        // Временное решение для демонстрации
-        alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-        form.reset();
-        
-        // Сброс классов валидации
-        phoneInput.classList.remove('valid', 'invalid');
-      } catch (error) {
-        console.error('Ошибка:', error);
-        alert('Произошла ошибка при отправке. Пожалуйста, попробуйте позже.');
-      }
-    });
-  }
+    if (isSent) {
+      alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+      form.reset();
+    } else {
+      alert('❌ Ошибка отправки. Пожалуйста, попробуйте позже.');
+    }
+  });
 }
 
 function updateCurrentYear() {
@@ -247,4 +210,28 @@ function setupProjectCarousel() {
       goToSlide((currentIndex + 1) % (cards.length - visibleCards + 1));
     }, 5000);
   });
+}
+
+async function sendToTelegram(formData) {
+  const botToken = '7578279966:AAFBTym2L5mWB18toYbHDnfXk6qOKPD3fmM';
+  const chatId = '7578279966';
+  
+  const text = `📌 Новая заявка!\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nУслуга: ${formData.service}\nСообщение: ${formData.message || '—'}`;
+
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: text,
+        parse_mode: 'HTML'
+      })
+    });
+    
+    return response.ok;
+  } catch (error) {
+    console.error('Ошибка:', error);
+    return false;
+  }
 }
