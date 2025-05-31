@@ -13,7 +13,7 @@ jobs:
           echo "export const TELEGRAM = {
             BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}',
             CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
-          };" > ./js/config.js
+          };" > .RERRL/script/config.js
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
