@@ -845,3 +845,26 @@ footer {
     font-size: 13px;
   }
 }
+
+  #alert-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .toast-hidden {
+    transform: translateX(150%);
+    opacity: 0;
+  }
+  .toast-visible {
+    transform: translateX(0);
+    opacity: 1;

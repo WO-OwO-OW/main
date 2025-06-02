@@ -1,6 +1,11 @@
-const TELEGRAM_CONFIG = {
+const TELEGRAM_CONFIG1 = {
   BOT_TOKEN: '7578279966:AAFBTym2L5mWB18toYbHDnfXk6qOKPD3fmM', 
   CHAT_ID: '1263043831'
+};
+
+const TELEGRAM_CONFIG = {
+  BOT_TOKEN: '%%TELEGRAM_BOT_TOKEN%%',  // Заменится при сборке
+  CHAT_ID: '%%TELEGRAM_CHAT_ID%%'
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
   setupSmoothScrolling();
   setupMobileMenu();
   setupProjectCarousel();
+  verifyCaptcha();
+  showAlert();
 });
 
 function initMaskedInput() {
@@ -123,9 +130,19 @@ function setupFormValidation() {
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitBtn = form.querySelector('button[type="submit"]');
-    
+  e.preventDefault();
+  const captchaToken = grecaptcha.getResponse();
+  
+  if (!captchaToken) {
+    alert('Пройдите капчу!');
+    return;
+  }
+
+  const captchaResult = await verifyCaptcha(captchaToken);
+  if (!captchaResult.success) {
+    alert('Капча не пройдена');
+    return;
+  }
     try {
       // Блокируем кнопку
       submitBtn.disabled = true;
@@ -159,6 +176,8 @@ function setupFormValidation() {
       submitBtn.textContent = 'Отправить';
     }
   });
+
+  requestLimiter.check();
 }
 
 function updateCurrentYear() {
@@ -281,4 +300,47 @@ function setupProjectCarousel() {
       goToSlide((currentIndex + 1) % (cards.length - visibleCards + 1));
     }, 5000);
   });
+}
+
+async function verifyCaptcha(token) {
+  const response = await fetch('https://hcaptcha.com/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      secret: 'ES_97d7c98662074f35a9a5f5202db85d68',
+      response: token
+    })
+  });
+  return await response.json();
+}
+
+const requestLimiter = {
+  lastRequest: 0,
+  count: 0,
+  check() {
+    const now = Date.now();
+    if (now - this.lastRequest < 30000) { // 30 сек
+      this.count++;
+      if (this.count > 3) {
+        throw new Error('Слишком много запросов. Попробуйте позже.');
+      }
+    } else {
+      this.count = 1;
+    }
+    this.lastRequest = now;
+  }
+};
+
+function showAlert(message, isSuccess = true) {
+  const toast = document.getElementById('alert-toast');
+  toast.style.background = isSuccess ? '#4CAF50' : '#F44336';
+  toast.querySelector('span').textContent = message;
+  
+  toast.classList.remove('toast-hidden');
+  toast.classList.add('toast-visible');
+  
+  setTimeout(() => {
+    toast.classList.remove('toast-visible');
+    toast.classList.add('toast-hidden');
+  }, 5000);
 }

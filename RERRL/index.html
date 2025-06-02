@@ -259,8 +259,10 @@
           </select>
         </div>
         <div class="form-group">
-          <textarea name="message" placeholder="Опишите ваш проект" required></textarea>
+          <textarea name="message" placeholder="О пишите ваш проект" required></textarea>
         </div>
+      <div class="h-captcha" data-sitekey="db980e98-1cbc-4e36-be78-80f84ddc010e"></div>
+      <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <button type="submit" class="submit-btn">Отправить заявку</button>
       </form>
     </div>
@@ -287,6 +289,13 @@
     </div>
   </footer>
 
+
+  <div id="alert-toast" class="toast-hidden">
+  <div class="toast-content">
+    <i class="fas fa-check-circle"></i>
+    <span>Заявка отправлена!</span>
+  </div>
+</div>
   <!-- Скрипты -->
    <script src="./script/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/imask"></script>
