@@ -3,46 +3,6 @@ const TELEGRAM_CONFIG = {
   CHAT_ID: '1263043831'
 };
 
-// Временно добавьте в начало index.js
-console.log('Проверка конфигурации:', {
-  tokenLength: TELEGRAM_CONFIG.BOT_TOKEN.length,
-  chatId: TELEGRAM_CONFIG.CHAT_ID,
-  isTokenValid: /^\d+:[\w-]+$/.test(TELEGRAM_CONFIG.BOT_TOKEN),
-  isChatIdValid: /^-?\d+$/.test(TELEGRAM_CONFIG.CHAT_ID)
-});
-
-// Временный код для проверки (удалите после использования)
-window.showTelegramConfig = function() {
-  console.log('Токен:', TELEGRAM_CONFIG.BOT_TOKEN);
-  console.log('Chat ID:', TELEGRAM_CONFIG.CHAT_ID);
-};
-
-// Временный код (удалить после проверки)
-const testBtn = document.createElement('button');
-testBtn.textContent = 'Тест API';
-testBtn.style.position = 'fixed';
-testBtn.style.bottom = '10px';
-testBtn.style.right = '10px';
-testBtn.style.zIndex = '9999';
-testBtn.onclick = async () => {
-  try {
-    const testData = {
-      name: "Тест",
-      phone: "79991234567",
-      service: "Тестовая услуга"
-    };
-    
-    console.log('Отправка тестовых данных:', testData);
-    const result = await sendTelegramMessage(testData);
-    console.log('Результат:', result);
-    alert('Тест успешен! Проверьте чат Telegram');
-  } catch (error) {
-    console.error('Тест провален:', error);
-    alert(`Тест не пройден: ${error.message}`);
-  }
-};
-document.body.appendChild(testBtn);
-
 document.addEventListener('DOMContentLoaded', function() {
   initMaskedInput();
   setupProjectFilters();
