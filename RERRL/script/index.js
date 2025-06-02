@@ -1,12 +1,45 @@
+import { TELEGRAM_CONFIG } from './js/telegram-config.js';
+
+// Тестовая функция (удалите после проверки)
+function testTelegramIntegration() {
+  const testBtn = document.createElement('button');
+  testBtn.textContent = 'Тест Telegram';
+  testBtn.style.position = 'fixed';
+  testBtn.style.bottom = '20px';
+  testBtn.style.right = '20px';
+  testBtn.style.zIndex = '9999';
+  testBtn.style.padding = '10px';
+  testBtn.style.background = '#0088cc';
+  testBtn.style.color = 'white';
+  testBtn.style.border = 'none';
+  testBtn.style.borderRadius = '5px';
+
+  testBtn.addEventListener('click', async () => {
+    const result = await sendTelegramMessage({
+      name: 'Тестовое имя',
+      phone: '+7 (999) 123-45-67',
+      email: 'test@example.com',
+      service: 'Тестовая услуга',
+      message: 'Это тестовое сообщение'
+    });
+    console.log('Результат отправки:', result);
+  });
+
+  document.body.appendChild(testBtn);
+}
+
+// Вызов теста (удалите после проверки)
+testTelegramIntegration();
+
 document.addEventListener('DOMContentLoaded', function() {
   initMaskedInput();
   setupProjectFilters();
+  sendTelegramMessage();
   setupFormValidation();
   updateCurrentYear();
   setupSmoothScrolling();
   setupMobileMenu();
   setupProjectCarousel();
-  sendToTelegram(formData);
 });
 
 function initMaskedInput() {
@@ -61,33 +94,90 @@ function setupProjectFilters() {
   });
 }
 
+async function sendTelegramMessage(formData) {
+  try {
+    const message = `
+    📢 Новая заявка с сайта!
+    ─────────────────
+    Имя: ${formData.name}
+    Телефон: ${formData.phone}
+    Email: ${formData.email || 'Не указан'}
+    Услуга: ${formData.service}
+    Сообщение: ${formData.message || '—'}
+    `;
+
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CONFIG.CHAT_ID,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error('Ошибка отправки в Telegram:', error);
+    return null;
+  }
+}
+
 function setupFormValidation() {
   const form = document.getElementById('request-form');
   
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  if (form) {
+    const phoneInput = document.getElementById('phone');
     
-    const formData = {
-      name: form.elements['name'].value.trim(),
-      phone: form.elements['phone'].value,
-      service: form.elements['service'].value,
-      message: form.elements['message'].value.trim()
-    };
-
-    if (formData.phone.replace(/\D/g, '').length !== 11) {
-      alert('Введите корректный номер телефона');
-      return;
-    }
-
-    const isSent = await sendToTelegram(formData);
+    // Валидация в реальном времени
+    phoneInput.addEventListener('input', function() {
+      const phoneNumber = this.value.replace(/\D/g, '');
+      if (phoneNumber.length === 11) {
+        this.classList.remove('invalid');
+        this.classList.add('valid');
+      } else {
+        this.classList.remove('valid');
+        this.classList.add('invalid');
+      }
+    });
     
-    if (isSent) {
-      alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-      form.reset();
-    } else {
-      alert('❌ Ошибка отправки. Пожалуйста, попробуйте позже.');
-    }
-  });
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Проверка всех полей
+      const name = form.elements['name'].value.trim();
+      const email = form.elements['email'].value.trim();
+      const phone = form.elements['phone'].value.replace(/\D/g, '');
+      const service = form.elements['service'].value;
+      
+      if (!name || !email || phone.length !== 11 || !service) {
+        alert('Пожалуйста, заполните все поля корректно');
+        return;
+      }
+      
+      try {
+        const telegramResponse = await sendTelegramMessage({
+          name,
+          email,
+          phone,
+          service,
+          message: form.elements['message'].value.trim()
+        });
+
+        if (telegramResponse?.ok) {
+          alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+        } else {
+          throw new Error('Ошибка Telegram API');
+        }
+
+        form.reset();
+        phoneInput.classList.remove('valid', 'invalid');
+      } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Произошла ошибка при отправке. Пожалуйста, попробуйте позже или свяжитесь с нами другим способом.');
+      }
+    });
+  }
 }
 
 function updateCurrentYear() {
@@ -210,69 +300,4 @@ function setupProjectCarousel() {
       goToSlide((currentIndex + 1) % (cards.length - visibleCards + 1));
     }, 5000);
   });
-}
-
-// Импорт конфига (создается автоматически при деплое)
-import { TELEGRAM } from './config.js';
-
-// Форма
-const form = document.getElementById('request-form');
-
-if (form) {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    // Получаем данные формы
-    const formData = {
-      name: form.querySelector('[name="name"]').value.trim(),
-      phone: form.querySelector('[name="phone"]').value.trim(),
-      service: form.querySelector('[name="service"]').value,
-      message: form.querySelector('[name="message"]').value.trim()
-    };
-
-    // Валидация телефона
-    if (formData.phone.replace(/\D/g, '').length !== 11) {
-      alert('Введите корректный номер телефона');
-      return;
-    }
-
-    // Отправка в Telegram
-    const isSent = await sendToTelegram(formData);
-    
-    if (isSent) {
-      alert('✅ Заявка отправлена!');
-      form.reset();
-    } else {
-      alert('❌ Ошибка отправки. Попробуйте позже.');
-    }
-  });
-}
-
-// Функция отправки в Telegram
-async function sendToTelegram(data) {
-  try {
-    const text = `
-    📌 Новая заявка!
-    ──────────────
-    Имя: ${data.name}
-    Телефон: ${data.phone}
-    Услуга: ${data.service}
-    Сообщение: ${data.message || '—'}
-    `;
-
-    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM.BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM.CHAT_ID,
-        text: text,
-        parse_mode: 'Markdown'
-      })
-    });
-
-    return response.ok;
-  } catch (error) {
-    console.error('Ошибка:', error);
-    return false;
-  }
 }
