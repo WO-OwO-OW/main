@@ -1,9 +1,9 @@
-const TELEGRAM_CONFIG1 = {
+const TELEGRAM_CONFIG = {
   BOT_TOKEN: '7578279966:AAFBTym2L5mWB18toYbHDnfXk6qOKPD3fmM', 
   CHAT_ID: '1263043831'
 };
 
-const TELEGRAM_CONFIG = {
+const TELEGRAM_CONFIG1 = {
   BOT_TOKEN: '%%TELEGRAM_BOT_TOKEN%%',  // Заменится при сборке
   CHAT_ID: '%%TELEGRAM_CHAT_ID%%'
 };
@@ -133,7 +133,7 @@ function setupFormValidation() {
   e.preventDefault();
   const captchaToken = grecaptcha.getResponse();
   
-  if (!captchaToken) {
+  /* if (!captchaToken) {
     alert('Пройдите капчу!');
     return;
   }
@@ -142,11 +142,11 @@ function setupFormValidation() {
   if (!captchaResult.success) {
     alert('Капча не пройдена');
     return;
-  }
+  } */
     try {
-      // Блокируем кнопку
+      /* Блокируем кнопку
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Отправка...';
+      submitBtn.textContent = 'Отправка...'; */
 
       // Получаем данные
       const formData = {
