@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RERRL — Профессиональное создание сайтов</title>
-  <link rel="stylesheet" href="/main/RERRL/css/united.css">
+  <link rel="stylesheet" href="./css/site.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
@@ -26,8 +26,6 @@
         <a href="#portfolio"><i class="fas fa-briefcase"></i> Наши работы</a>
         <a href="#reviews"><i class="fas fa-star"></i> Отзывы</a>
         <a href="#contact" class="cta-button"><i class="fas fa-paper-plane"></i> Оставить заявку</a>
-      </nav>
-      <div class="nav-right">
         <a href="tel:+77475091236" class="phone">
           <i class="fas fa-phone phone-icon"></i>
           <span class="phone-text">+7 747 509 12 36</span>
@@ -37,7 +35,7 @@
           <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
           <a href="https://t.me/rerrl_kz" class="telegram"><i class="fab fa-telegram"></i></a>
         </div>
-      </div>
+      </nav>
     </div>
   </header>
 
@@ -115,45 +113,71 @@
     <div class="container">
       <h2 class="section-title">Наши тарифы</h2>
       <div class="section-divider"></div>
-      <div class="price-cards" style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center;">
-        <div class="service-card" style="background: var(--card-bg); border: 1px solid var(--primary); min-width: 320px; max-width: 350px;">
-          <h3 style="color: var(--primary); font-size: 1.4rem;">Лендинг</h3>
-          <p style="color: var(--text-lighter);">Идеально для старта бизнеса</p>
-          <div style="font-size: 2rem; color: var(--primary); margin: 16px 0;">от 25 000 ₽</div>
-          <ul style="color: var(--text-light); margin-bottom: 18px;">
-            <li><i class="fas fa-check text-green-500 mr-2"></i> 1 страница</li>
-            <li><i class="fas fa-check text-green-500 mr-2"></i> Адаптивный дизайн</li>
-            <li><i class="fas fa-check text-green-500 mr-2"></i> Форма заявки</li>
-            <li><i class="fas fa-check text-green-500 mr-2"></i> Галерея работ</li>
-          </ul>
-          <a href="#contact" class="btn" style="width: 100%;">Заказать</a>
+      <div class="price-cards">
+        <div class="price-card">
+          <div class="price-header">
+            <h3>Лендинг</h3>
+            <p>Идеально для старта бизнеса</p>
+          </div>
+          <div class="price-amount">
+            <span class="currency">₸</span>
+            <span class="amount">50 000</span>
+            <span class="period">от</span>
+          </div>
+          <div class="price-features">
+            <div class="feature">1 страница</div>
+            <div class="feature">Адаптивный дизайн</div>
+            <div class="feature">Форма заявки</div>
+            <div class="feature">Галерея работ</div>
+            <div class="feature">SEO-оптимизация</div>
+            <div class="feature">Поддержка 1 месяц</div>
+          </div>
+          <a href="#contact" class="price-button">Заказать</a>
         </div>
-        <div class="service-card" style="background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%); color: #fff; min-width: 320px; max-width: 350px; box-shadow: 0 4px 24px #6366f1aa; transform: scale(1.05);">
-          <div style="position: absolute; top: 0; right: 0; background: #facc15; color: #7c3aed; font-weight: bold; padding: 4px 12px; border-radius: 0 8px 0 8px; font-size: 0.9rem;">Популярно</div>
-          <h3 style="font-size: 1.4rem;">Корпоративный сайт</h3>
-          <p style="opacity: 0.9;">Для среднего бизнеса</p>
-          <div style="font-size: 2rem; margin: 16px 0;">от 50 000 ₽</div>
-          <ul style="color: #fff; margin-bottom: 18px;">
-            <li><i class="fas fa-check text-yellow-300 mr-2"></i> До 10 страниц</li>
-            <li><i class="fas fa-check text-yellow-300 mr-2"></i> Адаптивный дизайн</li>
-            <li><i class="fas fa-check text-yellow-300 mr-2"></i> Мультиязычность</li>
-            <li><i class="fas fa-check text-yellow-300 mr-2"></i> Админ-панель</li>
-            <li><i class="fas fa-check text-yellow-300 mr-2"></i> SEO-оптимизация</li>
-          </ul>
-          <a href="#contact" class="btn" style="background: #fff; color: #6366f1; width: 100%;">Заказать</a>
+        
+        <div class="price-card featured">
+          <div class="popular-badge">Популярно</div>
+          <div class="price-header">
+            <h3>Корпоративный сайт</h3>
+            <p>Для среднего бизнеса</p>
+          </div>
+          <div class="price-amount">
+            <span class="currency">₸</span>
+            <span class="amount">200 000</span>
+            <span class="period">от</span>
+          </div>
+          <div class="price-features">
+            <div class="feature">До 10 страниц</div>
+            <div class="feature">Адаптивный дизайн</div>
+            <div class="feature">Мультиязычность</div>
+            <div class="feature">Админ-панель</div>
+            <div class="feature">SEO-оптимизация</div>
+            <div class="feature">Поддержка 3 месяца</div>
+            <div class="feature">Интеграция с CRM</div>
+          </div>
+          <a href="#contact" class="price-button">Заказать</a>
         </div>
-        <div class="service-card" style="background: var(--card-bg); border: 1px solid var(--primary); min-width: 320px; max-width: 350px;">
-          <h3 style="color: var(--primary); font-size: 1.4rem;">Интернет-магазин</h3>
-          <p style="color: var(--text-lighter);">Для онлайн-продаж</p>
-          <div style="font-size: 2rem; color: var(--primary); margin: 16px 0;">от 80 000 ₽</div>
-          <ul style="color: var(--text-light); margin-bottom: 18px;">
-            <li><i class="fas fa-check text-green-500 mr-2"></i> Неограниченные товары</li>
-            <li><i class="fas fa-check text-green-500 mr-2"></i> Корзина и оплата</li>
-            <li><i class="fas fa-check text-green-500 mr-2"></i> Личный кабинет</li>
-            <li><i class="fas fa-check text-green-500 mr-2"></i> CRM интеграция</li>
-            <li><i class="fas fa-check text-green-500 mr-2"></i> SEO-оптимизация</li>
-          </ul>
-          <a href="#contact" class="btn" style="width: 100%;">Заказать</a>
+        
+        <div class="price-card">
+          <div class="price-header">
+            <h3>Интернет-магазин</h3>
+            <p>Для онлайн-продаж</p>
+          </div>
+          <div class="price-amount">
+            <span class="currency">₸</span>
+            <span class="amount">500 000</span>
+            <span class="period">от</span>
+          </div>
+          <div class="price-features">
+            <div class="feature">Неограниченные товары</div>
+            <div class="feature">Корзина и оплата</div>
+            <div class="feature">Личный кабинет</div>
+            <div class="feature">CRM интеграция</div>
+            <div class="feature">SEO-оптимизация</div>
+            <div class="feature">Поддержка 6 месяцев</div>
+            <div class="feature">Мобильное приложение</div>
+          </div>
+          <a href="#contact" class="price-button">Заказать</a>
         </div>
       </div>
     </div>
@@ -165,8 +189,7 @@
       <h2 class="section-title">Наши работы</h2>
       <div class="section-divider"></div>
       <div class="project-filters" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
-        <button class="active" data-category="all">Все</button>
-        <button data-category="landing">Лендинги</button>
+        <button class="active" data-category="landing">Лендинги</button>
         <button data-category="corporate">Корпоративные</button>
         <button data-category="ecommerce">Интернет-магазины</button>
       </div>
@@ -198,6 +221,30 @@
                 <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
               </div>
             </div>
+            <div class="project-card" data-category="landing">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80" alt="Лендинг 4"></div>
+              <div class="project-info">
+                <h3>Лендинг для автосервиса</h3>
+                <p>Промо-сайт для автосервиса премиум класса</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="landing">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="Лендинг 5"></div>
+              <div class="project-info">
+                <h3>Лендинг для школы танцев</h3>
+                <p>Сайт для танцевальной студии</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="landing">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80" alt="Лендинг 6"></div>
+              <div class="project-info">
+                <h3>Лендинг для салона красоты</h3>
+                <p>Элегантный сайт для beauty-салона</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
             <!-- Корпоративные -->
             <div class="project-card" data-category="corporate">
               <div class="project-image"><img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 1"></div>
@@ -223,6 +270,38 @@
                 <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
               </div>
             </div>
+            <div class="project-card" data-category="corporate">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 4"></div>
+              <div class="project-info">
+                <h3>Строительная компания</h3>
+                <p>Многостраничный сайт для строительной фирмы</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="corporate">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 5"></div>
+              <div class="project-info">
+                <h3>Медицинский центр</h3>
+                <p>Сайт для многопрофильной клиники</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="corporate">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 6"></div>
+              <div class="project-info">
+                <h3>Образовательный центр</h3>
+                <p>Сайт для языковой школы</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="corporate">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 7"></div>
+              <div class="project-info">
+                <h3>Консалтинговая фирма</h3>
+                <p>Современный сайт для консалтинговой компании</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
             <!-- Интернет-магазины -->
             <div class="project-card" data-category="ecommerce">
               <div class="project-image"><img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=600&q=80" alt="Магазин 1"></div>
@@ -245,6 +324,38 @@
               <div class="project-info">
                 <h3>Магазин мебели</h3>
                 <p>Онлайн-магазин дизайнерской мебели</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="ecommerce">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?auto=format&fit=crop&w=600&q=80" alt="Магазин 4"></div>
+              <div class="project-info">
+                <h3>Магазин косметики</h3>
+                <p>Онлайн-магазин натуральной косметики</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="ecommerce">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?auto=format&fit=crop&w=600&q=80" alt="Магазин 5"></div>
+              <div class="project-info">
+                <h3>Магазин спортивного питания</h3>
+                <p>Сайт для продажи спортивного питания</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="ecommerce">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?auto=format&fit=crop&w=600&q=80" alt="Магазин 6"></div>
+              <div class="project-info">
+                <h3>Магазин игрушек</h3>
+                <p>Онлайн-магазин детских игрушек</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="ecommerce">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?auto=format&fit=crop&w=600&q=80" alt="Магазин 7"></div>
+              <div class="project-info">
+                <h3>Магазин книг</h3>
+                <p>Онлайн-библиотека и книжный магазин</p>
                 <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
               </div>
             </div>
@@ -383,7 +494,7 @@
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/imask"></script>
-  <script src="script/united.js"></script>
+  <script src="./script/site.js"></script>
   <script>
     AOS.init({ duration: 800, once: true });
     document.getElementById('current-year').textContent = new Date().getFullYear();

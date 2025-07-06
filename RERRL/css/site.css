@@ -46,6 +46,7 @@ section {
   color: var(--primary);
   text-align: center;
   margin-bottom: 2rem;
+  line-height: 1.1;
 }
 
 .section-divider {
@@ -83,11 +84,12 @@ section {
 
 .nav-links {
   display: flex;
-  gap: 30px;
+  gap: 25px;
+  align-items: center;
 }
 
 .nav-links a {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   transition: color 0.3s ease;
   display: flex;
@@ -95,6 +97,7 @@ section {
   gap: 8px;
   text-decoration: none;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
@@ -115,11 +118,7 @@ section {
   transform: translateY(-2px);
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+/* .nav-right удален - все элементы теперь в nav-links */
 
 .phone {
   font-size: 18px;
@@ -138,11 +137,12 @@ section {
 
 .social-icons {
   display: flex;
-  gap: 15px;
+  gap: 12px;
+  align-items: center;
 }
 
 .social-icons a {
-  font-size: 22px;
+  font-size: 18px;
   transition: color 0.3s ease;
   color: var(--text);
   text-decoration: none;
@@ -221,12 +221,14 @@ section {
   font-size: 36px;
   margin-bottom: 20px;
   color: var(--primary);
+  line-height: 1.1;
 }
 
 .about-text p {
   font-size: 18px;
   margin-bottom: 20px;
-  line-height: 1.7;
+  line-height: 1.4;
+  max-width: 600px;
 }
 
 .about-text ul {
@@ -314,8 +316,184 @@ section {
 .price-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 30px;
   justify-content: center;
+  align-items: stretch;
+}
+
+.price-card {
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  min-width: 320px;
+  max-width: 380px;
+  flex: 1;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.price-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 168, 255, 0.2);
+}
+
+.price-card.featured {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-color: var(--primary);
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 168, 255, 0.3);
+}
+
+.price-card.featured:hover {
+  transform: scale(1.05) translateY(-10px);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: linear-gradient(135deg, #facc15 0%, #fbbf24 100%);
+  color: #1f2937;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+}
+
+.price-header {
+  margin-bottom: 30px;
+}
+
+.price-header h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.price-card.featured .price-header h3 {
+  color: #000;
+}
+
+.price-header p {
+  color: var(--text-lighter);
+  font-size: 16px;
+}
+
+.price-card.featured .price-header p {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.price-amount {
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.currency {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary);
+  vertical-align: top;
+  margin-right: 4px;
+}
+
+.price-card.featured .currency {
+  color: #000;
+}
+
+.amount {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.price-card.featured .amount {
+  color: #000;
+}
+
+.period {
+  font-size: 16px;
+  color: var(--text-lighter);
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.price-card.featured .period {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.price-features {
+  margin-bottom: 35px;
+}
+
+.feature {
+  padding: 12px 0;
+  color: var(--text-light);
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature:last-child {
+  border-bottom: none;
+}
+
+.price-card.featured .feature {
+  color: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.feature:hover {
+  color: var(--primary);
+  transform: translateX(5px);
+}
+
+.price-card.featured .feature:hover {
+  color: #000;
+}
+
+.price-button {
+  display: inline-block;
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--primary);
+  color: #000;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.price-button:hover {
+  background: transparent;
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 168, 255, 0.3);
+}
+
+.price-card.featured .price-button {
+  background: #000;
+  color: var(--primary);
+  border-color: #000;
+}
+
+.price-card.featured .price-button:hover {
+  background: transparent;
+  color: #000;
+  border-color: #000;
 }
 
 /* Проекты */
@@ -424,6 +602,11 @@ section {
   overflow: hidden;
   transition: all 0.3s ease;
   min-width: 350px;
+  display: none; /* Скрываем все карточки по умолчанию */
+}
+
+.project-card[data-category="landing"] {
+  display: block; /* Показываем только лендинги по умолчанию */
 }
 
 .project-card:hover {
@@ -820,13 +1003,6 @@ footer {
     cursor: pointer;
   }
   
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    order: 2;
-  }
-  
   .phone {
     display: flex;
     align-items: center;
@@ -883,6 +1059,24 @@ footer {
     text-align: left;
     max-width: 500px;
     margin: 30px auto 0;
+  }
+  
+  .price-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .price-card {
+    min-width: 280px;
+    max-width: 100%;
+  }
+  
+  .price-card.featured {
+    transform: scale(1.02);
+  }
+  
+  .price-card.featured:hover {
+    transform: scale(1.02) translateY(-10px);
   }
 }
 

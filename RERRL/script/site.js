@@ -6,8 +6,17 @@ const TELEGRAM_CONFIG = {
 
 document.addEventListener('DOMContentLoaded', function() {
   initMaskedInput();
+  
+  // Скрываем все карточки кроме лендингов при загрузке
+  const projectCards = document.querySelectorAll('.project-card');
+  projectCards.forEach(card => {
+    if (card.dataset.category !== 'landing') {
+      card.style.display = 'none';
+    }
+  });
+  
   setupProjectFilters();
-  setupProjectCarousel();
+  setupProjectCarousel(); // Инициализируем карусель для лендингов по умолчанию
   setupReviewsCarousel();
   setupFormValidation();
   setupMobileMenu();
@@ -51,7 +60,7 @@ function setupProjectFilters() {
       
       setTimeout(() => {
         projectCards.forEach(card => {
-          if (category === 'all' || card.dataset.category === category) {
+          if (card.dataset.category === category) {
             card.style.display = 'block';
           } else {
             card.style.display = 'none';
@@ -60,12 +69,8 @@ function setupProjectFilters() {
         
         carouselTrack.style.opacity = '1';
         
-        if (category !== 'all') {
-          document.querySelector('#portfolio').scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+        // Пересоздаем карусель для новой категории
+        setupProjectCarousel();
       }, 300);
     });
   });
@@ -80,22 +85,34 @@ function setupProjectCarousel() {
   
   if (!carouselTrack) return;
   
-  const cards = Array.from(document.querySelectorAll('.project-card'));
-  let currentIndex = 0;
-  const cardWidth = 380; // Ширина карточки + gap
-  const visibleCards = Math.min(3, cards.length);
+  // Очищаем предыдущие точки
+  dotsContainer.innerHTML = '';
   
-  // Создаем точки навигации
-  cards.forEach((_, index) => {
-    const dot = document.createElement('div');
-    dot.classList.add('carousel-dot');
-    if (index === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goToSlide(index));
-    dotsContainer.appendChild(dot);
+  // Получаем только видимые карточки (с display: block или без display: none)
+  const visibleCards = Array.from(document.querySelectorAll('.project-card')).filter(card => {
+    const style = window.getComputedStyle(card);
+    return style.display !== 'none';
   });
   
+  if (visibleCards.length === 0) return;
+  
+  let currentIndex = 0;
+  const cardWidth = 380; // Ширина карточки + gap
+  const maxVisibleCards = Math.min(3, visibleCards.length);
+  
+  // Создаем точки навигации только для видимых карточек
+  const totalSlides = Math.max(1, visibleCards.length - maxVisibleCards + 1);
+  
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.classList.add('carousel-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+  
   function goToSlide(index) {
-    currentIndex = Math.max(0, Math.min(index, cards.length - visibleCards));
+    currentIndex = Math.max(0, Math.min(index, visibleCards.length - maxVisibleCards));
     carouselTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
     
     // Обновляем активную точку
@@ -104,22 +121,49 @@ function setupProjectCarousel() {
     });
   }
   
+  // Сбрасываем позицию карусели
+  carouselTrack.style.transform = 'translateX(0)';
+  currentIndex = 0;
+  
+  // Удаляем старые обработчики событий
+  if (prevBtn) {
+    prevBtn.replaceWith(prevBtn.cloneNode(true));
+  }
+  if (nextBtn) {
+    nextBtn.replaceWith(nextBtn.cloneNode(true));
+  }
+  
+  // Получаем обновленные кнопки
+  const newPrevBtn = document.querySelector('.carousel-prev');
+  const newNextBtn = document.querySelector('.carousel-next');
+  
   // Кнопки навигации
-  if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+  if (newPrevBtn) newPrevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  if (newNextBtn) newNextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
   
-  // Автопрокрутка
-  let autoScroll = setInterval(() => {
-    goToSlide((currentIndex + 1) % (cards.length - visibleCards + 1));
-  }, 5000);
+  // Скрываем кнопки если карточек меньше или равно максимальному количеству
+  if (visibleCards.length <= maxVisibleCards) {
+    if (newPrevBtn) newPrevBtn.style.display = 'none';
+    if (newNextBtn) newNextBtn.style.display = 'none';
+  } else {
+    if (newPrevBtn) newPrevBtn.style.display = 'flex';
+    if (newNextBtn) newNextBtn.style.display = 'flex';
+  }
   
-  // Пауза при наведении
-  carouselTrack.addEventListener('mouseenter', () => clearInterval(autoScroll));
-  carouselTrack.addEventListener('mouseleave', () => {
-    autoScroll = setInterval(() => {
-      goToSlide((currentIndex + 1) % (cards.length - visibleCards + 1));
+  // Автопрокрутка только если есть больше карточек чем видимых
+  if (visibleCards.length > maxVisibleCards) {
+    let autoScroll = setInterval(() => {
+      goToSlide((currentIndex + 1) % totalSlides);
     }, 5000);
-  });
+    
+    // Пауза при наведении
+    carouselTrack.addEventListener('mouseenter', () => clearInterval(autoScroll));
+    carouselTrack.addEventListener('mouseleave', () => {
+      autoScroll = setInterval(() => {
+        goToSlide((currentIndex + 1) % totalSlides);
+      }, 5000);
+    });
+  }
 }
 
 // Карусель отзывов
