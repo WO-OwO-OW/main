@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RERRL — Профессиональное создание сайтов</title>
+  <link rel="stylesheet" href="/main/RERRL/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body { background: var(--dark); color: var(--text); }
+    .section-title { font-size: 2.5rem; color: var(--primary); text-align: center; margin-bottom: 2rem; }
+    .section-divider { width: 60px; height: 4px; background: var(--primary); margin: 0 auto 2.5rem; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <!-- Навигация -->
+  <header class="navbar">
+    <div class="container">
+      <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
+      <div class="logo">RERRL</div>
+      <nav class="nav-links">
+        <a href="#about"><i class="fas fa-info-circle"></i> О нас</a>
+        <a href="#services"><i class="fas fa-cogs"></i> Услуги</a>
+        <a href="#prices"><i class="fas fa-tags"></i> Тарифы</a>
+        <a href="#portfolio"><i class="fas fa-briefcase"></i> Наши работы</a>
+        <a href="#reviews"><i class="fas fa-star"></i> Отзывы</a>
+        <a href="#contact" class="cta-button"><i class="fas fa-paper-plane"></i> Оставить заявку</a>
+      </nav>
+      <div class="nav-right">
+        <a href="tel:+77475091236" class="phone">
+          <i class="fas fa-phone phone-icon"></i>
+          <span class="phone-text">+7 747 509 12 36</span>
+        </a>
+        <div class="social-icons">
+          <a href="https://wa.me/77475091236" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://t.me/rerrl_kz" class="telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero секция -->
+  <section class="hero" data-aos="fade-up">
+    <div class="container">
+      <h1>Создаём сайты, которые приносят результат</h1>
+      <p>Профессиональная веб-разработка для вашего бизнеса</p>
+      <a href="#contact" class="hero-button">Оставить заявку</a>
+    </div>
+  </section>
+
+  <!-- О нас -->
+  <section id="about" class="about" data-aos="fade-up">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>О нас</h2>
+          <p>RERRL — команда профессиональных веб-разработчиков с более чем 5-летним опытом. Мы создаем современные, адаптивные и высокопроизводительные сайты, которые помогают нашим клиентам привлекать новых клиентов и увеличивать продажи.</p>
+          <ul>
+            <li><i class="fas fa-check"></i> Более 100 успешных проектов</li>
+            <li><i class="fas fa-check"></i> Индивидуальный подход к каждому клиенту</li>
+            <li><i class="fas fa-check"></i> Полное сопровождение после запуска</li>
+          </ul>
+        </div>
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Наша команда">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Услуги -->
+  <section id="services" class="services" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Наши услуги</h2>
+      <div class="section-divider"></div>
+      <div class="service-cards" data-aos="zoom-in" data-aos-delay="200">
+        <div class="service-card">
+          <i class="fas fa-laptop-code"></i>
+          <h3>Веб-разработка</h3>
+          <p>Создание сайтов любой сложности под ключ</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-shopping-cart"></i>
+          <h3>Интернет-магазины</h3>
+          <p>Разработка удобных и функциональных онлайн-магазинов</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-mobile-alt"></i>
+          <h3>Мобильная адаптация</h3>
+          <p>Оптимизация сайтов для всех устройств</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-search"></i>
+          <h3>SEO-оптимизация</h3>
+          <p>Продвижение сайтов в поисковых системах</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-paint-brush"></i>
+          <h3>Дизайн</h3>
+          <p>Создание современного и удобного интерфейса</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-server"></i>
+          <h3>Хостинг</h3>
+          <p>Надежное размещение и обслуживание сайтов</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Тарифы -->
+  <section id="prices" class="prices" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Наши тарифы</h2>
+      <div class="section-divider"></div>
+      <div class="price-cards" style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center;">
+        <div class="service-card" style="background: var(--card-bg); border: 1px solid var(--primary); min-width: 320px; max-width: 350px;">
+          <h3 style="color: var(--primary); font-size: 1.4rem;">Лендинг</h3>
+          <p style="color: var(--text-lighter);">Идеально для старта бизнеса</p>
+          <div style="font-size: 2rem; color: var(--primary); margin: 16px 0;">от 25 000 ₽</div>
+          <ul style="color: var(--text-light); margin-bottom: 18px;">
+            <li><i class="fas fa-check text-green-500 mr-2"></i> 1 страница</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i> Адаптивный дизайн</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i> Форма заявки</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i> Галерея работ</li>
+          </ul>
+          <a href="#contact" class="btn" style="width: 100%;">Заказать</a>
+        </div>
+        <div class="service-card" style="background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%); color: #fff; min-width: 320px; max-width: 350px; box-shadow: 0 4px 24px #6366f1aa; transform: scale(1.05);">
+          <div style="position: absolute; top: 0; right: 0; background: #facc15; color: #7c3aed; font-weight: bold; padding: 4px 12px; border-radius: 0 8px 0 8px; font-size: 0.9rem;">Популярно</div>
+          <h3 style="font-size: 1.4rem;">Корпоративный сайт</h3>
+          <p style="opacity: 0.9;">Для среднего бизнеса</p>
+          <div style="font-size: 2rem; margin: 16px 0;">от 50 000 ₽</div>
+          <ul style="color: #fff; margin-bottom: 18px;">
+            <li><i class="fas fa-check text-yellow-300 mr-2"></i> До 10 страниц</li>
+            <li><i class="fas fa-check text-yellow-300 mr-2"></i> Адаптивный дизайн</li>
+            <li><i class="fas fa-check text-yellow-300 mr-2"></i> Мультиязычность</li>
+            <li><i class="fas fa-check text-yellow-300 mr-2"></i> Админ-панель</li>
+            <li><i class="fas fa-check text-yellow-300 mr-2"></i> SEO-оптимизация</li>
+          </ul>
+          <a href="#contact" class="btn" style="background: #fff; color: #6366f1; width: 100%;">Заказать</a>
+        </div>
+        <div class="service-card" style="background: var(--card-bg); border: 1px solid var(--primary); min-width: 320px; max-width: 350px;">
+          <h3 style="color: var(--primary); font-size: 1.4rem;">Интернет-магазин</h3>
+          <p style="color: var(--text-lighter);">Для онлайн-продаж</p>
+          <div style="font-size: 2rem; color: var(--primary); margin: 16px 0;">от 80 000 ₽</div>
+          <ul style="color: var(--text-light); margin-bottom: 18px;">
+            <li><i class="fas fa-check text-green-500 mr-2"></i> Неограниченные товары</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i> Корзина и оплата</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i> Личный кабинет</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i> CRM интеграция</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i> SEO-оптимизация</li>
+          </ul>
+          <a href="#contact" class="btn" style="width: 100%;">Заказать</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Наши работы -->
+  <section id="portfolio" class="projects" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Наши работы</h2>
+      <div class="section-divider"></div>
+      <div class="project-filters" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
+        <button class="active" data-category="all">Все</button>
+        <button data-category="landing">Лендинги</button>
+        <button data-category="corporate">Корпоративные</button>
+        <button data-category="ecommerce">Интернет-магазины</button>
+      </div>
+      <div class="project-carousel">
+        <div class="carousel-container">
+          <div class="carousel-track">
+            <!-- Лендинги -->
+            <div class="project-card" data-category="landing">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80" alt="Лендинг 1"></div>
+              <div class="project-info">
+                <h3>Лендинг для фитнес-центра</h3>
+                <p>Промо-сайт для нового фитнес-клуба</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="landing">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=600&q=80" alt="Лендинг 2"></div>
+              <div class="project-info">
+                <h3>Лендинг для стоматологии</h3>
+                <p>Сайт для клиники эстетической стоматологии</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="landing">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Лендинг 3"></div>
+              <div class="project-info">
+                <h3>Лендинг для доставки еды</h3>
+                <p>Сайт для сервиса доставки еды</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <!-- Корпоративные -->
+            <div class="project-card" data-category="corporate">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 1"></div>
+              <div class="project-info">
+                <h3>Производственная компания</h3>
+                <p>Многостраничный сайт для производителя оборудования</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="corporate">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 2"></div>
+              <div class="project-info">
+                <h3>Юридическая фирма</h3>
+                <p>Сайт для юридической компании с каталогом услуг</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="corporate">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Корпоративный 3"></div>
+              <div class="project-info">
+                <h3>IT компания</h3>
+                <p>Современный сайт для разработчика ПО</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <!-- Интернет-магазины -->
+            <div class="project-card" data-category="ecommerce">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=600&q=80" alt="Магазин 1"></div>
+              <div class="project-info">
+                <h3>Магазин одежды</h3>
+                <p>Онлайн-магазин модной одежды и аксессуаров</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="ecommerce">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=600&q=80" alt="Магазин 2"></div>
+              <div class="project-info">
+                <h3>Магазин электроники</h3>
+                <p>Продажа гаджетов и аксессуаров</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+            <div class="project-card" data-category="ecommerce">
+              <div class="project-image"><img src="https://images.unsplash.com/photo-1607082349566-0077024786f8?auto=format&fit=crop&w=600&q=80" alt="Магазин 3"></div>
+              <div class="project-info">
+                <h3>Магазин мебели</h3>
+                <p>Онлайн-магазин дизайнерской мебели</p>
+                <a href="#" class="project-link" target="_blank">Перейти <i class="fas fa-external-link-alt"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="carousel-dots"></div>
+    </div>
+  </section>
+
+  <!-- Отзывы -->
+  <section id="reviews" class="reviews" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Отзывы клиентов</h2>
+      <div class="section-divider"></div>
+      <div class="reviews-carousel">
+        <div class="reviews-container">
+          <div class="reviews-track">
+            <div class="review-card">
+              <div class="review-header">
+                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Клиент" class="review-avatar">
+                <div class="review-info">
+                  <h4>Анна Смирнова</h4>
+                  <p>Директор цветочного магазина</p>
+                </div>
+              </div>
+              <p class="review-text">"Лендинг, который нам сделали, увеличил количество заказов на 40% уже в первый месяц! Очень довольна работой и подходом к делу."</p>
+              <div class="review-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-header">
+                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Клиент" class="review-avatar">
+                <div class="review-info">
+                  <h4>Дмитрий Иванов</h4>
+                  <p>Владелец мебельной фабрики</p>
+                </div>
+              </div>
+              <p class="review-text">"Корпоративный сайт полностью отражает наш бренд и ценности. Клиенты отмечают удобство и стильный дизайн. Спасибо за профессионализм!"</p>
+              <div class="review-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-header">
+                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Клиент" class="review-avatar">
+                <div class="review-info">
+                  <h4>Елена Петрова</h4>
+                  <p>Основатель бренда одежды</p>
+                </div>
+              </div>
+              <p class="review-text">"Интернет-магазин работает без сбоев, удобен для клиентов и для нас. Продажи выросли в 3 раза после запуска. Рекомендую эту команду!"</p>
+              <div class="review-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="reviews-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="reviews-next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="reviews-dots"></div>
+    </div>
+  </section>
+
+  <!-- Форма заявки -->
+  <section id="contact" class="contact" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Оставьте заявку</h2>
+      <div class="section-divider"></div>
+      <form id="request-form" style="max-width: 600px; margin: 0 auto; background-color: var(--card-bg); padding: 40px; border-radius: 8px; border: 1px solid var(--card-border);">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Ваш email" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" name="phone" id="phone" placeholder="+7 (___) ___-__-__" required>
+        </div>
+        <div class="form-group">
+          <select name="service" required>
+            <option value="" disabled selected>Выберите услугу</option>
+            <option value="landing">Лендинг</option>
+            <option value="corporate">Корпоративный сайт</option>
+            <option value="ecommerce">Интернет-магазин</option>
+            <option value="seo">SEO-оптимизация</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder="Опишите ваш проект" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Отправить заявку</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Всплывающее окно -->
+  <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl p-8 max-w-md mx-4 text-center animate__animated animate__zoomIn">
+      <div class="text-green-500 text-6xl mb-4">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Спасибо!</h3>
+      <p class="text-gray-600 mb-6">Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.</p>
+      <button onclick="document.getElementById('successModal').classList.add('hidden')" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-secondary transition duration-300">
+        Закрыть
+      </button>
+    </div>
+  </div>
+
+  <!-- Подвал -->
+  <footer>
+    <div class="container" data-aos="fade-up">
+      <div class="footer-content">
+        <div class="footer-logo">RERRL</div>
+        <div class="footer-contacts">
+          <p><i class="fas fa-phone"></i> <a href="tel:+77475091236">+7 747 509 12 36</a></p>
+          <p><i class="fas fa-envelope"></i> <a href="mailto:info@rerrl.kz">info@rerrl.kz</a></p>
+        </div>
+        <div class="footer-social">
+          <a href="https://wa.me/77475091236" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://t.me/rerrl_kz" class="telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> RERRL. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/imask"></script>
+  <script src="united.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html> 

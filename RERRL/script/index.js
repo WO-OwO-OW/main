@@ -339,7 +339,7 @@ function showAlert(message, isSuccess = true) {
   toast.classList.remove('toast-hidden');
   toast.classList.add('toast-visible');
   
-  setTimeout(() => {
+  setTimeout(() => {  
     toast.classList.remove('toast-visible');
     toast.classList.add('toast-hidden');
   }, 5000);
