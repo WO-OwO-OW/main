@@ -52,6 +52,23 @@
             border-radius: 10px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .player-info.active {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid #ffeb3b;
+            box-shadow: 0 0 15px rgba(255,235,59,0.5);
+        }
+
+        .turn-indicator {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
         }
 
         .main-game-area {
@@ -86,6 +103,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
+            border: 1px solid #999;
         }
 
         .square.white {
@@ -97,13 +115,13 @@
         }
 
         .square.selected {
-            background: #ffeb3b !important;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 0, 0.7) !important;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
         }
 
         .square.valid-move {
-            background: #4caf50 !important;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            background: rgba(0, 255, 0, 0.5) !important;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
         }
 
         .piece {
@@ -119,19 +137,22 @@
             border: 2px solid #333;
         }
 
-        .piece.chess {
-            background: linear-gradient(45deg, #8b4513, #d2691e);
+        .piece.player1 {
+            background: linear-gradient(45deg, #2c5aa0, #4a90e2);
             color: white;
+            border: 2px solid #1e3c72;
         }
 
-        .piece.checkers {
-            background: linear-gradient(45deg, #ff4444, #cc0000);
+        .piece.player2 {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
+            border: 2px solid #a93226;
         }
 
         .piece.king {
             background: linear-gradient(45deg, #ffd700, #ffed4e);
             color: #333;
+            border: 2px solid #f39c12;
         }
 
         .side-panel {
@@ -186,6 +207,10 @@
         .card.green { color: #00ff00; }
         .card.yellow { color: #ffff00; }
         .card.black { color: #000000; }
+        .card.purple { color: #800080; }
+        .card.cyan { color: #00ffff; }
+        .card.silver { color: #c0c0c0; }
+        .card.gold { color: #ffd700; }
 
         .dice-section {
             background: rgba(255,255,255,0.1);
@@ -304,38 +329,195 @@
         .log-entry.player2 { color: #4ecdc4; }
         .log-entry.system { color: #ffe66d; }
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
+        .debug-info {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.8rem;
         }
 
-        .modal-content {
-            background: linear-gradient(135deg, #2a5298, #1e3c72);
-            margin: 15% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 500px;
+        .effects-panel {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-top: 10px;
+        }
+
+        .effects-panel h3 {
+            margin-bottom: 10px;
             text-align: center;
-            border: 2px solid rgba(255,255,255,0.2);
         }
 
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
+        .effect-item {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            margin: 2px 0;
+            border-radius: 5px;
+            font-size: 0.8rem;
         }
 
-        .close:hover {
+        .history-panel {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-top: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .history-panel h3 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .history-item {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            margin: 2px 0;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        .dice-section.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .coin.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .log-entry {
+            padding: 2px 5px;
+            margin: 1px 0;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .log-entry.player1 {
+            background: rgba(0, 123, 255, 0.2);
+            border-left: 3px solid #007bff;
+        }
+
+        .log-entry.player2 {
+            background: rgba(220, 53, 69, 0.2);
+            border-left: 3px solid #dc3545;
+        }
+
+        .log-entry.system {
+            background: rgba(108, 117, 125, 0.2);
+            border-left: 3px solid #6c757d;
+        }
+
+        .square.selected {
+            background: rgba(255, 255, 0, 0.7) !important;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+        }
+
+        .square.valid-move {
+            background: rgba(0, 255, 0, 0.5) !important;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+        }
+
+        .player-effects {
+            margin-top: 10px;
+            font-size: 0.8rem;
+        }
+
+        .player-effect {
+            background: rgba(255,255,255,0.1);
+            padding: 3px 8px;
+            margin: 2px 0;
+            border-radius: 5px;
+            font-size: 0.7rem;
+        }
+
+        .effects-list-panel {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-top: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .timer.warning {
+            background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+            animation: pulse 1s infinite;
+        }
+
+        .timer.danger {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .effects-list-panel h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .effects-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .effects-category {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .effects-category h4 {
+            margin-bottom: 15px;
+            text-align: center;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .effect-item-list {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            border-left: 4px solid #007bff;
+            line-height: 1.4;
+        }
+
+        .effect-item-list.dice {
+            border-left-color: #28a745;
+        }
+
+        .effect-item-list.coin {
+            border-left-color: #ffc107;
         }
 
         @media (max-width: 768px) {
@@ -369,22 +551,39 @@
             <p>Шахматы vs Шашки с элементами УНО и случайности</p>
         </div>
 
+        <div class="turn-indicator" id="turnIndicator">
+            🎮 Ход игрока 1
+        </div>
+        
+        <div class="timer" id="timer">
+            ⏱️ Время: <span id="timeLeft">60</span> сек
+        </div>
+        
         <div class="game-info">
-            <div class="player-info">
-                <h3>Игрок 1 (Шахматы)</h3>
+            <div class="player-info" id="player1-info">
+                <h3>🔵 Игрок 1</h3>
                 <p>Очки: <span id="player1-score">0</span></p>
                 <p>Карты: <span id="player1-cards">0</span></p>
+                <div class="player-effects" id="player1-effects-display"></div>
             </div>
-            <div class="player-info">
-                <h3>Игрок 2 (Шашки)</h3>
+            <div class="player-info" id="player2-info">
+                <h3>🔴 Игрок 2</h3>
                 <p>Очки: <span id="player2-score">0</span></p>
                 <p>Карты: <span id="player2-cards">0</span></p>
+                <div class="player-effects" id="player2-effects-display"></div>
             </div>
         </div>
 
+
+
         <div class="main-game-area">
             <div class="board-container">
-                <div class="game-board" id="gameBoard"></div>
+                <div class="game-board" id="gameBoard">
+                    <!-- Доска будет создана JavaScript -->
+                </div>
+                <div class="debug-info" id="debugInfo">
+                    Статус: Инициализация...
+                </div>
             </div>
 
             <div class="side-panel">
@@ -410,6 +609,43 @@
                     <button class="btn" id="newGameBtn">Новая игра</button>
                     <button class="btn warning" id="rulesBtn">Правила</button>
                     <button class="btn danger" id="resetBtn">Сброс</button>
+                    <button class="btn" id="effectsBtn">📋 Эффекты</button>
+                    <button class="btn" id="effectsListBtn">📖 Список эффектов</button>
+                </div>
+
+                <div class="effects-panel" id="effectsPanel" style="display: none;">
+                    <h3>🎭 Активные эффекты</h3>
+                    <div id="player1Effects">
+                        <strong>🔵 Игрок 1:</strong>
+                        <div id="player1EffectsList"></div>
+                    </div>
+                    <div id="player2Effects">
+                        <strong>🔴 Игрок 2:</strong>
+                        <div id="player2EffectsList"></div>
+                    </div>
+                </div>
+
+                <div class="effects-list-panel" id="effectsListPanel" style="display: none;">
+                    <h3>📖 Полный список эффектов</h3>
+                    <div class="effects-categories">
+                        <div class="effects-category">
+                            <h4>🎴 Карты УНО</h4>
+                            <div id="unoEffectsList"></div>
+                        </div>
+                        <div class="effects-category">
+                            <h4>🎲 Кубики</h4>
+                            <div id="diceEffectsList"></div>
+                        </div>
+                        <div class="effects-category">
+                            <h4>🪙 Монетка</h4>
+                            <div id="coinEffectsList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="history-panel">
+                    <h3>📜 История действий</h3>
+                    <div id="actionHistory"></div>
                 </div>
 
                 <div class="game-log">
@@ -420,70 +656,53 @@
         </div>
     </div>
 
-    <!-- Модальное окно с правилами -->
-    <div id="rulesModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>📖 Правила игры Zortum</h2>
-            <div style="text-align: left; margin-top: 20px;">
-                <h3>🎯 Цель игры:</h3>
-                <p>Победить противника, используя комбинацию шахмат, шашек, карт УНО и элементов случайности.</p>
-                
-                <h3>♟️ Шахматы (Игрок 1):</h3>
-                <ul>
-                    <li>Используйте стандартные правила шахмат</li>
-                    <li>Пешки могут превращаться в ферзей при достижении последней линии</li>
-                    <li>Шах и мат побеждают</li>
-                </ul>
-                
-                <h3>🔴 Шашки (Игрок 2):</h3>
-                <ul>
-                    <li>Используйте стандартные правила шашек</li>
-                    <li>Обязательное взятие</li>
-                    <li>Дамки могут ходить на любое расстояние</li>
-                </ul>
-                
-                <h3>🎴 Карты УНО:</h3>
-                <ul>
-                    <li><strong>Обычные карты:</strong> Дополнительные ходы</li>
-                    <li><strong>Флип:</strong> Меняет цвет фигур</li>
-                    <li><strong>Ноу Мерси:</strong> Отменяет ход противника</li>
-                    <li><strong>+2/+4:</strong> Противник пропускает ходы</li>
-                </ul>
-                
-                <h3>🎲 Элементы случайности:</h3>
-                <ul>
-                    <li><strong>D6:</strong> Определяет количество дополнительных ходов</li>
-                    <li><strong>D20:</strong> Специальные эффекты (телепортация, защита и т.д.)</li>
-                    <li><strong>Монетка:</strong> 50/50 шанс на успех действия</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <script>
-        class ZortumGame {
+        // Простая версия игры для локального запуска
+        class SimpleZortumGame {
             constructor() {
                 this.board = [];
-                this.currentPlayer = 1; // 1 - Игрок 1, 2 - Игрок 2
+                this.currentPlayer = 1;
                 this.selectedPiece = null;
                 this.player1Score = 0;
                 this.player2Score = 0;
                 this.player1Cards = [];
                 this.player2Cards = [];
                 this.gameLog = [];
-                this.moveHistory = [];
-                this.unoCards = new UNOCards();
-                this.sounds = new GameSounds();
+                this.actionHistory = [];
+                this.extraMoves = 0; // Дополнительные ходы
+                this.diceUsed = false; // Кубик использован в этом ходе
+                this.coinUsed = false; // Монетка использована в этом ходе
+                this.playerEffects = {
+                    1: [], // Эффекты игрока 1
+                    2: []  // Эффекты игрока 2
+                };
+                this.capturedPieces = {
+                    1: [], // Взятые фигуры игрока 1
+                    2: []  // Взятые фигуры игрока 2
+                };
+                this.turnTime = 60; // Время на ход в секундах
+                this.timeLeft = this.turnTime;
+                this.timerInterval = null;
                 
+                this.debug('Инициализация игры...');
                 this.initializeBoard();
-                this.dealCards();
+                this.initializeCards();
                 this.setupEventListeners();
                 this.updateDisplay();
                 this.addLogEntry('system', 'Игра началась! Игрок 1 ходит первым.');
+                this.debug('Игра готова!');
+            }
+
+            debug(message) {
+                const debugInfo = document.getElementById('debugInfo');
+                if (debugInfo) {
+                    debugInfo.textContent = `Статус: ${message}`;
+                }
+                console.log('DEBUG:', message);
             }
 
             initializeBoard() {
+                this.debug('Создание доски...');
                 this.board = [];
                 for (let row = 0; row < 8; row++) {
                     this.board[row] = [];
@@ -500,50 +719,95 @@
                     {piece: '♞', type: 'knight'}, {piece: '♜', type: 'rook'}
                 ];
 
-                // Игрок 1 (нижняя часть доски)
-                // Пешки
-                for (let col = 0; col < 8; col++) {
-                    this.board[6][col] = {player: 1, piece: '♟', type: 'pawn', isKing: false};
-                }
-                
-                // Остальные фигуры
+                // Игрок 1 (нижняя часть доски) - смешанная расстановка
+                // 7-й ряд (последний) - шахматные фигуры
                 for (let col = 0; col < 8; col++) {
                     this.board[7][col] = {player: 1, piece: chessPieces[col].piece, type: chessPieces[col].type, isKing: false};
                 }
-
-                // Игрок 2 (верхняя часть доски)
-                // Пешки
+                
+                // 6-й ряд - пешки на белых клетках, шашки на черных
                 for (let col = 0; col < 8; col++) {
-                    this.board[1][col] = {player: 2, piece: '♙', type: 'pawn', isKing: false};
+                    if ((col + 6) % 2 === 0) { // Белые клетки
+                        this.board[6][col] = {player: 1, piece: '♟', type: 'pawn', isKing: false};
+                    } else { // Черные клетки
+                        this.board[6][col] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
+                    }
                 }
                 
-                // Остальные фигуры
+                // 5-й ряд - шашки на белых клетках, пешки на черных
+                for (let col = 0; col < 8; col++) {
+                    if ((col + 5) % 2 === 0) { // Белые клетки
+                        this.board[5][col] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
+                    } else { // Черные клетки
+                        this.board[5][col] = {player: 1, piece: '♟', type: 'pawn', isKing: false};
+                    }
+                }
+
+                // Игрок 2 (верхняя часть доски) - смешанная расстановка
+                // 0-й ряд (первый) - шахматные фигуры
                 for (let col = 0; col < 8; col++) {
                     this.board[0][col] = {player: 2, piece: chessPieces[col].piece.toUpperCase(), type: chessPieces[col].type, isKing: false};
                 }
+                
+                // 1-й ряд - пешки на белых клетках, шашки на черных
+                for (let col = 0; col < 8; col++) {
+                    if ((col + 1) % 2 === 0) { // Белые клетки
+                        this.board[1][col] = {player: 2, piece: '♙', type: 'pawn', isKing: false};
+                    } else { // Черные клетки
+                        this.board[1][col] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
+                    }
+                }
+                
+                // 2-й ряд - шашки на белых клетках, пешки на черных
+                for (let col = 0; col < 8; col++) {
+                    if ((col + 2) % 2 === 0) { // Белые клетки
+                        this.board[2][col] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
+                    } else { // Черные клетки
+                        this.board[2][col] = {player: 2, piece: '♙', type: 'pawn', isKing: false};
+                    }
+                }
 
-                // Добавляем 4 шашки спереди для каждого игрока (на черных клетках)
-                // Игрок 1 - шашки на 5-й строке
-                this.board[5][0] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
-                this.board[5][2] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
-                this.board[5][4] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
-                this.board[5][6] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
-
-                // Игрок 2 - шашки на 2-й строке
-                this.board[2][1] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
-                this.board[2][3] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
-                this.board[2][5] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
-                this.board[2][7] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
+                this.debug('Доска создана');
             }
 
-            dealCards() {
-                const dealt = this.unoCards.dealCards();
-                this.player1Cards = dealt.player1;
-                this.player2Cards = dealt.player2;
-                this.addLogEntry('system', 'Карты УНО разданы!');
+            initializeCards() {
+                // Простые карты УНО
+                const cards = [
+                    {type: 'number', value: 0, color: 'red', effect: 'Дополнительный ход'},
+                    {type: 'number', value: 1, color: 'blue', effect: 'Перемещение на 1 клетку'},
+                    {type: 'number', value: 2, color: 'green', effect: 'Двойной ход'},
+                    {type: 'number', value: 3, color: 'yellow', effect: 'Тройной ход'},
+                    {type: 'skip', color: 'red', effect: 'Пропуск хода противника'},
+                    {type: 'reverse', color: 'blue', effect: 'Изменение направления'},
+                    {type: 'draw2', color: 'green', effect: 'Получить 2 карты'},
+                    {type: 'wild', color: 'black', effect: 'Любая карта из колоды'},
+                    {type: 'flip', color: 'purple', effect: 'Смена сторон'},
+                    {type: 'teleport', color: 'cyan', effect: 'Телепортация фигуры'},
+                    {type: 'shield', color: 'silver', effect: 'Защита от взятия'},
+                    {type: 'double_move', color: 'gold', effect: 'Двойной ход'},
+                    {type: 'freeze', color: 'cyan', effect: 'Заморозка фигуры противника'},
+                    {type: 'heal', color: 'green', effect: 'Воскрешение фигуры'},
+                    {type: 'stealth', color: 'purple', effect: 'Фигура становится невидимой'},
+                    {type: 'rage', color: 'red', effect: 'Двойная сила атаки'},
+                    {type: 'time_stop', color: 'gold', effect: 'Остановка таймера противника'},
+                    {type: 'clone', color: 'orange', effect: 'Клонирование фигуры'},
+                    {type: 'swap', color: 'pink', effect: 'Обмен позициями фигур'},
+                    {type: 'dice_d6', color: 'blue', effect: 'Использовать D6 кубик'},
+                    {type: 'dice_d20', color: 'purple', effect: 'Использовать D20 кубик'},
+                    {type: 'coin_flip', color: 'gold', effect: 'Подбросить монетку'},
+                    {type: 'time_plus', color: 'cyan', effect: '+30 секунд к таймеру'},
+                    {type: 'time_freeze', color: 'white', effect: 'Остановить свой таймер'}
+                ];
+
+                // Раздаем карты
+                this.player1Cards = cards.slice(0, 3);
+                this.player2Cards = cards.slice(3, 6);
+                this.debug('Карты разданы');
             }
 
             setupEventListeners() {
+                this.debug('Настройка событий...');
+                
                 // Игровая доска
                 document.getElementById('gameBoard').addEventListener('click', (e) => {
                     const square = e.target.closest('.square');
@@ -566,31 +830,25 @@
                 // Монетка
                 document.getElementById('coin').addEventListener('click', () => this.flipCoin());
 
-                // Карты УНО
-                this.updateCardDisplay();
+                // Кнопка эффектов
+                document.getElementById('effectsBtn').addEventListener('click', () => this.toggleEffectsPanel());
+                
+                // Кнопка списка эффектов
+                document.getElementById('effectsListBtn').addEventListener('click', () => this.toggleEffectsListPanel());
 
-                // Модальное окно
-                const modal = document.getElementById('rulesModal');
-                const span = document.getElementsByClassName('close')[0];
-                span.onclick = () => modal.style.display = 'none';
-                window.onclick = (event) => {
-                    if (event.target === modal) {
-                        modal.style.display = 'none';
-                    }
-                };
+                this.debug('События настроены');
             }
 
             handleSquareClick(row, col) {
+                this.debug(`Клик по клетке: ${row}, ${col}`);
                 const piece = this.board[row][col];
                 
                 if (this.selectedPiece) {
-                    // Если фигура уже выбрана, пытаемся сделать ход
                     if (this.isValidMove(this.selectedPiece.row, this.selectedPiece.col, row, col)) {
                         this.makeMove(this.selectedPiece.row, this.selectedPiece.col, row, col);
                         this.selectedPiece = null;
                         this.clearHighlights();
                     } else {
-                        // Выбираем новую фигуру
                         this.selectedPiece = piece ? {row: row, col: col, ...piece} : null;
                         this.clearHighlights();
                         if (this.selectedPiece) {
@@ -598,7 +856,6 @@
                         }
                     }
                 } else {
-                    // Выбираем фигуру
                     if (piece && piece.player === this.currentPlayer) {
                         this.selectedPiece = {row: row, col: col, ...piece};
                         this.highlightValidMoves(row, col);
@@ -628,9 +885,11 @@
                 const rowDiff = toRow - fromRow;
                 const colDiff = Math.abs(toCol - fromCol);
 
-                // Проверяем направление движения
-                if (piece.player === 2 && rowDiff <= 0) return false; // Шашки двигаются вверх
-                if (piece.player === 1 && rowDiff >= 0) return false; // Шашки двигаются вниз
+                // Направление движения (только для обычных шашек)
+                if (!piece.isKing) {
+                    if (piece.player === 2 && rowDiff <= 0) return false; // Игрок 2 ходит вниз
+                    if (piece.player === 1 && rowDiff >= 0) return false; // Игрок 1 ходит вверх
+                }
 
                 // Обычный ход
                 if (colDiff === 1 && Math.abs(rowDiff) === 1) {
@@ -680,15 +939,12 @@
                 const rowDiff = toRow - fromRow;
                 const colDiff = Math.abs(toCol - fromCol);
 
-                // Направление движения
                 const direction = piece.player === 1 ? -1 : 1;
 
-                // Обычный ход
                 if (colDiff === 0 && rowDiff === direction && !target) {
                     return true;
                 }
 
-                // Первый ход пешки
                 if (colDiff === 0 && rowDiff === 2 * direction && !target) {
                     const middleRow = fromRow + direction;
                     if (!this.board[middleRow][fromCol]) {
@@ -696,7 +952,6 @@
                     }
                 }
 
-                // Взятие по диагонали
                 if (colDiff === 1 && rowDiff === direction && target) {
                     return true;
                 }
@@ -753,22 +1008,37 @@
                 const piece = this.board[fromRow][fromCol];
                 const target = this.board[toRow][toCol];
                 
-                // Сохраняем ход в историю
-                this.moveHistory.push({
-                    player: this.currentPlayer,
-                    from: {row: fromRow, col: fromCol},
-                    to: {row: toRow, col: toCol},
-                    piece: {...piece},
-                    captured: target ? {...target} : null
-                });
-                
-                // Записываем ход в лог
                 const pieceName = this.getPieceName(piece);
                 this.addLogEntry(this.currentPlayer, `${pieceName} с ${this.getSquareName(fromRow, fromCol)} на ${this.getSquareName(toRow, toCol)}`);
                 
-                // Удаляем взятые фигуры
-                if (target) {
-                    this.addLogEntry(this.currentPlayer === 1 ? 2 : 1, `Фигура ${this.getPieceName(target)} взята!`);
+                // Проверяем взятие для шашек
+                if (piece.type === 'checker') {
+                    const rowDiff = toRow - fromRow;
+                    const colDiff = Math.abs(toCol - fromCol);
+                    
+                    if (colDiff === 2 && Math.abs(rowDiff) === 2) {
+                        // Это взятие - удаляем перепрыгнутую фигуру
+                        const jumpRow = fromRow + rowDiff / 2;
+                        const jumpCol = fromCol + (toCol - fromCol) / 2;
+                        const jumpedPiece = this.board[jumpRow][jumpCol];
+                        
+                        if (jumpedPiece) {
+                            this.addLogEntry(this.currentPlayer, `Взята фигура ${this.getPieceName(jumpedPiece)}!`);
+                            // Сохраняем взятую фигуру
+                            this.capturedPieces[this.currentPlayer].push({...jumpedPiece});
+                            if (this.currentPlayer === 1) {
+                                this.player1Score += this.getPieceValue(jumpedPiece);
+                            } else {
+                                this.player2Score += this.getPieceValue(jumpedPiece);
+                            }
+                            this.board[jumpRow][jumpCol] = null; // Удаляем взятую фигуру
+                        }
+                    }
+                } else if (target) {
+                    // Обычное взятие для шахмат
+                    this.addLogEntry(this.currentPlayer, `Взята фигура ${this.getPieceName(target)}!`);
+                    // Сохраняем взятую фигуру
+                    this.capturedPieces[this.currentPlayer].push({...target});
                     if (this.currentPlayer === 1) {
                         this.player1Score += this.getPieceValue(target);
                     } else {
@@ -776,21 +1046,9 @@
                     }
                 }
                 
-                // Перемещаем фигуру
                 this.board[toRow][toCol] = piece;
                 this.board[fromRow][fromCol] = null;
                 
-                // Проверяем превращение пешки
-                if (piece.type === 'pawn') {
-                    if ((piece.player === 1 && toRow === 0) || (piece.player === 2 && toRow === 7)) {
-                        piece.type = 'queen';
-                        piece.piece = piece.player === 1 ? '♛' : '♕';
-                        piece.isKing = true;
-                        this.addLogEntry(this.currentPlayer, 'Пешка превращена в ферзя!');
-                    }
-                }
-                
-                // Проверяем превращение шашки в дамку
                 if (piece.type === 'checker') {
                     if ((piece.player === 2 && toRow === 7) || (piece.player === 1 && toRow === 0)) {
                         piece.isKing = true;
@@ -799,9 +1057,24 @@
                     }
                 }
                 
-                // Меняем игрока
-                this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-                this.addLogEntry('system', `Ход игрока ${this.currentPlayer}`);
+                // Проверяем дополнительные ходы
+                if (this.extraMoves > 0) {
+                    this.extraMoves--;
+                    this.addLogEntry('system', `Дополнительный ход! Осталось: ${this.extraMoves}`);
+                } else {
+                    // Сброс флагов использования кубиков и монетки
+                    this.diceUsed = false;
+                    this.coinUsed = false;
+                    
+                    // Выдаем карту УНО после завершения хода
+                    this.drawCard();
+                    
+                    this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+                    this.addLogEntry('system', `Ход игрока ${this.currentPlayer}`);
+                    
+                    // Запускаем таймер для нового игрока
+                    this.startTimer();
+                }
                 
                 this.updateDisplay();
             }
@@ -863,11 +1136,19 @@
             }
 
             rollDice(sides) {
+                if (this.diceUsed) {
+                    this.addLogEntry('system', 'Кубик уже использован в этом ходе!');
+                    return;
+                }
+                
+                this.diceUsed = true;
                 const result = Math.floor(Math.random() * sides) + 1;
                 this.addLogEntry('system', `🎲 Выпало ${result} на D${sides}`);
+                this.addActionToHistory(`D${sides}`, result);
                 
                 if (sides === 6) {
-                    this.addLogEntry(this.currentPlayer, `Получает ${result} дополнительных ходов`);
+                    this.extraMoves += result;
+                    this.addLogEntry(this.currentPlayer, `Получает ${result} дополнительных ходов!`);
                 } else if (sides === 20) {
                     this.applyD20Effect(result);
                 }
@@ -881,10 +1162,10 @@
                     2: 'Защита от следующего взятия',
                     3: 'Дополнительный ход',
                     4: 'Обмен позициями двух фигур',
-                    5: 'Восстановление взятой фигуры',
+                    5: 'Воскрешение случайной фигуры',
                     6: 'Удвоение очков за следующий ход',
                     7: 'Пропуск хода противника',
-                    8: 'Случайная карта УНО',
+                    8: 'Дополнительная карта УНО',
                     9: 'Замораживание противника',
                     10: 'Невидимость фигуры',
                     11: 'Клонирование фигуры',
@@ -903,15 +1184,41 @@
                 
                 if (result === 20) {
                     this.endGame(this.currentPlayer);
+                } else if (result === 3) {
+                    this.extraMoves += 1;
+                } else if (result === 5) {
+                    this.resurrectRandomPiece();
+                } else if (result === 7) {
+                    this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+                    this.currentPlayer = this.currentPlayer === 1 ? 2 : 1; // Пропускаем ход
+                } else if (result === 8) {
+                    this.drawCard();
+                    this.drawCard(); // Дополнительная карта
+                } else if (result === 2) {
+                    this.addEffect(this.currentPlayer, {effect: 'Защита от взятия', duration: '1 ход'});
+                } else if (result === 9) {
+                    this.addEffect(this.currentPlayer === 1 ? 2 : 1, {effect: 'Заморожен', duration: '1 ход'});
+                } else if (result === 10) {
+                    this.addEffect(this.currentPlayer, {effect: 'Невидимость', duration: '2 хода'});
+                } else if (result === 14) {
+                    this.addEffect(this.currentPlayer, {effect: 'Энергетический щит', duration: '3 хода'});
                 }
             }
 
             flipCoin() {
+                if (this.coinUsed) {
+                    this.addLogEntry('system', 'Монетка уже использована в этом ходе!');
+                    return;
+                }
+                
+                this.coinUsed = true;
                 const result = Math.random() < 0.5 ? 'Орёл' : 'Решка';
                 this.addLogEntry('system', `🪙 Монетка: ${result}`);
+                this.addActionToHistory('Монетка', result);
                 
                 if (result === 'Орёл') {
-                    this.addLogEntry(this.currentPlayer, 'Успех! Дополнительное действие');
+                    this.extraMoves += 1;
+                    this.addLogEntry(this.currentPlayer, 'Успех! Дополнительный ход');
                 } else {
                     this.addLogEntry(this.currentPlayer, 'Неудача! Ход пропущен');
                     this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
@@ -922,18 +1229,304 @@
 
             addLogEntry(player, message) {
                 const timestamp = new Date().toLocaleTimeString();
-                const entry = `[${timestamp}] ${message}`;
-                this.gameLog.push({player, message: entry});
+                const playerName = player === 1 ? '🔵 Игрок 1' : player === 2 ? '🔴 Игрок 2' : '⚙️ Система';
+                const entry = `[${timestamp}] ${playerName}: ${message}`;
+                this.gameLog.push(entry);
+                this.updateLogDisplay();
+            }
+
+            addActionToHistory(action, effect) {
+                const timestamp = new Date().toLocaleTimeString();
+                const entry = `[${timestamp}] ${action}: ${effect}`;
+                this.actionHistory.unshift(entry); // Добавляем в начало
+                if (this.actionHistory.length > 10) { // Ограничиваем историю
+                    this.actionHistory.pop();
+                }
+                this.updateHistoryDisplay();
+            }
+
+            addEffect(player, effect) {
+                this.playerEffects[player].push({
+                    ...effect,
+                    id: Date.now() + Math.random(),
+                    appliedAt: new Date()
+                });
+                this.updateEffectsDisplay();
+            }
+
+            removeEffect(player, effectId) {
+                this.playerEffects[player] = this.playerEffects[player].filter(e => e.id !== effectId);
+                this.updateEffectsDisplay();
+            }
+
+            toggleEffectsPanel() {
+                const panel = document.getElementById('effectsPanel');
+                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            }
+
+            toggleEffectsListPanel() {
+                const panel = document.getElementById('effectsListPanel');
+                if (panel.style.display === 'none') {
+                    this.populateEffectsList();
+                    panel.style.display = 'block';
+                } else {
+                    panel.style.display = 'none';
+                }
+            }
+
+            populateEffectsList() {
+                // Карты УНО
+                const unoEffects = [
+                    {name: '0', effect: 'Дополнительный ход'},
+                    {name: '1', effect: 'Перемещение на 1 клетку'},
+                    {name: '2', effect: 'Двойной ход'},
+                    {name: '3', effect: 'Тройной ход'},
+                    {name: '⏭️ Пропуск', effect: 'Пропуск хода противника'},
+                    {name: '🔄 Реверс', effect: 'Изменение направления'},
+                    {name: '+2', effect: 'Получить 2 карты'},
+                    {name: '🌈 Дикая', effect: 'Получить случайную карту'},
+                    {name: '🔄 Флип', effect: 'Смена сторон игроков'},
+                    {name: '🚀 Телепорт', effect: 'Телепортация фигуры'},
+                    {name: '🛡️ Щит', effect: 'Защита от взятия (1 ход)'},
+                    {name: '⚡ Двойной ход', effect: 'Двойной ход'},
+                    {name: '❄️ Заморозка', effect: 'Заморозка фигуры противника (1 ход)'},
+                    {name: '💚 Лечение', effect: 'Воскрешение случайной фигуры'},
+                    {name: '👻 Невидимость', effect: 'Фигура становится невидимой (2 хода)'},
+                    {name: '😡 Ярость', effect: 'Двойная сила атаки (1 ход)'},
+                    {name: '⏸️ Остановка', effect: 'Остановка таймера противника (1 ход)'},
+                    {name: '🔄 Клон', effect: 'Клонирование фигуры'},
+                    {name: '🔄 Обмен', effect: 'Обмен позициями фигур'},
+                    {name: '🎲6 D6', effect: 'Использовать D6 кубик'},
+                    {name: '🎲20 D20', effect: 'Использовать D20 кубик'},
+                    {name: '🪙 Монетка', effect: 'Подбросить монетку'},
+                    {name: '⏰+ Время+', effect: '+30 секунд к таймеру'},
+                    {name: '⏰❄️ Заморозка времени', effect: 'Остановить свой таймер (1 ход)'}
+                ];
+
+                // D20 эффекты
+                const d20Effects = [
+                    {name: '1', effect: 'Телепортация случайной фигуры'},
+                    {name: '2', effect: 'Защита от следующего взятия'},
+                    {name: '3', effect: 'Дополнительный ход'},
+                    {name: '4', effect: 'Обмен позициями двух фигур'},
+                    {name: '5', effect: 'Воскрешение случайной фигуры'},
+                    {name: '6', effect: 'Удвоение очков за следующий ход'},
+                    {name: '7', effect: 'Пропуск хода противника'},
+                    {name: '8', effect: 'Дополнительная карта УНО'},
+                    {name: '9', effect: 'Замораживание противника'},
+                    {name: '10', effect: 'Невидимость фигуры'},
+                    {name: '11', effect: 'Клонирование фигуры'},
+                    {name: '12', effect: 'Массовое перемещение'},
+                    {name: '13', effect: 'Временная остановка'},
+                    {name: '14', effect: 'Энергетический щит'},
+                    {name: '15', effect: 'Квантовый прыжок'},
+                    {name: '16', effect: 'Параллельная реальность'},
+                    {name: '17', effect: 'Временная петля'},
+                    {name: '18', effect: 'Космический портал'},
+                    {name: '19', effect: 'Божественное вмешательство'},
+                    {name: '20', effect: 'ПОБЕДА!'}
+                ];
+
+                // D6 эффекты
+                const d6Effects = [
+                    {name: '1-6', effect: 'Дополнительные ходы (по количеству выпавшего числа)'}
+                ];
+
+                // Монетка эффекты
+                const coinEffects = [
+                    {name: 'Орёл', effect: 'Дополнительный ход'},
+                    {name: 'Решка', effect: 'Пропуск хода'}
+                ];
+
+                // Заполняем списки
+                const unoList = document.getElementById('unoEffectsList');
+                const diceList = document.getElementById('diceEffectsList');
+                const coinList = document.getElementById('coinEffectsList');
+
+                unoList.innerHTML = unoEffects.map(e => 
+                    `<div class="effect-item-list">${e.name}: ${e.effect}</div>`
+                ).join('');
+
+                diceList.innerHTML = 
+                    d6Effects.map(e => `<div class="effect-item-list dice">D6 ${e.name}: ${e.effect}</div>`).join('') +
+                    d20Effects.map(e => `<div class="effect-item-list dice">D20 ${e.name}: ${e.effect}</div>`).join('');
+
+                coinList.innerHTML = coinEffects.map(e => 
+                    `<div class="effect-item-list coin">${e.name}: ${e.effect}</div>`
+                ).join('');
+            }
+
+            updateEffectsDisplay() {
+                const player1List = document.getElementById('player1EffectsList');
+                const player2List = document.getElementById('player2EffectsList');
+                const player1Display = document.getElementById('player1-effects-display');
+                const player2Display = document.getElementById('player2-effects-display');
                 
+                player1List.innerHTML = this.playerEffects[1].map(effect => 
+                    `<div class="effect-item">${effect.effect} (${effect.duration || 'постоянно'})</div>`
+                ).join('');
+                
+                player2List.innerHTML = this.playerEffects[2].map(effect => 
+                    `<div class="effect-item">${effect.effect} (${effect.duration || 'постоянно'})</div>`
+                ).join('');
+
+                // Обновляем отображение эффектов в панели игроков
+                player1Display.innerHTML = this.playerEffects[1].map(effect => 
+                    `<div class="player-effect">${effect.effect}</div>`
+                ).join('');
+                
+                player2Display.innerHTML = this.playerEffects[2].map(effect => 
+                    `<div class="player-effect">${effect.effect}</div>`
+                ).join('');
+            }
+
+            updateHistoryDisplay() {
+                const historyDiv = document.getElementById('actionHistory');
+                historyDiv.innerHTML = this.actionHistory.map(entry => 
+                    `<div class="history-item">${entry}</div>`
+                ).join('');
+            }
+
+            drawCard() {
+                const availableCards = [
+                    {type: 'number', value: 0, color: 'red', effect: 'Дополнительный ход'},
+                    {type: 'number', value: 1, color: 'blue', effect: 'Перемещение на 1 клетку'},
+                    {type: 'number', value: 2, color: 'green', effect: 'Двойной ход'},
+                    {type: 'number', value: 3, color: 'yellow', effect: 'Тройной ход'},
+                    {type: 'skip', color: 'red', effect: 'Пропуск хода противника'},
+                    {type: 'reverse', color: 'blue', effect: 'Изменение направления'},
+                    {type: 'draw2', color: 'green', effect: 'Противник берет 2 карты'},
+                    {type: 'wild', color: 'black', effect: 'Смена цвета'},
+                    {type: 'flip', color: 'purple', effect: 'Смена сторон'},
+                    {type: 'teleport', color: 'cyan', effect: 'Телепортация'},
+                    {type: 'shield', color: 'silver', effect: 'Защита'},
+                    {type: 'double_move', color: 'gold', effect: 'Двойной ход'},
+                    {type: 'freeze', color: 'cyan', effect: 'Заморозка фигуры'},
+                    {type: 'heal', color: 'green', effect: 'Воскрешение фигуры'},
+                    {type: 'stealth', color: 'purple', effect: 'Невидимость'},
+                    {type: 'rage', color: 'red', effect: 'Ярость - двойная сила'},
+                    {type: 'time_stop', color: 'gold', effect: 'Остановка времени'},
+                    {type: 'clone', color: 'orange', effect: 'Клонирование'},
+                    {type: 'swap', color: 'pink', effect: 'Обмен позициями'}
+                ];
+                
+                const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
+                
+                if (this.currentPlayer === 1) {
+                    this.player1Cards.push(randomCard);
+                } else {
+                    this.player2Cards.push(randomCard);
+                }
+                
+                this.addLogEntry(this.currentPlayer, `Получена карта: ${randomCard.effect}`);
+                this.addActionToHistory(`Карта УНО`, randomCard.effect);
+            }
+
+            resurrectRandomPiece() {
+                const capturedPieces = this.capturedPieces[this.currentPlayer];
+                if (capturedPieces.length === 0) {
+                    this.addLogEntry(this.currentPlayer, 'Нет взятых фигур для воскрешения');
+                    return;
+                }
+                
+                const randomIndex = Math.floor(Math.random() * capturedPieces.length);
+                const pieceToResurrect = capturedPieces[randomIndex];
+                
+                // Ищем свободное место на доске
+                const emptySquares = [];
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        if (!this.board[row][col]) {
+                            emptySquares.push({row, col});
+                        }
+                    }
+                }
+                
+                if (emptySquares.length === 0) {
+                    this.addLogEntry(this.currentPlayer, 'Нет места для воскрешения фигуры');
+                    return;
+                }
+                
+                const randomSquare = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+                this.board[randomSquare.row][randomSquare.col] = {...pieceToResurrect};
+                
+                // Удаляем из списка взятых
+                capturedPieces.splice(randomIndex, 1);
+                
+                this.addLogEntry(this.currentPlayer, `Воскрешена фигура ${this.getPieceName(pieceToResurrect)} на ${this.getSquareName(randomSquare.row, randomSquare.col)}`);
+                this.addActionToHistory('Воскрешение', this.getPieceName(pieceToResurrect));
+            }
+
+
+
+            startTimer() {
+                this.timeLeft = this.turnTime;
+                this.updateTimerDisplay();
+                
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                
+                this.timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    
+                    if (this.timeLeft <= 0) {
+                        this.timeOut();
+                    }
+                }, 1000);
+            }
+
+            updateTimerDisplay() {
+                const timerElement = document.getElementById('timeLeft');
+                const timerContainer = document.getElementById('timer');
+                
+                if (timerElement) {
+                    timerElement.textContent = this.timeLeft;
+                }
+                
+                if (timerContainer) {
+                    timerContainer.classList.remove('warning', 'danger');
+                    if (this.timeLeft <= 10) {
+                        timerContainer.classList.add('danger');
+                    } else if (this.timeLeft <= 20) {
+                        timerContainer.classList.add('warning');
+                    }
+                }
+            }
+
+            timeOut() {
+                clearInterval(this.timerInterval);
+                this.addLogEntry('system', `Время вышло! Ход игрока ${this.currentPlayer} пропущен`);
+                this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+                this.startTimer();
+                this.updateDisplay();
+            }
+
+            stopTimer() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
+                }
+            }
+
+            updateLogDisplay() {
                 const logContainer = document.getElementById('gameLog');
-                const logEntry = document.createElement('div');
-                logEntry.className = `log-entry ${player === 1 ? 'player1' : player === 2 ? 'player2' : 'system'}`;
-                logEntry.textContent = entry;
-                logContainer.appendChild(logEntry);
+                logContainer.innerHTML = '';
+                
+                this.gameLog.forEach(entry => {
+                    const logEntry = document.createElement('div');
+                    logEntry.className = `log-entry ${entry.player === 1 ? 'player1' : entry.player === 2 ? 'player2' : 'system'}`;
+                    logEntry.textContent = entry;
+                    logContainer.appendChild(logEntry);
+                });
+                
                 logContainer.scrollTop = logContainer.scrollHeight;
             }
 
             updateDisplay() {
+                this.debug('Обновление отображения...');
+                
                 // Обновляем доску
                 const board = document.getElementById('gameBoard');
                 board.innerHTML = '';
@@ -948,7 +1541,7 @@
                         const piece = this.board[row][col];
                         if (piece) {
                             const pieceElement = document.createElement('div');
-                            pieceElement.className = `piece ${piece.type} ${piece.isKing ? 'king' : ''}`;
+                            pieceElement.className = `piece player${piece.player} ${piece.isKing ? 'king' : ''}`;
                             pieceElement.textContent = piece.piece;
                             square.appendChild(pieceElement);
                         }
@@ -963,8 +1556,24 @@
                 document.getElementById('player1-cards').textContent = this.player1Cards.length;
                 document.getElementById('player2-cards').textContent = this.player2Cards.length;
                 
-                // Обновляем отображение карт
+                // Обновляем индикатор хода
+                document.getElementById('turnIndicator').textContent = `🎮 Ход игрока ${this.currentPlayer}${this.extraMoves > 0 ? ` (Доп. ходов: ${this.extraMoves})` : ''}`;
+                
+                // Подсвечиваем активного игрока
+                document.getElementById('player1-info').classList.toggle('active', this.currentPlayer === 1);
+                document.getElementById('player2-info').classList.toggle('active', this.currentPlayer === 2);
+                
+                // Обновляем карты
                 this.updateCardDisplay();
+                
+                // Обновляем состояние кубиков и монетки
+                this.updateDiceAndCoinState();
+                
+                // Обновляем эффекты и историю
+                this.updateEffectsDisplay();
+                this.updateHistoryDisplay();
+                
+                this.debug('Отображение обновлено');
             }
 
             updateCardDisplay() {
@@ -976,11 +1585,75 @@
                 currentPlayerCards.forEach((card, index) => {
                     const cardElement = document.createElement('div');
                     cardElement.className = `card ${card.color}`;
-                    cardElement.textContent = this.unoCards.getCardDisplay(card);
+                    cardElement.textContent = this.getCardDisplay(card);
                     cardElement.title = card.effect;
                     cardElement.addEventListener('click', () => this.playCard(index));
                     cardDeck.appendChild(cardElement);
                 });
+            }
+
+            updateDiceAndCoinState() {
+                const diceSection = document.querySelector('.dice-section');
+                const coin = document.getElementById('coin');
+                
+                if (this.diceUsed) {
+                    diceSection.classList.add('disabled');
+                } else {
+                    diceSection.classList.remove('disabled');
+                }
+                
+                if (this.coinUsed) {
+                    coin.classList.add('disabled');
+                } else {
+                    coin.classList.remove('disabled');
+                }
+            }
+
+            getCardDisplay(card) {
+                if (card.type === 'number') {
+                    return card.value.toString();
+                } else if (card.type === 'skip') {
+                    return '⏭️';
+                } else if (card.type === 'reverse') {
+                    return '🔄';
+                } else if (card.type === 'draw2') {
+                    return '+2';
+                } else if (card.type === 'wild') {
+                    return '🌈';
+                } else if (card.type === 'flip') {
+                    return '🔄';
+                } else if (card.type === 'teleport') {
+                    return '🚀';
+                } else if (card.type === 'shield') {
+                    return '🛡️';
+                } else if (card.type === 'double_move') {
+                    return '⚡';
+                } else if (card.type === 'freeze') {
+                    return '❄️';
+                } else if (card.type === 'heal') {
+                    return '💚';
+                } else if (card.type === 'stealth') {
+                    return '👻';
+                } else if (card.type === 'rage') {
+                    return '😡';
+                } else if (card.type === 'time_stop') {
+                    return '⏸️';
+                } else if (card.type === 'clone') {
+                    return '🔄';
+                } else if (card.type === 'swap') {
+                    return '🔄';
+                } else if (card.type === 'dice_d6') {
+                    return '🎲6';
+                } else if (card.type === 'dice_d20') {
+                    return '🎲20';
+                } else if (card.type === 'coin_flip') {
+                    return '🪙';
+                } else if (card.type === 'time_plus') {
+                    return '⏰+';
+                } else if (card.type === 'time_freeze') {
+                    return '⏰❄️';
+                }
+                return '?';
             }
 
             playCard(cardIndex) {
@@ -988,33 +1661,104 @@
                 const card = currentPlayerCards[cardIndex];
                 
                 if (card) {
-                    this.addLogEntry(this.currentPlayer, `Играет карту: ${this.unoCards.getCardDisplay(card)}`);
-                    this.unoCards.applyCardEffect(card, this);
+                    this.addLogEntry(this.currentPlayer, `Играет карту: ${this.getCardDisplay(card)}`);
+                    this.applyCardEffect(card);
                     
                     // Удаляем карту из руки
                     currentPlayerCards.splice(cardIndex, 1);
-                    
-                    // Добавляем карту в сброс
-                    this.unoCards.discardPile.push(card);
                     
                     this.updateDisplay();
                 }
             }
 
-            newGame() {
-                this.initializeBoard();
-                this.currentPlayer = 1;
-                this.selectedPiece = null;
-                this.player1Score = 0;
-                this.player2Score = 0;
-                this.player1Cards = [];
-                this.player2Cards = [];
-                this.gameLog = [];
-                this.moveHistory = [];
-                this.clearHighlights();
-                this.dealCards();
-                this.updateDisplay();
-                this.addLogEntry('system', 'Новая игра началась!');
+            applyCardEffect(card) {
+                switch (card.type) {
+                    case 'number':
+                        if (card.value === 0) {
+                            this.extraMoves += 1;
+                            this.addLogEntry(this.currentPlayer, 'Дополнительный ход!');
+                        } else if (card.value === 2) {
+                            this.extraMoves += 2;
+                            this.addLogEntry(this.currentPlayer, 'Двойной ход!');
+                        } else if (card.value === 3) {
+                            this.extraMoves += 3;
+                            this.addLogEntry(this.currentPlayer, 'Тройной ход!');
+                        }
+                        break;
+                    case 'skip':
+                        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+                        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1; // Пропускаем ход
+                        this.addLogEntry(this.currentPlayer, 'Противник пропускает ход!');
+                        break;
+                    case 'reverse':
+                        this.addLogEntry(this.currentPlayer, 'Направление изменено!');
+                        break;
+                    case 'draw2':
+                        this.drawCard();
+                        this.drawCard();
+                        this.addLogEntry(this.currentPlayer, 'Получено 2 карты!');
+                        break;
+                    case 'wild':
+                        this.drawCard();
+                        this.addLogEntry(this.currentPlayer, 'Получена случайная карта!');
+                        break;
+                    case 'flip':
+                        this.swapPlayers();
+                        break;
+                    case 'teleport':
+                        this.addLogEntry(this.currentPlayer, 'Телепортация!');
+                        break;
+                    case 'shield':
+                        this.addEffect(this.currentPlayer, {effect: 'Защита от взятия', duration: '1 ход'});
+                        this.addLogEntry(this.currentPlayer, 'Щит активирован!');
+                        break;
+                    case 'double_move':
+                        this.extraMoves += 2;
+                        this.addLogEntry(this.currentPlayer, 'Двойной ход!');
+                        break;
+                    case 'freeze':
+                        this.addEffect(this.currentPlayer === 1 ? 2 : 1, {effect: 'Заморожен', duration: '1 ход'});
+                        this.addLogEntry(this.currentPlayer, 'Противник заморожен!');
+                        break;
+                    case 'heal':
+                        this.resurrectRandomPiece();
+                        break;
+                    case 'stealth':
+                        this.addEffect(this.currentPlayer, {effect: 'Невидимость', duration: '2 хода'});
+                        this.addLogEntry(this.currentPlayer, 'Невидимость активирована!');
+                        break;
+                    case 'rage':
+                        this.addEffect(this.currentPlayer, {effect: 'Ярость - двойная сила', duration: '1 ход'});
+                        this.addLogEntry(this.currentPlayer, 'Ярость активирована!');
+                        break;
+                    case 'time_stop':
+                        this.addEffect(this.currentPlayer === 1 ? 2 : 1, {effect: 'Таймер остановлен', duration: '1 ход'});
+                        this.addLogEntry(this.currentPlayer, 'Таймер противника остановлен!');
+                        break;
+                    case 'clone':
+                        this.addLogEntry(this.currentPlayer, 'Клонирование!');
+                        break;
+                    case 'swap':
+                        this.addLogEntry(this.currentPlayer, 'Обмен позициями!');
+                        break;
+                    case 'dice_d6':
+                        this.rollDice(6);
+                        break;
+                    case 'dice_d20':
+                        this.rollDice(20);
+                        break;
+                    case 'coin_flip':
+                        this.flipCoin();
+                        break;
+                    case 'time_plus':
+                        this.timeLeft += 30;
+                        this.addLogEntry(this.currentPlayer, '+30 секунд к таймеру!');
+                        break;
+                    case 'time_freeze':
+                        this.addEffect(this.currentPlayer, {effect: 'Таймер заморожен', duration: '1 ход'});
+                        this.addLogEntry(this.currentPlayer, 'Таймер заморожен!');
+                        break;
+                }
             }
 
             swapPlayers() {
@@ -1038,7 +1782,35 @@
                 this.player1Cards = this.player2Cards;
                 this.player2Cards = tempCards;
                 
+                this.addLogEntry('system', 'Игроки поменялись сторонами!');
+            }
+
+            newGame() {
+                this.debug('Новая игра...');
+                this.initializeBoard();
+                this.initializeCards();
+                this.currentPlayer = 1;
+                this.selectedPiece = null;
+                this.player1Score = 0;
+                this.player2Score = 0;
+                this.player1Cards = [];
+                this.player2Cards = [];
+                this.gameLog = [];
+                this.actionHistory = [];
+                this.extraMoves = 0;
+                this.diceUsed = false;
+                this.coinUsed = false;
+                this.playerEffects = {1: [], 2: []};
+                this.capturedPieces = {1: [], 2: []};
+                this.clearHighlights();
                 this.updateDisplay();
+                this.addLogEntry('system', 'Новая игра началась!');
+                this.startTimer();
+            }
+
+            endGame(winner) {
+                this.addLogEntry('system', `🎉 Игра окончена! Победитель: Игрок ${winner}!`);
+                alert(`Победитель: Игрок ${winner}!`);
             }
 
             resetGame() {
@@ -1048,19 +1820,14 @@
             }
 
             showRules() {
-                document.getElementById('rulesModal').style.display = 'block';
-            }
-
-            endGame(winner) {
-                const winnerName = winner === 1 ? 'Шахматы' : 'Шашки';
-                this.addLogEntry('system', `🎉 Игра окончена! Победитель: ${winnerName}`);
-                alert(`Победитель: ${winnerName}!`);
+                alert('Правила игры:\n\n1. Выберите фигуру кликом\n2. Кликните на зеленую клетку для хода\n3. Используйте карты УНО, кубики и монетку\n4. Цель - победить противника!');
             }
         }
 
-        // Инициализация игры
+        // Инициализация игры при загрузке страницы
         document.addEventListener('DOMContentLoaded', () => {
-            new ZortumGame();
+            console.log('Страница загружена, инициализация игры...');
+            window.game = new SimpleZortumGame();
         });
     </script>
 </body>
