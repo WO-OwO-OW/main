@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zortum - Шахматы vs Шашки с УНО</title>
+    <title>RERRL - Шахматы vs Шашки с УНО</title>
     <style>
         * {
             margin: 0;
@@ -465,19 +465,22 @@
         class ZortumGame {
             constructor() {
                 this.board = [];
-                this.currentPlayer = 1; // 1 - шахматы, 2 - шашки
+                this.currentPlayer = 1; // 1 - Игрок 1, 2 - Игрок 2
                 this.selectedPiece = null;
-                this.gameMode = 'chess'; // 'chess' или 'checkers'
                 this.player1Score = 0;
                 this.player2Score = 0;
                 this.player1Cards = [];
                 this.player2Cards = [];
                 this.gameLog = [];
+                this.moveHistory = [];
+                this.unoCards = new UNOCards();
+                this.sounds = new GameSounds();
                 
                 this.initializeBoard();
+                this.dealCards();
                 this.setupEventListeners();
                 this.updateDisplay();
-                this.addLogEntry('system', 'Игра началась! Игрок 1 (Шахматы) ходит первым.');
+                this.addLogEntry('system', 'Игра началась! Игрок 1 ходит первым.');
             }
 
             initializeBoard() {
@@ -489,7 +492,7 @@
                     }
                 }
 
-                // Расставляем шахматы (Игрок 1)
+                // Шахматные фигуры для обоих игроков
                 const chessPieces = [
                     {piece: '♜', type: 'rook'}, {piece: '♞', type: 'knight'}, 
                     {piece: '♝', type: 'bishop'}, {piece: '♛', type: 'queen'},
@@ -497,34 +500,47 @@
                     {piece: '♞', type: 'knight'}, {piece: '♜', type: 'rook'}
                 ];
 
+                // Игрок 1 (нижняя часть доски)
                 // Пешки
                 for (let col = 0; col < 8; col++) {
-                    this.board[1][col] = {player: 1, piece: '♟', type: 'pawn', isKing: false};
-                    this.board[6][col] = {player: 1, piece: '♙', type: 'pawn', isKing: false};
+                    this.board[6][col] = {player: 1, piece: '♟', type: 'pawn', isKing: false};
                 }
-
+                
                 // Остальные фигуры
                 for (let col = 0; col < 8; col++) {
-                    this.board[0][col] = {player: 1, piece: chessPieces[col].piece, type: chessPieces[col].type, isKing: false};
-                    this.board[7][col] = {player: 1, piece: chessPieces[col].piece.toUpperCase(), type: chessPieces[col].type, isKing: false};
+                    this.board[7][col] = {player: 1, piece: chessPieces[col].piece, type: chessPieces[col].type, isKing: false};
                 }
 
-                // Расставляем шашки (Игрок 2)
-                for (let row = 0; row < 3; row++) {
-                    for (let col = 0; col < 8; col++) {
-                        if ((row + col) % 2 === 1) {
-                            this.board[row][col] = {player: 2, piece: '🔴', type: 'checker', isKing: false};
-                        }
-                    }
+                // Игрок 2 (верхняя часть доски)
+                // Пешки
+                for (let col = 0; col < 8; col++) {
+                    this.board[1][col] = {player: 2, piece: '♙', type: 'pawn', isKing: false};
+                }
+                
+                // Остальные фигуры
+                for (let col = 0; col < 8; col++) {
+                    this.board[0][col] = {player: 2, piece: chessPieces[col].piece.toUpperCase(), type: chessPieces[col].type, isKing: false};
                 }
 
-                for (let row = 5; row < 8; row++) {
-                    for (let col = 0; col < 8; col++) {
-                        if ((row + col) % 2 === 1) {
-                            this.board[row][col] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
-                        }
-                    }
-                }
+                // Добавляем 4 шашки спереди для каждого игрока (на черных клетках)
+                // Игрок 1 - шашки на 5-й строке
+                this.board[5][0] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
+                this.board[5][2] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
+                this.board[5][4] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
+                this.board[5][6] = {player: 1, piece: '🔴', type: 'checker', isKing: false};
+
+                // Игрок 2 - шашки на 2-й строке
+                this.board[2][1] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
+                this.board[2][3] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
+                this.board[2][5] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
+                this.board[2][7] = {player: 2, piece: '🔵', type: 'checker', isKing: false};
+            }
+
+            dealCards() {
+                const dealt = this.unoCards.dealCards();
+                this.player1Cards = dealt.player1;
+                this.player2Cards = dealt.player2;
+                this.addLogEntry('system', 'Карты УНО разданы!');
             }
 
             setupEventListeners() {
@@ -550,6 +566,9 @@
                 // Монетка
                 document.getElementById('coin').addEventListener('click', () => this.flipCoin());
 
+                // Карты УНО
+                this.updateCardDisplay();
+
                 // Модальное окно
                 const modal = document.getElementById('rulesModal');
                 const span = document.getElementsByClassName('close')[0];
@@ -572,7 +591,7 @@
                         this.clearHighlights();
                     } else {
                         // Выбираем новую фигуру
-                        this.selectedPiece = piece ? {row, col, ...piece} : null;
+                        this.selectedPiece = piece ? {row: row, col: col, ...piece} : null;
                         this.clearHighlights();
                         if (this.selectedPiece) {
                             this.highlightValidMoves(row, col);
@@ -581,7 +600,7 @@
                 } else {
                     // Выбираем фигуру
                     if (piece && piece.player === this.currentPlayer) {
-                        this.selectedPiece = {row, col, ...piece};
+                        this.selectedPiece = {row: row, col: col, ...piece};
                         this.highlightValidMoves(row, col);
                     }
                 }
@@ -734,6 +753,15 @@
                 const piece = this.board[fromRow][fromCol];
                 const target = this.board[toRow][toCol];
                 
+                // Сохраняем ход в историю
+                this.moveHistory.push({
+                    player: this.currentPlayer,
+                    from: {row: fromRow, col: fromCol},
+                    to: {row: toRow, col: toCol},
+                    piece: {...piece},
+                    captured: target ? {...target} : null
+                });
+                
                 // Записываем ход в лог
                 const pieceName = this.getPieceName(piece);
                 this.addLogEntry(this.currentPlayer, `${pieceName} с ${this.getSquareName(fromRow, fromCol)} на ${this.getSquareName(toRow, toCol)}`);
@@ -773,7 +801,7 @@
                 
                 // Меняем игрока
                 this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-                this.addLogEntry('system', `Ход игрока ${this.currentPlayer} (${this.currentPlayer === 1 ? 'Шахматы' : 'Шашки'})`);
+                this.addLogEntry('system', `Ход игрока ${this.currentPlayer}`);
                 
                 this.updateDisplay();
             }
@@ -934,6 +962,43 @@
                 document.getElementById('player2-score').textContent = this.player2Score;
                 document.getElementById('player1-cards').textContent = this.player1Cards.length;
                 document.getElementById('player2-cards').textContent = this.player2Cards.length;
+                
+                // Обновляем отображение карт
+                this.updateCardDisplay();
+            }
+
+            updateCardDisplay() {
+                const cardDeck = document.getElementById('cardDeck');
+                cardDeck.innerHTML = '';
+                
+                const currentPlayerCards = this.currentPlayer === 1 ? this.player1Cards : this.player2Cards;
+                
+                currentPlayerCards.forEach((card, index) => {
+                    const cardElement = document.createElement('div');
+                    cardElement.className = `card ${card.color}`;
+                    cardElement.textContent = this.unoCards.getCardDisplay(card);
+                    cardElement.title = card.effect;
+                    cardElement.addEventListener('click', () => this.playCard(index));
+                    cardDeck.appendChild(cardElement);
+                });
+            }
+
+            playCard(cardIndex) {
+                const currentPlayerCards = this.currentPlayer === 1 ? this.player1Cards : this.player2Cards;
+                const card = currentPlayerCards[cardIndex];
+                
+                if (card) {
+                    this.addLogEntry(this.currentPlayer, `Играет карту: ${this.unoCards.getCardDisplay(card)}`);
+                    this.unoCards.applyCardEffect(card, this);
+                    
+                    // Удаляем карту из руки
+                    currentPlayerCards.splice(cardIndex, 1);
+                    
+                    // Добавляем карту в сброс
+                    this.unoCards.discardPile.push(card);
+                    
+                    this.updateDisplay();
+                }
             }
 
             newGame() {
@@ -945,9 +1010,35 @@
                 this.player1Cards = [];
                 this.player2Cards = [];
                 this.gameLog = [];
+                this.moveHistory = [];
                 this.clearHighlights();
+                this.dealCards();
                 this.updateDisplay();
                 this.addLogEntry('system', 'Новая игра началась!');
+            }
+
+            swapPlayers() {
+                // Меняем игроков местами на доске
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = this.board[row][col];
+                        if (piece) {
+                            piece.player = piece.player === 1 ? 2 : 1;
+                        }
+                    }
+                }
+                
+                // Меняем очки
+                const tempScore = this.player1Score;
+                this.player1Score = this.player2Score;
+                this.player2Score = tempScore;
+                
+                // Меняем карты
+                const tempCards = this.player1Cards;
+                this.player1Cards = this.player2Cards;
+                this.player2Cards = tempCards;
+                
+                this.updateDisplay();
             }
 
             resetGame() {
