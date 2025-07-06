@@ -1,26 +1,30 @@
+// Конфигурация Telegram
 const TELEGRAM_CONFIG = {
   BOT_TOKEN: '7578279966:AAFBTym2L5mWB18toYbHDnfXk6qOKPD3fmM', 
   CHAT_ID: '1263043831'
 };
 
-const TELEGRAM_CONFIG1 = {
-  BOT_TOKEN: '%%TELEGRAM_BOT_TOKEN%%',  // Заменится при сборке
-  CHAT_ID: '%%TELEGRAM_CHAT_ID%%'
-};
-
 document.addEventListener('DOMContentLoaded', function() {
   initMaskedInput();
+  
+  // Скрываем все карточки кроме лендингов при загрузке
+  const projectCards = document.querySelectorAll('.project-card');
+  projectCards.forEach(card => {
+    if (card.dataset.category !== 'landing') {
+      card.style.display = 'none';
+    }
+  });
+  
   setupProjectFilters();
-  sendTelegramMessage();
+  setupProjectCarousel(); // Инициализируем карусель для лендингов по умолчанию
+  setupReviewsCarousel();
   setupFormValidation();
-  updateCurrentYear();
-  setupSmoothScrolling();
   setupMobileMenu();
-  setupProjectCarousel();
-  verifyCaptcha();
-  showAlert();
+  setupSmoothScrolling();
+  updateCurrentYear();
 });
 
+// Инициализация маски для телефона
 function initMaskedInput() {
   const phoneInput = document.getElementById('phone');
   if (!phoneInput) return;
@@ -38,6 +42,7 @@ function initMaskedInput() {
   }
 }
 
+// Фильтрация проектов
 function setupProjectFilters() {
   const filterButtons = document.querySelectorAll('.project-filters button');
   const projectCards = document.querySelectorAll('.project-card');
@@ -48,107 +53,236 @@ function setupProjectFilters() {
       button.classList.add('active');
       
       const category = button.dataset.category;
-      const cardsContainer = document.querySelector('.project-cards');
+      const carouselTrack = document.querySelector('.carousel-track');
       
-      cardsContainer.style.opacity = '0.5';
-      cardsContainer.style.transition = 'opacity 0.3s ease';
+      carouselTrack.style.opacity = '0.5';
+      carouselTrack.style.transition = 'opacity 0.3s ease';
       
       setTimeout(() => {
         projectCards.forEach(card => {
-          card.style.display = (category === 'all' || card.dataset.category === category) 
-            ? 'block' 
-            : 'none';
+          if (card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
         });
         
-        cardsContainer.style.opacity = '1';
+        carouselTrack.style.opacity = '1';
         
-        if (category !== 'all') {
-          document.querySelector('#projects').scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+        // Пересоздаем карусель для новой категории
+        setupProjectCarousel();
       }, 300);
     });
   });
 }
 
+// Карусель проектов
+function setupProjectCarousel() {
+  const carouselTrack = document.querySelector('.carousel-track');
+  const prevBtn = document.querySelector('.carousel-prev');
+  const nextBtn = document.querySelector('.carousel-next');
+  const dotsContainer = document.querySelector('.carousel-dots');
+  
+  if (!carouselTrack) return;
+  
+  // Очищаем предыдущие точки
+  dotsContainer.innerHTML = '';
+  
+  // Получаем только видимые карточки (с display: block или без display: none)
+  const visibleCards = Array.from(document.querySelectorAll('.project-card')).filter(card => {
+    const style = window.getComputedStyle(card);
+    return style.display !== 'none';
+  });
+  
+  if (visibleCards.length === 0) return;
+  
+  let currentIndex = 0;
+  const cardWidth = 380; // Ширина карточки + gap
+  const maxVisibleCards = Math.min(3, visibleCards.length);
+  
+  // Создаем точки навигации только для видимых карточек
+  const totalSlides = Math.max(1, visibleCards.length - maxVisibleCards + 1);
+  
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.classList.add('carousel-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+  
+  function goToSlide(index) {
+    currentIndex = Math.max(0, Math.min(index, visibleCards.length - maxVisibleCards));
+    carouselTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+    
+    // Обновляем активную точку
+    document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+  }
+  
+  // Сбрасываем позицию карусели
+  carouselTrack.style.transform = 'translateX(0)';
+  currentIndex = 0;
+  
+  // Удаляем старые обработчики событий
+  if (prevBtn) {
+    prevBtn.replaceWith(prevBtn.cloneNode(true));
+  }
+  if (nextBtn) {
+    nextBtn.replaceWith(nextBtn.cloneNode(true));
+  }
+  
+  // Получаем обновленные кнопки
+  const newPrevBtn = document.querySelector('.carousel-prev');
+  const newNextBtn = document.querySelector('.carousel-next');
+  
+  // Кнопки навигации
+  if (newPrevBtn) newPrevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  if (newNextBtn) newNextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+  
+  // Скрываем кнопки если карточек меньше или равно максимальному количеству
+  if (visibleCards.length <= maxVisibleCards) {
+    if (newPrevBtn) newPrevBtn.style.display = 'none';
+    if (newNextBtn) newNextBtn.style.display = 'none';
+  } else {
+    if (newPrevBtn) newPrevBtn.style.display = 'flex';
+    if (newNextBtn) newNextBtn.style.display = 'flex';
+  }
+  
+  // Автопрокрутка только если есть больше карточек чем видимых
+  if (visibleCards.length > maxVisibleCards) {
+    let autoScroll = setInterval(() => {
+      goToSlide((currentIndex + 1) % totalSlides);
+    }, 5000);
+    
+    // Пауза при наведении
+    carouselTrack.addEventListener('mouseenter', () => clearInterval(autoScroll));
+    carouselTrack.addEventListener('mouseleave', () => {
+      autoScroll = setInterval(() => {
+        goToSlide((currentIndex + 1) % totalSlides);
+      }, 5000);
+    });
+  }
+}
+
+// Карусель отзывов
+function setupReviewsCarousel() {
+  const reviewsTrack = document.querySelector('.reviews-track');
+  const prevBtn = document.querySelector('.reviews-prev');
+  const nextBtn = document.querySelector('.reviews-next');
+  const dotsContainer = document.querySelector('.reviews-dots');
+  
+  if (!reviewsTrack) return;
+  
+  const reviews = Array.from(document.querySelectorAll('.review-card'));
+  let currentIndex = 0;
+  const reviewWidth = 380;
+  const visibleReviews = Math.min(3, reviews.length);
+  
+  // Создаем точки навигации
+  reviews.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('carousel-dot');
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToReview(index));
+    dotsContainer.appendChild(dot);
+  });
+  
+  function goToReview(index) {
+    currentIndex = Math.max(0, Math.min(index, reviews.length - visibleReviews));
+    reviewsTrack.style.transform = `translateX(-${currentIndex * reviewWidth}px)`;
+    
+    // Обновляем активную точку
+    document.querySelectorAll('.reviews-dots .carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+  }
+  
+  // Кнопки навигации
+  if (prevBtn) prevBtn.addEventListener('click', () => goToReview(currentIndex - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goToReview(currentIndex + 1));
+  
+  // Автопрокрутка
+  let autoScroll = setInterval(() => {
+    goToReview((currentIndex + 1) % (reviews.length - visibleReviews + 1));
+  }, 4000);
+  
+  // Пауза при наведении
+  reviewsTrack.addEventListener('mouseenter', () => clearInterval(autoScroll));
+  reviewsTrack.addEventListener('mouseleave', () => {
+    autoScroll = setInterval(() => {
+      goToReview((currentIndex + 1) % (reviews.length - visibleReviews + 1));
+    }, 4000);
+  });
+}
+
+// Отправка сообщения в Telegram
 async function sendTelegramMessage(data) {
-  // Проверка данных
   if (!data || typeof data !== 'object') {
-  console.error('Полученные данные:', data);
-  throw new Error('Форма не содержит данных');
-}
+    console.error('Полученные данные:', data);
+    throw new Error('Форма не содержит данных');
+  }
 
-if (!data.phone || data.phone.replace(/\D/g, '').length !== 11) {
-  console.error('Некорректный телефон:', data.phone);
-  throw new Error('Требуется корректный номер телефона');
-}
+  if (!data.phone || data.phone.replace(/\D/g, '').length !== 11) {
+    console.error('Некорректный телефон:', data.phone);
+    throw new Error('Требуется корректный номер телефона');
+  }
 
-  // Форматируем сообщение
   const text = `
-  📌 <b>Новая заявка!</b>
-  ──────────────
-  <b>Имя:</b> ${data.name || 'Не указано'}
-  <b>Телефон:</b> <code>${data.phone}</code>
-  <b>Email:</b> ${data.email || 'Не указан'}
-  <b>Услуга:</b> ${data.service || 'Не выбрана'}
-  ${data.message ? `\n<b>Сообщение:</b>\n${data.message}` : ''}
+📌 <b>Новая заявка!</b>
+──────────────
+<b>Имя:</b> ${data.name || 'Не указано'}
+<b>Телефон:</b> <code>${data.phone}</code>
+<b>Email:</b> ${data.email || 'Не указан'}
+<b>Услуга:</b> ${data.service || 'Не выбрана'}
+${data.message ? `\n<b>Сообщение:</b>\n${data.message}` : ''}
   `;
 
   try {
-  const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: Number(TELEGRAM_CONFIG.CHAT_ID), // Важно: число, а не строка
-      text: text,
-      parse_mode: 'HTML'
-    })
-  });
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: Number(TELEGRAM_CONFIG.CHAT_ID),
+        text: text,
+        parse_mode: 'HTML'
+      })
+    });
 
-  const result = await response.json();
-  
-  if (!result.ok) {
-    console.error('Telegram API Error:', result);
-    throw new Error(result.description || 'Ошибка Telegram API');
+    const result = await response.json();
+    
+    if (!result.ok) {
+      console.error('Telegram API Error:', result);
+      throw new Error(result.description || 'Ошибка Telegram API');
+    }
+
+    return result;
+  } catch (error) {
+    console.error('Полная ошибка:', {
+      error: error.message,
+      config: TELEGRAM_CONFIG,
+      request: { chat_id: TELEGRAM_CONFIG.CHAT_ID }
+    });
+    throw error;
   }
-
-  return result;
-} catch (error) {
-  console.error('Полная ошибка:', {
-    error: error.message,
-    config: TELEGRAM_CONFIG,
-    request: { chat_id: TELEGRAM_CONFIG.CHAT_ID }
-  });
-  throw error;
-}
 }
 
+// Валидация и отправка формы
 function setupFormValidation() {
   const form = document.getElementById('request-form');
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const captchaToken = grecaptcha.getResponse();
-  
-  /* if (!captchaToken) {
-    alert('Пройдите капчу!');
-    return;
-  }
-
-  const captchaResult = await verifyCaptcha(captchaToken);
-  if (!captchaResult.success) {
-    alert('Капча не пройдена');
-    return;
-  } */
+    e.preventDefault();
+    
+    const submitBtn = form.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    
     try {
-      /* Блокируем кнопку
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Отправка...'; */
+      submitBtn.textContent = 'Отправка...';
 
-      // Получаем данные
       const formData = {
         name: form.querySelector('[name="name"]')?.value.trim(),
         phone: form.querySelector('[name="phone"]')?.value.replace(/\D/g, ''),
@@ -157,59 +291,26 @@ function setupFormValidation() {
         message: form.querySelector('[name="message"]')?.value.trim()
       };
 
-      // Валидация
       if (!formData.phone || formData.phone.length !== 11) {
         throw new Error('Введите корректный номер телефона');
       }
 
-      // Отправка
       const result = await sendTelegramMessage(formData);
       
       if (result.ok) {
-        alert('✅ Заявка отправлена!');
+        document.getElementById('successModal').classList.remove('hidden');
         form.reset();
       }
     } catch (error) {
       alert(`❌ ${error.message}`);
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Отправить';
+      submitBtn.textContent = originalText;
     }
   });
-
-  requestLimiter.check();
 }
 
-function updateCurrentYear() {
-  const yearElement = document.getElementById('current-year');
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-  }
-}
-
-function setupSmoothScrolling() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href');
-      
-      try {
-        const targetElement = document.querySelector(targetId);
-        if (!targetElement) throw new Error('Целевой элемент не найден');
-        
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      } catch (error) {
-        console.error('Ошибка плавного скролла:', error);
-        // Fallback для старых браузеров
-        window.location.href = targetId;
-      }
-    });
-  });
-}
-
+// Мобильное меню
 function setupMobileMenu() {
   const menuToggle = document.querySelector('.mobile-menu-toggle');
   if (!menuToggle) return;
@@ -240,107 +341,33 @@ function setupMobileMenu() {
   });
 }
 
-function setupProjectCarousel() {
-  const carouselTrack = document.querySelector('.carousel-track');
-  const prevBtn = document.querySelector('.carousel-prev');
-  const nextBtn = document.querySelector('.carousel-next');
-  const dotsContainer = document.querySelector('.carousel-dots');
-  
-  // Клонируем существующие карточки
-  const cards = Array.from(document.querySelectorAll('.project-card'));
-  
-  // Очищаем старый grid и переносим карточки в карусель
-  document.querySelector('.project-cards').style.display = 'none';
-  carouselTrack.innerHTML = '';
-  cards.forEach(card => {
-    const clone = card.cloneNode(true);
-    clone.style.minWidth = '350px';
-    clone.style.margin = '0';
-    carouselTrack.appendChild(clone);
-  });
-  
-  // Инициализация карусели
-  let currentIndex = 0;
-  const cardWidth = 350; // Ширина карточки + gap
-  const visibleCards = Math.min(3, cards.length);
-  
-  // Создаем точки навигации
-  cards.forEach((_, index) => {
-    const dot = document.createElement('div');
-    dot.classList.add('carousel-dot');
-    if (index === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goToSlide(index));
-    dotsContainer.appendChild(dot);
-  });
-  
-  // Функция перехода к слайду
-  function goToSlide(index) {
-    currentIndex = Math.max(0, Math.min(index, cards.length - visibleCards));
-    carouselTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-    
-    // Обновляем активную точку
-    document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentIndex);
-    });
-  }
-  
-  // Кнопки навигации
-  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
-  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
-  
-  // Автопрокрутка (опционально)
-  let autoScroll = setInterval(() => {
-    goToSlide((currentIndex + 1) % (cards.length - visibleCards + 1));
-  }, 5000);
-  
-  // Пауза при наведении
-  carouselTrack.addEventListener('mouseenter', () => clearInterval(autoScroll));
-  carouselTrack.addEventListener('mouseleave', () => {
-    autoScroll = setInterval(() => {
-      goToSlide((currentIndex + 1) % (cards.length - visibleCards + 1));
-    }, 5000);
-  });
-}
-
-async function verifyCaptcha(token) {
-  const response = await fetch('https://hcaptcha.com/siteverify', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      secret: 'ES_97d7c98662074f35a9a5f5202db85d68',
-      response: token
-    })
-  });
-  return await response.json();
-}
-
-const requestLimiter = {
-  lastRequest: 0,
-  count: 0,
-  check() {
-    const now = Date.now();
-    if (now - this.lastRequest < 30000) { // 30 сек
-      this.count++;
-      if (this.count > 3) {
-        throw new Error('Слишком много запросов. Попробуйте позже.');
+// Плавная прокрутка
+function setupSmoothScrolling() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      
+      try {
+        const targetElement = document.querySelector(targetId);
+        if (!targetElement) throw new Error('Целевой элемент не найден');
+        
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      } catch (error) {
+        console.error('Ошибка плавного скролла:', error);
+        window.location.href = targetId;
       }
-    } else {
-      this.count = 1;
-    }
-    this.lastRequest = now;
-  }
-};
-
-function showAlert(message, isSuccess = true) {
-  const toast = document.getElementById('alert-toast');
-  toast.style.background = isSuccess ? '#4CAF50' : '#F44336';
-  toast.querySelector('span').textContent = message;
-  
-  toast.classList.remove('toast-hidden');
-  toast.classList.add('toast-visible');
-  
-  setTimeout(() => {
-    toast.classList.remove('toast-visible');
-    toast.classList.add('toast-hidden');
-  }, 5000);
+    });
+  });
 }
+
+// Обновление года в подвале
+function updateCurrentYear() {
+  const yearElement = document.getElementById('current-year');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+} 
