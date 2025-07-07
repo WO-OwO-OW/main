@@ -244,12 +244,19 @@
             font-size: 1.2rem;
             color: #333;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: opacity 0.3s, filter 0.3s;
             border: 2px solid #333;
         }
 
         .dice:hover {
             transform: scale(1.1);
+        }
+
+        .dice.inactive {
+            opacity: 0.4;
+            filter: grayscale(0.7);
+            pointer-events: none;
+            cursor: default;
         }
 
         .coin {
@@ -262,7 +269,7 @@
             justify-content: center;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: opacity 0.3s, filter 0.3s;
             border: 3px solid #333;
             color: #333;
             margin: 0 auto;
@@ -270,6 +277,13 @@
 
         .coin:hover {
             transform: rotateY(180deg);
+        }
+
+        .coin.inactive {
+            opacity: 0.4;
+            filter: grayscale(0.7);
+            pointer-events: none;
+            cursor: default;
         }
 
         .game-controls {
@@ -542,6 +556,25 @@
                 font-size: 1.2rem;
             }
         }
+
+        .effects-category .effect-item-list.dice, .effects-category .effect-item-list.coin {
+            font-size: 1.1rem;
+            min-height: 28px;
+            margin-bottom: 4px;
+            width: 520px;
+            max-width: 100%;
+            white-space: normal;
+            word-break: break-word;
+            display: block;
+            animation: none !important;
+        }
+        /* Убрать эффект переворота только для монеты в списке эффектов, даже при наведении */
+        .effects-category .effect-item-list.coin .coin,
+        .effects-category .effect-item-list.coin .coin:hover {
+            animation: none !important;
+            transform: none !important;
+            transition: none !important;
+        }
     </style>
 </head>
 <body>
@@ -556,7 +589,9 @@
         </div>
         
         <div class="timer" id="timer">
-            ⏱️ Время: <span id="timeLeft">60</span> сек
+            ⏱️ Время на ход: <span id="timeLeft">60</span> сек<br>
+            ⏳ Время игрока 1: <span id="totalTime1">600</span> сек<br>
+            ⏳ Время игрока 2: <span id="totalTime2">600</span> сек
         </div>
         
         <div class="game-info">
@@ -606,6 +641,7 @@
 
                 <div class="game-controls">
                     <h3>🎮 Управление</h3>
+                    <label>Общее время на игрока (сек): <input type="number" id="totalTimeInput" min="60" max="3600" value="600"></label>
                     <button class="btn" id="newGameBtn">Новая игра</button>
                     <button class="btn warning" id="rulesBtn">Правила</button>
                     <button class="btn danger" id="resetBtn">Сброс</button>
@@ -683,6 +719,10 @@
                 this.turnTime = 60; // Время на ход в секундах
                 this.timeLeft = this.turnTime;
                 this.timerInterval = null;
+                // Новый код для общего времени
+                this.totalTime1 = 600; // По умолчанию 10 минут
+                this.totalTime2 = 600;
+                this.totalTimerInterval = null;
                 
                 this.debug('Инициализация игры...');
                 this.initializeBoard();
@@ -691,6 +731,9 @@
                 this.updateDisplay();
                 this.addLogEntry('system', 'Игра началась! Игрок 1 ходит первым.');
                 this.debug('Игра готова!');
+                this.canUseD6 = false;
+                this.canUseD20 = false;
+                this.canUseCoin = false;
             }
 
             debug(message) {
@@ -844,20 +887,30 @@
                 const piece = this.board[row][col];
                 
                 if (this.selectedPiece) {
+                    if (this.selectedPiece.player !== this.currentPlayer) {
+                        this.selectedPiece = null;
+                        this.clearHighlights();
+                        this.updateDisplay();
+                        return;
+                    }
                     if (this.isValidMove(this.selectedPiece.row, this.selectedPiece.col, row, col)) {
                         this.makeMove(this.selectedPiece.row, this.selectedPiece.col, row, col);
                         this.selectedPiece = null;
                         this.clearHighlights();
                     } else {
-                        this.selectedPiece = piece ? {row: row, col: col, ...piece} : null;
-                        this.clearHighlights();
-                        if (this.selectedPiece) {
+                        if (piece && piece.player === this.currentPlayer) {
+                            this.selectedPiece = {row: row, col: col, ...piece};
+                            this.clearHighlights();
                             this.highlightValidMoves(row, col);
+                        } else {
+                            this.selectedPiece = null;
+                            this.clearHighlights();
                         }
                     }
                 } else {
                     if (piece && piece.player === this.currentPlayer) {
                         this.selectedPiece = {row: row, col: col, ...piece};
+                        this.clearHighlights();
                         this.highlightValidMoves(row, col);
                     }
                 }
@@ -1077,6 +1130,10 @@
                 }
                 
                 this.updateDisplay();
+                // Сброс разрешений на кубики и монету
+                this.canUseD6 = false;
+                this.canUseD20 = false;
+                this.canUseCoin = false;
             }
 
             getPieceName(piece) {
@@ -1136,6 +1193,11 @@
             }
 
             rollDice(sides) {
+                if ((sides === 6 && !this.canUseD6) || (sides === 20 && !this.canUseD20)) {
+                    this.addLogEntry('system', 'Сначала разыграйте соответствующую карту!');
+                    return;
+                }
+                
                 if (this.diceUsed) {
                     this.addLogEntry('system', 'Кубик уже использован в этом ходе!');
                     return;
@@ -1154,6 +1216,9 @@
                 }
                 
                 this.updateDisplay();
+                // После броска сбрасываем разрешение
+                if (sides === 6) this.canUseD6 = false;
+                if (sides === 20) this.canUseD20 = false;
             }
 
             applyD20Effect(result) {
@@ -1206,6 +1271,11 @@
             }
 
             flipCoin() {
+                if (!this.canUseCoin) {
+                    this.addLogEntry('system', 'Сначала разыграйте соответствующую карту!');
+                    return;
+                }
+                
                 if (this.coinUsed) {
                     this.addLogEntry('system', 'Монетка уже использована в этом ходе!');
                     return;
@@ -1225,6 +1295,7 @@
                 }
                 
                 this.updateDisplay();
+                this.canUseCoin = false;
             }
 
             addLogEntry(player, message) {
@@ -1296,10 +1367,10 @@
                     {name: '⏸️ Остановка', effect: 'Остановка таймера противника (1 ход)'},
                     {name: '🔄 Клон', effect: 'Клонирование фигуры'},
                     {name: '🔄 Обмен', effect: 'Обмен позициями фигур'},
-                    {name: '🎲6 D6', effect: 'Использовать D6 кубик'},
-                    {name: '🎲20 D20', effect: 'Использовать D20 кубик'},
-                    {name: '🪙 Монетка', effect: 'Подбросить монетку'},
-                    {name: '⏰+ Время+', effect: '+30 секунд к таймеру'},
+                    {name: '🎲6 D6', effect: 'Разрешает бросить D6 (1 раз в этот ход)'},
+                    {name: '🎲20 D20', effect: 'Разрешает бросить D20 (1 раз в этот ход)'},
+                    {name: '🪙 Монетка', effect: 'Разрешает бросить монетку (1 раз в этот ход)'},
+                    {name: '⏰+ Время+', effect: '+30 секунд к общему времени'},
                     {name: '⏰❄️ Заморозка времени', effect: 'Остановить свой таймер (1 ход)'}
                 ];
 
@@ -1387,7 +1458,7 @@
                 ).join('');
             }
 
-            drawCard() {
+            drawCard(forcedPlayer) {
                 const availableCards = [
                     {type: 'number', value: 0, color: 'red', effect: 'Дополнительный ход'},
                     {type: 'number', value: 1, color: 'blue', effect: 'Перемещение на 1 клетку'},
@@ -1407,18 +1478,26 @@
                     {type: 'rage', color: 'red', effect: 'Ярость - двойная сила'},
                     {type: 'time_stop', color: 'gold', effect: 'Остановка времени'},
                     {type: 'clone', color: 'orange', effect: 'Клонирование'},
-                    {type: 'swap', color: 'pink', effect: 'Обмен позициями'}
+                    {type: 'swap', color: 'pink', effect: 'Обмен позициями'},
+                    // Новые карты для разрешения броска кубиков и монеты
+                    {type: 'dice_d6', color: 'gray', effect: 'Разрешает бросить D6'},
+                    {type: 'dice_d20', color: 'gray', effect: 'Разрешает бросить D20'},
+                    {type: 'coin_flip', color: 'gray', effect: 'Разрешает бросить монетку'},
+                    // Карта для увеличения общего времени
+                    {type: 'time_plus', color: 'gold', effect: '+30 секунд к общему времени'}
                 ];
                 
                 const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
                 
-                if (this.currentPlayer === 1) {
-                    this.player1Cards.push(randomCard);
-                } else {
-                    this.player2Cards.push(randomCard);
+                // Определяем, кому выдавать карту
+                let player = forcedPlayer || this.currentPlayer;
+                let playerCards = player === 1 ? this.player1Cards : this.player2Cards;
+                if (playerCards.length >= 10) {
+                    this.addLogEntry(player, 'Максимум карт в руке! Новая карта не выдана.');
+                    return;
                 }
-                
-                this.addLogEntry(this.currentPlayer, `Получена карта: ${randomCard.effect}`);
+                playerCards.push(randomCard);
+                this.addLogEntry(player, `Получена карта: ${randomCard.effect}`);
                 this.addActionToHistory(`Карта УНО`, randomCard.effect);
             }
 
@@ -1460,19 +1539,34 @@
 
 
             startTimer() {
+                this.stopTimer();
                 this.timeLeft = this.turnTime;
                 this.updateTimerDisplay();
-                
-                if (this.timerInterval) {
-                    clearInterval(this.timerInterval);
-                }
-                
                 this.timerInterval = setInterval(() => {
                     this.timeLeft--;
+                    // Новый код: уменьшаем общий таймер текущего игрока
+                    if (this.currentPlayer === 1) {
+                        this.totalTime1--;
+                    } else {
+                        this.totalTime2--;
+                    }
                     this.updateTimerDisplay();
-                    
                     if (this.timeLeft <= 0) {
-                        this.timeOut();
+                        this.addLogEntry('system', `Время на ход вышло! Ход игрока ${this.currentPlayer} пропущен`);
+                        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+                        this.startTimer();
+                        this.selectedPiece = null;
+                        this.clearHighlights();
+                        this.updateDisplay();
+                    }
+                    // Проверка общего времени
+                    if (this.totalTime1 <= 0) {
+                        this.endGame(2);
+                        this.stopTimer();
+                    }
+                    if (this.totalTime2 <= 0) {
+                        this.endGame(1);
+                        this.stopTimer();
                     }
                 }, 1000);
             }
@@ -1480,27 +1574,16 @@
             updateTimerDisplay() {
                 const timerElement = document.getElementById('timeLeft');
                 const timerContainer = document.getElementById('timer');
-                
-                if (timerElement) {
-                    timerElement.textContent = this.timeLeft;
-                }
-                
+                const total1 = document.getElementById('totalTime1');
+                const total2 = document.getElementById('totalTime2');
+                if (timerElement) timerElement.textContent = this.timeLeft;
+                if (total1) total1.textContent = this.totalTime1;
+                if (total2) total2.textContent = this.totalTime2;
                 if (timerContainer) {
                     timerContainer.classList.remove('warning', 'danger');
-                    if (this.timeLeft <= 10) {
-                        timerContainer.classList.add('danger');
-                    } else if (this.timeLeft <= 20) {
-                        timerContainer.classList.add('warning');
-                    }
+                    if (this.timeLeft <= 10) timerContainer.classList.add('danger');
+                    else if (this.timeLeft <= 20) timerContainer.classList.add('warning');
                 }
-            }
-
-            timeOut() {
-                clearInterval(this.timerInterval);
-                this.addLogEntry('system', `Время вышло! Ход игрока ${this.currentPlayer} пропущен`);
-                this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-                this.startTimer();
-                this.updateDisplay();
             }
 
             stopTimer() {
@@ -1573,7 +1656,21 @@
                 this.updateEffectsDisplay();
                 this.updateHistoryDisplay();
                 
+                // Подсветка выбранной фигуры
+                this.clearHighlights();
+                if (this.selectedPiece) {
+                    const square = document.querySelector(`[data-row="${this.selectedPiece.row}"][data-col="${this.selectedPiece.col}"]`);
+                    if (square) square.classList.add('selected');
+                }
+                
                 this.debug('Отображение обновлено');
+                // Обновляем активность кубиков и монеты
+                const d6 = document.getElementById('d6');
+                const d20 = document.getElementById('d20');
+                const coin = document.getElementById('coin');
+                if (d6) d6.classList.toggle('inactive', !this.canUseD6);
+                if (d20) d20.classList.toggle('inactive', !this.canUseD20);
+                if (coin) coin.classList.toggle('inactive', !this.canUseCoin);
             }
 
             updateCardDisplay() {
@@ -1758,6 +1855,27 @@
                         this.addEffect(this.currentPlayer, {effect: 'Таймер заморожен', duration: '1 ход'});
                         this.addLogEntry(this.currentPlayer, 'Таймер заморожен!');
                         break;
+                    case 'dice_d6':
+                        this.canUseD6 = true;
+                        this.addLogEntry(this.currentPlayer, 'Теперь можно бросить D6 в этот ход!');
+                        break;
+                    case 'dice_d20':
+                        this.canUseD20 = true;
+                        this.addLogEntry(this.currentPlayer, 'Теперь можно бросить D20 в этот ход!');
+                        break;
+                    case 'coin_flip':
+                        this.canUseCoin = true;
+                        this.addLogEntry(this.currentPlayer, 'Теперь можно бросить монетку в этот ход!');
+                        break;
+                    case 'time_plus':
+                        if (this.currentPlayer === 1) {
+                            this.totalTime1 += 30;
+                        } else {
+                            this.totalTime2 += 30;
+                        }
+                        this.addLogEntry(this.currentPlayer, '+30 секунд к общему времени!');
+                        this.updateTimerDisplay();
+                        break;
                 }
             }
 
@@ -1805,7 +1923,20 @@
                 this.clearHighlights();
                 this.updateDisplay();
                 this.addLogEntry('system', 'Новая игра началась!');
+                // Новый код: читаем общее время из инпута
+                const input = document.getElementById('totalTimeInput');
+                let total = 600;
+                if (input && input.value) {
+                    total = parseInt(input.value) || 600;
+                }
+                this.totalTime1 = total;
+                this.totalTime2 = total;
                 this.startTimer();
+                // В начале новой игры каждый игрок получает по 3 карты
+                for (let i = 0; i < 3; i++) {
+                    this.drawCard(1);
+                    this.drawCard(2);
+                }
             }
 
             endGame(winner) {
@@ -1831,4 +1962,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
