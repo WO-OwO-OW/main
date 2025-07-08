@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RERRL - Шахматы vs Шашки с УНО</title>
+    <title>RERRL - Шахматы vs Шашки с Карточками</title>
     <style>
         * {
             margin: 0;
@@ -397,6 +397,46 @@
             font-size: 0.8rem;
         }
 
+        .check-king {
+            outline: 3px solid red !important;
+            z-index: 2;
+        }
+        .mate-king {
+            outline: 5px solid red !important;
+            box-shadow: 0 0 10px 3px red;
+            z-index: 3;
+        }
+        .stalemate-king {
+            outline: 4px solid gold !important;
+            box-shadow: 0 0 10px 3px gold;
+            z-index: 3;
+        }
+        .frozen-piece {
+            outline: 3px solid cyan !important;
+            box-shadow: 0 0 8px 2px cyan;
+            z-index: 2;
+        }
+        .teleporting-piece {
+            outline: 3px solid purple !important;
+            box-shadow: 0 0 8px 2px purple;
+            z-index: 2;
+        }
+        .cloning-piece {
+            outline: 3px solid orange !important;
+            box-shadow: 0 0 8px 2px orange;
+            z-index: 2;
+        }
+        .moving-piece {
+            outline: 3px solid green !important;
+            box-shadow: 0 0 8px 2px green;
+            z-index: 2;
+        }
+        .swapping-piece {
+            outline: 3px solid pink !important;
+            box-shadow: 0 0 8px 2px pink;
+            z-index: 2;
+        }
+
         .dice-section.disabled {
             opacity: 0.5;
             pointer-events: none;
@@ -575,6 +615,46 @@
             transform: none !important;
             transition: none !important;
         }
+
+        .check-king {
+            outline: 3px solid red !important;
+            z-index: 2;
+        }
+        .mate-king {
+            outline: 5px solid red !important;
+            box-shadow: 0 0 10px 3px red;
+            z-index: 3;
+        }
+        .stalemate-king {
+            outline: 4px solid gold !important;
+            box-shadow: 0 0 10px 3px gold;
+            z-index: 3;
+        }
+        .frozen-piece {
+            outline: 3px solid cyan !important;
+            box-shadow: 0 0 8px 2px cyan;
+            z-index: 2;
+        }
+        .teleporting-piece {
+            outline: 3px solid purple !important;
+            box-shadow: 0 0 8px 2px purple;
+            z-index: 2;
+        }
+        .cloning-piece {
+            outline: 3px solid orange !important;
+            box-shadow: 0 0 8px 2px orange;
+            z-index: 2;
+        }
+        .moving-piece {
+            outline: 3px solid green !important;
+            box-shadow: 0 0 8px 2px green;
+            z-index: 2;
+        }
+        .swapping-piece {
+            outline: 3px solid pink !important;
+            box-shadow: 0 0 8px 2px pink;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -633,7 +713,6 @@
                     <h3>🎲 Кубики</h3>
                     <div class="dice-container">
                         <div class="dice" id="d6">D6</div>
-                        <div class="dice" id="d20">D20</div>
                     </div>
                     <h4>🪙 Монетка</h4>
                     <div class="coin" id="coin">🪙</div>
@@ -647,6 +726,9 @@
                     <button class="btn danger" id="resetBtn">Сброс</button>
                     <button class="btn" id="effectsBtn">📋 Эффекты</button>
                     <button class="btn" id="effectsListBtn">📖 Список эффектов</button>
+                    <button class="btn" id="pauseBtn">⏸️ Пауза</button>
+                    <button class="btn" id="saveBtn">💾 Сохранить</button>
+                    <button class="btn" id="loadBtn">📂 Загрузить</button>
                 </div>
 
                 <div class="effects-panel" id="effectsPanel" style="display: none;">
@@ -732,8 +814,21 @@
                 this.addLogEntry('system', 'Игра началась! Игрок 1 ходит первым.');
                 this.debug('Игра готова!');
                 this.canUseD6 = false;
-                this.canUseD20 = false;
                 this.canUseCoin = false;
+                
+                // Переменные для специальных режимов карт
+                this.waitingForCardTarget = false;
+                this.activeCard = null;
+                this.cloneMode = false;
+                this.teleportMode = false;
+                this.swapMode = false;
+                this.moveOneMode = false;
+                this.freezeMode = false;
+                this.healMode = false;
+                
+                // Переменные для паузы и сохранения
+                this.isPaused = false;
+                this.gameState = {};
             }
 
             debug(message) {
@@ -821,30 +916,26 @@
                     {type: 'number', value: 2, color: 'green', effect: 'Двойной ход'},
                     {type: 'number', value: 3, color: 'yellow', effect: 'Тройной ход'},
                     {type: 'skip', color: 'red', effect: 'Пропуск хода противника'},
-                    {type: 'reverse', color: 'blue', effect: 'Изменение направления'},
                     {type: 'draw2', color: 'green', effect: 'Получить 2 карты'},
-                    {type: 'wild', color: 'black', effect: 'Любая карта из колоды'},
                     {type: 'flip', color: 'purple', effect: 'Смена сторон'},
                     {type: 'teleport', color: 'cyan', effect: 'Телепортация фигуры'},
                     {type: 'shield', color: 'silver', effect: 'Защита от взятия'},
-                    {type: 'double_move', color: 'gold', effect: 'Двойной ход'},
                     {type: 'freeze', color: 'cyan', effect: 'Заморозка фигуры противника'},
                     {type: 'heal', color: 'green', effect: 'Воскрешение фигуры'},
-                    {type: 'stealth', color: 'purple', effect: 'Фигура становится невидимой'},
-                    {type: 'rage', color: 'red', effect: 'Двойная сила атаки'},
-                    {type: 'time_stop', color: 'gold', effect: 'Остановка таймера противника'},
                     {type: 'clone', color: 'orange', effect: 'Клонирование фигуры'},
                     {type: 'swap', color: 'pink', effect: 'Обмен позициями фигур'},
                     {type: 'dice_d6', color: 'blue', effect: 'Использовать D6 кубик'},
-                    {type: 'dice_d20', color: 'purple', effect: 'Использовать D20 кубик'},
                     {type: 'coin_flip', color: 'gold', effect: 'Подбросить монетку'},
                     {type: 'time_plus', color: 'cyan', effect: '+30 секунд к таймеру'},
                     {type: 'time_freeze', color: 'white', effect: 'Остановить свой таймер'}
                 ];
 
-                // Раздаем карты
-                this.player1Cards = cards.slice(0, 3);
-                this.player2Cards = cards.slice(3, 6);
+                // Перемешиваем карты
+                const shuffledCards = [...cards].sort(() => Math.random() - 0.5);
+
+                // Раздаем карты случайно
+                this.player1Cards = shuffledCards.slice(0, 3);
+                this.player2Cards = shuffledCards.slice(3, 6);
                 this.debug('Карты разданы');
             }
 
@@ -868,7 +959,6 @@
 
                 // Кубики
                 document.getElementById('d6').addEventListener('click', () => this.rollDice(6));
-                document.getElementById('d20').addEventListener('click', () => this.rollDice(20));
 
                 // Монетка
                 document.getElementById('coin').addEventListener('click', () => this.flipCoin());
@@ -879,12 +969,32 @@
                 // Кнопка списка эффектов
                 document.getElementById('effectsListBtn').addEventListener('click', () => this.toggleEffectsListPanel());
 
+                // Кнопки паузы и сохранения
+                const pauseBtn = document.getElementById('pauseBtn');
+                const saveBtn = document.getElementById('saveBtn');
+                const loadBtn = document.getElementById('loadBtn');
+                
+                if (pauseBtn) pauseBtn.addEventListener('click', () => this.togglePause());
+                if (saveBtn) saveBtn.addEventListener('click', () => this.saveGame());
+                if (loadBtn) loadBtn.addEventListener('click', () => this.loadGame());
+
                 this.debug('События настроены');
             }
 
             handleSquareClick(row, col) {
+                if (this.isPaused) {
+                    this.addLogEntry('system', 'Игра на паузе! Нажмите "Продолжить" для возобновления.');
+                    return;
+                }
+                
                 this.debug(`Клик по клетке: ${row}, ${col}`);
                 const piece = this.board[row][col];
+                
+                // Обработка специальных режимов карт
+                if (this.waitingForCardTarget) {
+                    this.handleCardTarget(row, col);
+                    return;
+                }
                 
                 if (this.selectedPiece) {
                     if (this.selectedPiece.player !== this.currentPlayer) {
@@ -921,6 +1031,14 @@
             isValidMove(fromRow, fromCol, toRow, toCol) {
                 const piece = this.board[fromRow][fromCol];
                 if (!piece) return false;
+
+                // Проверяем, не заморожена ли фигура
+                const freezeEffect = this.hasEffect(piece.player, 'Заморожен');
+                if (freezeEffect && freezeEffect.targetPiece && 
+                    freezeEffect.targetPiece.row === fromRow && 
+                    freezeEffect.targetPiece.col === fromCol) {
+                    return false;
+                }
 
                 if (piece.type === 'checker') {
                     return this.isValidCheckerMove(fromRow, fromCol, toRow, toCol);
@@ -1058,6 +1176,7 @@
             }
 
             makeMove(fromRow, fromCol, toRow, toCol) {
+                this.clearKingHighlights();
                 const piece = this.board[fromRow][fromCol];
                 const target = this.board[toRow][toCol];
                 
@@ -1076,6 +1195,15 @@
                         const jumpedPiece = this.board[jumpRow][jumpCol];
                         
                         if (jumpedPiece) {
+                            // Проверяем защиту у атакуемой фигуры
+                            const hasProtection = this.hasEffect(jumpedPiece.player, 'Защита от взятия');
+                            if (hasProtection) {
+                                this.addLogEntry('system', `Фигура защищена! Взятие отменено.`);
+                                this.removeEffect(jumpedPiece.player, hasProtection.id);
+                                this.updateDisplay();
+                                return; // Отменяем ход
+                            }
+                            
                             this.addLogEntry(this.currentPlayer, `Взята фигура ${this.getPieceName(jumpedPiece)}!`);
                             // Сохраняем взятую фигуру
                             this.capturedPieces[this.currentPlayer].push({...jumpedPiece});
@@ -1088,6 +1216,15 @@
                         }
                     }
                 } else if (target) {
+                    // Проверяем защиту у атакуемой фигуры
+                    const hasProtection = this.hasEffect(target.player, 'Защита от взятия');
+                    if (hasProtection) {
+                        this.addLogEntry('system', `Фигура защищена! Взятие отменено.`);
+                        this.removeEffect(target.player, hasProtection.id);
+                        this.updateDisplay();
+                        return; // Отменяем ход
+                    }
+                    
                     // Обычное взятие для шахмат
                     this.addLogEntry(this.currentPlayer, `Взята фигура ${this.getPieceName(target)}!`);
                     // Сохраняем взятую фигуру
@@ -1115,15 +1252,31 @@
                     this.extraMoves--;
                     this.addLogEntry('system', `Дополнительный ход! Осталось: ${this.extraMoves}`);
                 } else {
+                    // Удаляем эффекты "1 ход" у текущего игрока
+                    this.removeOneTurnEffects(this.currentPlayer);
+                    
                     // Сброс флагов использования кубиков и монетки
                     this.diceUsed = false;
                     this.coinUsed = false;
                     
                     // Выдаем карту УНО после завершения хода
                     this.drawCard();
-                    
+
+                    // Проверка шаха/мата/пата для шахматных фигур
+                    if (piece.type !== 'checker' && this.checkGameEnd()) {
+                        return;
+                    }
+
                     this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
                     this.addLogEntry('system', `Ход игрока ${this.currentPlayer}`);
+                    
+                    // Проверяем, должен ли игрок пропустить ход
+                    const skipEffect = this.hasEffect(this.currentPlayer, 'Пропуск хода');
+                    if (skipEffect) {
+                        this.removeEffect(this.currentPlayer, skipEffect.id);
+                        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+                        this.addLogEntry('system', `Игрок ${this.currentPlayer === 1 ? 2 : 1} пропускает ход!`);
+                    }
                     
                     // Запускаем таймер для нового игрока
                     this.startTimer();
@@ -1132,7 +1285,6 @@
                 this.updateDisplay();
                 // Сброс разрешений на кубики и монету
                 this.canUseD6 = false;
-                this.canUseD20 = false;
                 this.canUseCoin = false;
             }
 
@@ -1325,9 +1477,31 @@
                 this.updateEffectsDisplay();
             }
 
+            hasEffect(player, effectName) {
+                return this.playerEffects[player].find(e => e.effect === effectName);
+            }
+
             removeEffect(player, effectId) {
                 this.playerEffects[player] = this.playerEffects[player].filter(e => e.id !== effectId);
                 this.updateEffectsDisplay();
+            }
+
+            removeOneTurnEffects(player) {
+                const effectsToRemove = this.playerEffects[player].filter(e => 
+                    e.duration === '1 ход' || 
+                    e.effect === 'Защита от взятия' ||
+                    e.effect === 'Заморожен' ||
+                    e.effect === 'Таймер остановлен' ||
+                    e.effect === 'Таймер заморожен'
+                );
+                
+                effectsToRemove.forEach(effect => {
+                    this.removeEffect(player, effect.id);
+                });
+                
+                if (effectsToRemove.length > 0) {
+                    this.addLogEntry('system', `Эффекты игрока ${player} на 1 ход удалены.`);
+                }
             }
 
             toggleEffectsPanel() {
@@ -1353,18 +1527,12 @@
                     {name: '2', effect: 'Двойной ход'},
                     {name: '3', effect: 'Тройной ход'},
                     {name: '⏭️ Пропуск', effect: 'Пропуск хода противника'},
-                    {name: '🔄 Реверс', effect: 'Изменение направления'},
                     {name: '+2', effect: 'Получить 2 карты'},
-                    {name: '🌈 Дикая', effect: 'Получить случайную карту'},
                     {name: '🔄 Флип', effect: 'Смена сторон игроков'},
                     {name: '🚀 Телепорт', effect: 'Телепортация фигуры'},
                     {name: '🛡️ Щит', effect: 'Защита от взятия (1 ход)'},
-                    {name: '⚡ Двойной ход', effect: 'Двойной ход'},
                     {name: '❄️ Заморозка', effect: 'Заморозка фигуры противника (1 ход)'},
                     {name: '💚 Лечение', effect: 'Воскрешение случайной фигуры'},
-                    {name: '👻 Невидимость', effect: 'Фигура становится невидимой (2 хода)'},
-                    {name: '😡 Ярость', effect: 'Двойная сила атаки (1 ход)'},
-                    {name: '⏸️ Остановка', effect: 'Остановка таймера противника (1 ход)'},
                     {name: '🔄 Клон', effect: 'Клонирование фигуры'},
                     {name: '🔄 Обмен', effect: 'Обмен позициями фигур'},
                     {name: '🎲6 D6', effect: 'Разрешает бросить D6 (1 раз в этот ход)'},
@@ -1465,25 +1633,16 @@
                     {type: 'number', value: 2, color: 'green', effect: 'Двойной ход'},
                     {type: 'number', value: 3, color: 'yellow', effect: 'Тройной ход'},
                     {type: 'skip', color: 'red', effect: 'Пропуск хода противника'},
-                    {type: 'reverse', color: 'blue', effect: 'Изменение направления'},
                     {type: 'draw2', color: 'green', effect: 'Противник берет 2 карты'},
-                    {type: 'wild', color: 'black', effect: 'Смена цвета'},
                     {type: 'flip', color: 'purple', effect: 'Смена сторон'},
                     {type: 'teleport', color: 'cyan', effect: 'Телепортация'},
                     {type: 'shield', color: 'silver', effect: 'Защита'},
-                    {type: 'double_move', color: 'gold', effect: 'Двойной ход'},
                     {type: 'freeze', color: 'cyan', effect: 'Заморозка фигуры'},
                     {type: 'heal', color: 'green', effect: 'Воскрешение фигуры'},
-                    {type: 'stealth', color: 'purple', effect: 'Невидимость'},
-                    {type: 'rage', color: 'red', effect: 'Ярость - двойная сила'},
-                    {type: 'time_stop', color: 'gold', effect: 'Остановка времени'},
                     {type: 'clone', color: 'orange', effect: 'Клонирование'},
                     {type: 'swap', color: 'pink', effect: 'Обмен позициями'},
-                    // Новые карты для разрешения броска кубиков и монеты
                     {type: 'dice_d6', color: 'gray', effect: 'Разрешает бросить D6'},
-                    {type: 'dice_d20', color: 'gray', effect: 'Разрешает бросить D20'},
                     {type: 'coin_flip', color: 'gray', effect: 'Разрешает бросить монетку'},
-                    // Карта для увеличения общего времени
                     {type: 'time_plus', color: 'gold', effect: '+30 секунд к общему времени'}
                 ];
                 
@@ -1539,10 +1698,14 @@
 
 
             startTimer() {
+                if (this.isPaused) return; // Не запускаем таймер во время паузы
+                
                 this.stopTimer();
                 this.timeLeft = this.turnTime;
                 this.updateTimerDisplay();
                 this.timerInterval = setInterval(() => {
+                    if (this.isPaused) return; // Не уменьшаем время во время паузы
+                    
                     this.timeLeft--;
                     // Новый код: уменьшаем общий таймер текущего игрока
                     if (this.currentPlayer === 1) {
@@ -1666,27 +1829,30 @@
                 this.debug('Отображение обновлено');
                 // Обновляем активность кубиков и монеты
                 const d6 = document.getElementById('d6');
-                const d20 = document.getElementById('d20');
                 const coin = document.getElementById('coin');
                 if (d6) d6.classList.toggle('inactive', !this.canUseD6);
-                if (d20) d20.classList.toggle('inactive', !this.canUseD20);
                 if (coin) coin.classList.toggle('inactive', !this.canUseCoin);
             }
 
             updateCardDisplay() {
                 const cardDeck = document.getElementById('cardDeck');
+                if (!cardDeck) return;
+                
                 cardDeck.innerHTML = '';
                 
+                // Показываем карты текущего игрока
                 const currentPlayerCards = this.currentPlayer === 1 ? this.player1Cards : this.player2Cards;
                 
-                currentPlayerCards.forEach((card, index) => {
-                    const cardElement = document.createElement('div');
-                    cardElement.className = `card ${card.color}`;
-                    cardElement.textContent = this.getCardDisplay(card);
-                    cardElement.title = card.effect;
-                    cardElement.addEventListener('click', () => this.playCard(index));
-                    cardDeck.appendChild(cardElement);
-                });
+                if (currentPlayerCards && currentPlayerCards.length > 0) {
+                    currentPlayerCards.forEach((card, index) => {
+                        const cardElement = document.createElement('div');
+                        cardElement.className = `card ${card.color}`;
+                        cardElement.textContent = this.getCardDisplay(card);
+                        cardElement.title = card.effect;
+                        cardElement.addEventListener('click', () => this.playCard(index));
+                        cardDeck.appendChild(cardElement);
+                    });
+                }
             }
 
             updateDiceAndCoinState() {
@@ -1711,38 +1877,24 @@
                     return card.value.toString();
                 } else if (card.type === 'skip') {
                     return '⏭️';
-                } else if (card.type === 'reverse') {
-                    return '🔄';
                 } else if (card.type === 'draw2') {
                     return '+2';
-                } else if (card.type === 'wild') {
-                    return '🌈';
                 } else if (card.type === 'flip') {
                     return '🔄';
                 } else if (card.type === 'teleport') {
                     return '🚀';
                 } else if (card.type === 'shield') {
                     return '🛡️';
-                } else if (card.type === 'double_move') {
-                    return '⚡';
                 } else if (card.type === 'freeze') {
                     return '❄️';
                 } else if (card.type === 'heal') {
                     return '💚';
-                } else if (card.type === 'stealth') {
-                    return '👻';
-                } else if (card.type === 'rage') {
-                    return '😡';
-                } else if (card.type === 'time_stop') {
-                    return '⏸️';
                 } else if (card.type === 'clone') {
                     return '🔄';
                 } else if (card.type === 'swap') {
                     return '🔄';
                 } else if (card.type === 'dice_d6') {
                     return '🎲6';
-                } else if (card.type === 'dice_d20') {
-                    return '🎲20';
                 } else if (card.type === 'coin_flip') {
                     return '🪙';
                 } else if (card.type === 'time_plus') {
@@ -1754,6 +1906,11 @@
             }
 
             playCard(cardIndex) {
+                if (this.isPaused) {
+                    this.addLogEntry('system', 'Игра на паузе! Нажмите "Продолжить" для возобновления.');
+                    return;
+                }
+                
                 const currentPlayerCards = this.currentPlayer === 1 ? this.player1Cards : this.player2Cards;
                 const card = currentPlayerCards[cardIndex];
                 
@@ -1774,6 +1931,12 @@
                         if (card.value === 0) {
                             this.extraMoves += 1;
                             this.addLogEntry(this.currentPlayer, 'Дополнительный ход!');
+                        } else if (card.value === 1) {
+                            // Карта "1" - перемещение на 1 клетку
+                            this.moveOneMode = true;
+                            this.waitingForCardTarget = true;
+                            this.activeCard = card;
+                            this.addLogEntry(this.currentPlayer, 'Выберите фигуру для перемещения на 1 клетку');
                         } else if (card.value === 2) {
                             this.extraMoves += 2;
                             this.addLogEntry(this.currentPlayer, 'Двойной ход!');
@@ -1783,85 +1946,54 @@
                         }
                         break;
                     case 'skip':
-                        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-                        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1; // Пропускаем ход
-                        this.addLogEntry(this.currentPlayer, 'Противник пропускает ход!');
-                        break;
-                    case 'reverse':
-                        this.addLogEntry(this.currentPlayer, 'Направление изменено!');
+                        this.addEffect(this.currentPlayer === 1 ? 2 : 1, {effect: 'Пропуск хода', duration: '1 ход'});
+                        this.addLogEntry(this.currentPlayer, 'Противник пропустит следующий ход!');
                         break;
                     case 'draw2':
                         this.drawCard();
                         this.drawCard();
                         this.addLogEntry(this.currentPlayer, 'Получено 2 карты!');
                         break;
-                    case 'wild':
-                        this.drawCard();
-                        this.addLogEntry(this.currentPlayer, 'Получена случайная карта!');
-                        break;
                     case 'flip':
-                        this.swapPlayers();
+                        this.swapPlayerColors();
                         break;
                     case 'teleport':
-                        this.addLogEntry(this.currentPlayer, 'Телепортация!');
+                        this.teleportMode = true;
+                        this.waitingForCardTarget = true;
+                        this.activeCard = card;
+                        this.addLogEntry(this.currentPlayer, 'Выберите фигуру для телепортации');
                         break;
                     case 'shield':
                         this.addEffect(this.currentPlayer, {effect: 'Защита от взятия', duration: '1 ход'});
                         this.addLogEntry(this.currentPlayer, 'Щит активирован!');
                         break;
-                    case 'double_move':
-                        this.extraMoves += 2;
-                        this.addLogEntry(this.currentPlayer, 'Двойной ход!');
-                        break;
                     case 'freeze':
-                        this.addEffect(this.currentPlayer === 1 ? 2 : 1, {effect: 'Заморожен', duration: '1 ход'});
-                        this.addLogEntry(this.currentPlayer, 'Противник заморожен!');
+                        this.freezeMode = true;
+                        this.waitingForCardTarget = true;
+                        this.activeCard = card;
+                        this.addLogEntry(this.currentPlayer, 'Выберите фигуру противника для заморозки');
                         break;
                     case 'heal':
-                        this.resurrectRandomPiece();
-                        break;
-                    case 'stealth':
-                        this.addEffect(this.currentPlayer, {effect: 'Невидимость', duration: '2 хода'});
-                        this.addLogEntry(this.currentPlayer, 'Невидимость активирована!');
-                        break;
-                    case 'rage':
-                        this.addEffect(this.currentPlayer, {effect: 'Ярость - двойная сила', duration: '1 ход'});
-                        this.addLogEntry(this.currentPlayer, 'Ярость активирована!');
-                        break;
-                    case 'time_stop':
-                        this.addEffect(this.currentPlayer === 1 ? 2 : 1, {effect: 'Таймер остановлен', duration: '1 ход'});
-                        this.addLogEntry(this.currentPlayer, 'Таймер противника остановлен!');
+                        this.healMode = true;
+                        this.waitingForCardTarget = true;
+                        this.activeCard = card;
+                        this.addLogEntry(this.currentPlayer, 'Выберите фигуру для воскрешения');
                         break;
                     case 'clone':
-                        this.addLogEntry(this.currentPlayer, 'Клонирование!');
+                        this.cloneMode = true;
+                        this.waitingForCardTarget = true;
+                        this.activeCard = card;
+                        this.addLogEntry(this.currentPlayer, 'Выберите фигуру для клонирования');
                         break;
                     case 'swap':
-                        this.addLogEntry(this.currentPlayer, 'Обмен позициями!');
-                        break;
-                    case 'dice_d6':
-                        this.rollDice(6);
-                        break;
-                    case 'dice_d20':
-                        this.rollDice(20);
-                        break;
-                    case 'coin_flip':
-                        this.flipCoin();
-                        break;
-                    case 'time_plus':
-                        this.timeLeft += 30;
-                        this.addLogEntry(this.currentPlayer, '+30 секунд к таймеру!');
-                        break;
-                    case 'time_freeze':
-                        this.addEffect(this.currentPlayer, {effect: 'Таймер заморожен', duration: '1 ход'});
-                        this.addLogEntry(this.currentPlayer, 'Таймер заморожен!');
+                        this.swapMode = true;
+                        this.waitingForCardTarget = true;
+                        this.activeCard = card;
+                        this.addLogEntry(this.currentPlayer, 'Выберите первую фигуру для обмена');
                         break;
                     case 'dice_d6':
                         this.canUseD6 = true;
                         this.addLogEntry(this.currentPlayer, 'Теперь можно бросить D6 в этот ход!');
-                        break;
-                    case 'dice_d20':
-                        this.canUseD20 = true;
-                        this.addLogEntry(this.currentPlayer, 'Теперь можно бросить D20 в этот ход!');
                         break;
                     case 'coin_flip':
                         this.canUseCoin = true;
@@ -1876,7 +2008,313 @@
                         this.addLogEntry(this.currentPlayer, '+30 секунд к общему времени!');
                         this.updateTimerDisplay();
                         break;
+                    case 'time_freeze':
+                        this.addEffect(this.currentPlayer, {effect: 'Таймер заморожен', duration: '1 ход'});
+                        this.addLogEntry(this.currentPlayer, 'Таймер заморожен!');
+                        break;
                 }
+            }
+
+            handleCardTarget(row, col) {
+                const piece = this.board[row][col];
+                
+                if (this.cloneMode) {
+                    if (this.cloneSource && !this.cloneTarget) {
+                        // Выбираем клетку для клонирования
+                        this.cloneTarget = {row, col};
+                        this.executeClone();
+                    } else {
+                        this.handleCloneTarget(row, col);
+                    }
+                } else if (this.teleportMode) {
+                    if (this.teleportSource && !this.teleportTarget) {
+                        // Выбираем клетку для телепортации
+                        this.teleportTarget = {row, col};
+                        this.executeTeleport();
+                    } else {
+                        this.handleTeleportTarget(row, col);
+                    }
+                } else if (this.swapMode) {
+                    this.handleSwapTarget(row, col);
+                } else if (this.moveOneMode) {
+                    if (this.moveOneSource && !this.moveOneTarget) {
+                        // Выбираем клетку для перемещения
+                        this.moveOneTarget = {row, col};
+                        this.executeMoveOne();
+                    } else {
+                        this.handleMoveOneTarget(row, col);
+                    }
+                } else if (this.freezeMode) {
+                    this.handleFreezeTarget(row, col);
+                } else if (this.healMode) {
+                    this.handleHealTarget(row, col);
+                }
+            }
+
+            handleCloneTarget(row, col) {
+                const piece = this.board[row][col];
+                if (!piece || piece.player !== this.currentPlayer) {
+                    this.addLogEntry('system', 'Выберите свою фигуру для клонирования!');
+                    return;
+                }
+                
+                this.cloneSource = {row, col, piece: {...piece}};
+                this.highlightPieceForCard(row, col, 'clone');
+                this.waitingForCardTarget = true;
+                this.addLogEntry(this.currentPlayer, 'Теперь выберите клетку для клонированной фигуры');
+            }
+
+            handleTeleportTarget(row, col) {
+                const piece = this.board[row][col];
+                if (!piece || piece.player !== this.currentPlayer) {
+                    this.addLogEntry('system', 'Выберите свою фигуру для телепортации!');
+                    return;
+                }
+                
+                this.teleportSource = {row, col, piece: {...piece}};
+                this.highlightPieceForCard(row, col, 'teleport');
+                this.waitingForCardTarget = true;
+                this.addLogEntry(this.currentPlayer, 'Теперь выберите клетку для телепортации');
+            }
+
+            handleSwapTarget(row, col) {
+                const piece = this.board[row][col];
+                if (!piece || piece.player !== this.currentPlayer) {
+                    this.addLogEntry('system', 'Выберите свою фигуру для обмена!');
+                    return;
+                }
+                
+                if (!this.swapSource) {
+                    this.swapSource = {row, col, piece: {...piece}};
+                    this.highlightPieceForCard(row, col, 'swap');
+                    this.addLogEntry(this.currentPlayer, 'Теперь выберите вторую фигуру для обмена');
+                } else {
+                    this.swapTarget = {row, col, piece: {...piece}};
+                    this.executeSwap();
+                }
+            }
+
+            handleMoveOneTarget(row, col) {
+                const piece = this.board[row][col];
+                if (!piece || piece.player !== this.currentPlayer) {
+                    this.addLogEntry('system', 'Выберите свою фигуру для перемещения!');
+                    return;
+                }
+                
+                this.moveOneSource = {row, col, piece: {...piece}};
+                this.highlightPieceForCard(row, col, 'moveOne');
+                this.waitingForCardTarget = true;
+                this.addLogEntry(this.currentPlayer, 'Теперь выберите клетку для перемещения (на 1 клетку)');
+            }
+
+            handleFreezeTarget(row, col) {
+                const piece = this.board[row][col];
+                if (!piece || piece.player === this.currentPlayer) {
+                    this.addLogEntry('system', 'Выберите фигуру противника для заморозки!');
+                    return;
+                }
+                
+                this.highlightPieceForCard(row, col, 'freeze');
+                this.addEffect(piece.player, {effect: 'Заморожен', duration: '1 ход', targetPiece: {row, col}});
+                this.addLogEntry(this.currentPlayer, `Фигура ${this.getPieceName(piece)} заморожена!`);
+                this.resetCardMode();
+            }
+
+            handleHealTarget(row, col) {
+                const piece = this.board[row][col];
+                if (!piece || piece.player !== this.currentPlayer) {
+                    this.addLogEntry('system', 'Выберите свою фигуру для воскрешения!');
+                    return;
+                }
+                
+                // Проверяем, есть ли эта фигура в списке взятых
+                const capturedPieces = this.capturedPieces[this.currentPlayer];
+                const pieceToResurrect = capturedPieces.find(p => 
+                    p.type === piece.type && p.piece === piece.piece
+                );
+                
+                if (!pieceToResurrect) {
+                    this.addLogEntry('system', 'Эта фигура не была взята!');
+                    this.resetCardMode();
+                    return;
+                }
+                
+                // Ищем пустую клетку в заднем ряду
+                const backRow = this.currentPlayer === 1 ? 7 : 0;
+                const emptySquares = [];
+                for (let col = 0; col < 8; col++) {
+                    if (!this.board[backRow][col]) {
+                        emptySquares.push({row: backRow, col});
+                    }
+                }
+                
+                if (emptySquares.length === 0) {
+                    this.addLogEntry('system', 'Нет места в заднем ряду для воскрешения!');
+                    this.resetCardMode();
+                    return;
+                }
+                
+                const randomSquare = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+                this.board[randomSquare.row][randomSquare.col] = {...pieceToResurrect};
+                
+                // Удаляем из списка взятых
+                const index = capturedPieces.indexOf(pieceToResurrect);
+                if (index > -1) {
+                    capturedPieces.splice(index, 1);
+                }
+                
+                this.addLogEntry(this.currentPlayer, `Фигура ${this.getPieceName(pieceToResurrect)} воскрешена на ${this.getSquareName(randomSquare.row, randomSquare.col)}`);
+                this.resetCardMode();
+            }
+
+            executeClone() {
+                if (!this.cloneSource || !this.cloneTarget) return;
+                
+                const {row: sourceRow, col: sourceCol, piece} = this.cloneSource;
+                const {row: targetRow, col: targetCol} = this.cloneTarget;
+                
+                // Проверяем, что не клонируем короля
+                if (piece.type === 'king') {
+                    this.addLogEntry('system', 'Нельзя клонировать короля!');
+                    this.resetCardMode();
+                    return;
+                }
+                
+                if (this.board[targetRow][targetCol]) {
+                    this.addLogEntry('system', 'Клетка занята!');
+                    this.resetCardMode();
+                    return;
+                }
+                
+                this.board[targetRow][targetCol] = {...piece};
+                this.addLogEntry(this.currentPlayer, `Фигура клонирована на ${this.getSquareName(targetRow, targetCol)}`);
+                this.resetCardMode();
+            }
+
+            executeTeleport() {
+                if (!this.teleportSource || !this.teleportTarget) return;
+                
+                const {row: sourceRow, col: sourceCol, piece} = this.teleportSource;
+                const {row: targetRow, col: targetCol} = this.teleportTarget;
+                
+                if (this.board[targetRow][targetCol]) {
+                    this.addLogEntry('system', 'Клетка занята!');
+                    this.resetCardMode();
+                    return;
+                }
+                
+                this.board[targetRow][targetCol] = piece;
+                this.board[sourceRow][sourceCol] = null;
+                this.addLogEntry(this.currentPlayer, `Фигура телепортирована на ${this.getSquareName(targetRow, targetCol)}`);
+                this.resetCardMode();
+            }
+
+            executeSwap() {
+                if (!this.swapSource || !this.swapTarget) return;
+                
+                const {row: row1, col: col1, piece: piece1} = this.swapSource;
+                const {row: row2, col: col2, piece: piece2} = this.swapTarget;
+                
+                this.board[row1][col1] = piece2;
+                this.board[row2][col2] = piece1;
+                
+                this.addLogEntry(this.currentPlayer, `Фигуры обменяны: ${this.getSquareName(row1, col1)} ↔ ${this.getSquareName(row2, col2)}`);
+                this.resetCardMode();
+            }
+
+            executeMoveOne() {
+                if (!this.moveOneSource || !this.moveOneTarget) return;
+                
+                const {row: sourceRow, col: sourceCol, piece} = this.moveOneSource;
+                const {row: targetRow, col: targetCol} = this.moveOneTarget;
+                
+                // Проверяем, что ход на 1 клетку
+                const rowDiff = Math.abs(targetRow - sourceRow);
+                const colDiff = Math.abs(targetCol - sourceCol);
+                
+                if (rowDiff + colDiff !== 1) {
+                    this.addLogEntry('system', 'Можно переместить только на 1 клетку!');
+                    this.resetCardMode();
+                    return;
+                }
+                
+                // Для карты "1" разрешаем ход даже если клетка занята (взятие)
+                const targetPiece = this.board[targetRow][targetCol];
+                if (targetPiece) {
+                    // Проверяем защиту у атакуемой фигуры
+                    const hasProtection = this.hasEffect(targetPiece.player, 'Защита от взятия');
+                    if (hasProtection) {
+                        this.addLogEntry('system', `Фигура защищена! Взятие отменено.`);
+                        this.removeEffect(targetPiece.player, hasProtection.id);
+                        this.resetCardMode();
+                        return;
+                    }
+                    
+                    // Взятие
+                    this.addLogEntry(this.currentPlayer, `Взята фигура ${this.getPieceName(targetPiece)}!`);
+                    this.capturedPieces[this.currentPlayer].push({...targetPiece});
+                    if (this.currentPlayer === 1) {
+                        this.player1Score += this.getPieceValue(targetPiece);
+                    } else {
+                        this.player2Score += this.getPieceValue(targetPiece);
+                    }
+                }
+                
+                this.board[targetRow][targetCol] = piece;
+                this.board[sourceRow][sourceCol] = null;
+                this.addLogEntry(this.currentPlayer, `Фигура перемещена на ${this.getSquareName(targetRow, targetCol)}`);
+                this.resetCardMode();
+            }
+
+            resetCardMode() {
+                this.waitingForCardTarget = false;
+                this.activeCard = null;
+                this.cloneMode = false;
+                this.teleportMode = false;
+                this.swapMode = false;
+                this.moveOneMode = false;
+                this.freezeMode = false;
+                this.healMode = false;
+                this.cloneSource = null;
+                this.cloneTarget = null;
+                this.teleportSource = null;
+                this.teleportTarget = null;
+                this.swapSource = null;
+                this.swapTarget = null;
+                this.moveOneSource = null;
+                this.moveOneTarget = null;
+                this.clearHighlights();
+                this.clearCardHighlights();
+                this.updateDisplay();
+            }
+
+            swapPlayerColors() {
+                // Меняем цвета фигур игрока (не позиции)
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = this.board[row][col];
+                        if (piece && piece.player === this.currentPlayer) {
+                            // Меняем символы фигур на противоположные
+                            if (piece.piece === '♟') piece.piece = '♙';
+                            else if (piece.piece === '♙') piece.piece = '♟';
+                            else if (piece.piece === '♜') piece.piece = '♖';
+                            else if (piece.piece === '♖') piece.piece = '♜';
+                            else if (piece.piece === '♞') piece.piece = '♘';
+                            else if (piece.piece === '♘') piece.piece = '♞';
+                            else if (piece.piece === '♝') piece.piece = '♗';
+                            else if (piece.piece === '♗') piece.piece = '♝';
+                            else if (piece.piece === '♛') piece.piece = '♕';
+                            else if (piece.piece === '♕') piece.piece = '♛';
+                            else if (piece.piece === '♚') piece.piece = '♔';
+                            else if (piece.piece === '♔') piece.piece = '♚';
+                            else if (piece.piece === '🔴') piece.piece = '🔵';
+                            else if (piece.piece === '🔵') piece.piece = '🔴';
+                        }
+                    }
+                }
+                
+                this.addLogEntry(this.currentPlayer, 'Цвет фигур изменен!');
+                this.updateDisplay();
             }
 
             swapPlayers() {
@@ -1906,13 +2344,10 @@
             newGame() {
                 this.debug('Новая игра...');
                 this.initializeBoard();
-                this.initializeCards();
                 this.currentPlayer = 1;
                 this.selectedPiece = null;
                 this.player1Score = 0;
                 this.player2Score = 0;
-                this.player1Cards = [];
-                this.player2Cards = [];
                 this.gameLog = [];
                 this.actionHistory = [];
                 this.extraMoves = 0;
@@ -1921,8 +2356,13 @@
                 this.playerEffects = {1: [], 2: []};
                 this.capturedPieces = {1: [], 2: []};
                 this.clearHighlights();
+                
+                // Инициализируем карты ПЕРЕД обновлением дисплея
+                this.initializeCards();
+                
                 this.updateDisplay();
                 this.addLogEntry('system', 'Новая игра началась!');
+                
                 // Новый код: читаем общее время из инпута
                 const input = document.getElementById('totalTimeInput');
                 let total = 600;
@@ -1932,11 +2372,6 @@
                 this.totalTime1 = total;
                 this.totalTime2 = total;
                 this.startTimer();
-                // В начале новой игры каждый игрок получает по 3 карты
-                for (let i = 0; i < 3; i++) {
-                    this.drawCard(1);
-                    this.drawCard(2);
-                }
             }
 
             endGame(winner) {
@@ -1950,9 +2385,227 @@
                 }
             }
 
+            togglePause() {
+                this.isPaused = !this.isPaused;
+                
+                if (this.isPaused) {
+                    this.stopTimer();
+                    this.addLogEntry('system', 'Игра приостановлена');
+                    document.getElementById('pauseBtn').textContent = '▶️ Продолжить';
+                } else {
+                    this.startTimer();
+                    this.addLogEntry('system', 'Игра возобновлена');
+                    document.getElementById('pauseBtn').textContent = '⏸️ Пауза';
+                }
+            }
+
+            saveGame() {
+                const gameState = {
+                    board: this.board,
+                    currentPlayer: this.currentPlayer,
+                    player1Score: this.player1Score,
+                    player2Score: this.player2Score,
+                    player1Cards: this.player1Cards,
+                    player2Cards: this.player2Cards,
+                    playerEffects: this.playerEffects,
+                    capturedPieces: this.capturedPieces,
+                    totalTime1: this.totalTime1,
+                    totalTime2: this.totalTime2,
+                    gameLog: this.gameLog,
+                    actionHistory: this.actionHistory,
+                    extraMoves: this.extraMoves,
+                    diceUsed: this.diceUsed,
+                    coinUsed: this.coinUsed,
+                    canUseD6: this.canUseD6,
+                    canUseCoin: this.canUseCoin
+                };
+                
+                localStorage.setItem('zortumGameState', JSON.stringify(gameState));
+                this.addLogEntry('system', 'Игра сохранена!');
+            }
+
+            loadGame() {
+                const savedState = localStorage.getItem('zortumGameState');
+                if (!savedState) {
+                    this.addLogEntry('system', 'Нет сохраненной игры!');
+                    return;
+                }
+                
+                try {
+                    const gameState = JSON.parse(savedState);
+                    
+                    this.board = gameState.board;
+                    this.currentPlayer = gameState.currentPlayer;
+                    this.player1Score = gameState.player1Score;
+                    this.player2Score = gameState.player2Score;
+                    this.player1Cards = gameState.player1Cards;
+                    this.player2Cards = gameState.player2Cards;
+                    this.playerEffects = gameState.playerEffects;
+                    this.capturedPieces = gameState.capturedPieces;
+                    this.totalTime1 = gameState.totalTime1;
+                    this.totalTime2 = gameState.totalTime2;
+                    this.gameLog = gameState.gameLog;
+                    this.actionHistory = gameState.actionHistory;
+                    this.extraMoves = gameState.extraMoves;
+                    this.diceUsed = gameState.diceUsed;
+                    this.coinUsed = gameState.coinUsed;
+                    this.canUseD6 = gameState.canUseD6;
+                    this.canUseCoin = gameState.canUseCoin;
+                    
+                    this.selectedPiece = null;
+                    this.clearHighlights();
+                    this.updateDisplay();
+                    this.startTimer();
+                    
+                    this.addLogEntry('system', 'Игра загружена!');
+                } catch (error) {
+                    this.addLogEntry('system', 'Ошибка загрузки игры!');
+                    console.error('Ошибка загрузки:', error);
+                }
+            }
+
             showRules() {
                 alert('Правила игры:\n\n1. Выберите фигуру кликом\n2. Кликните на зеленую клетку для хода\n3. Используйте карты УНО, кубики и монетку\n4. Цель - победить противника!');
             }
+
+            // Проверка, под шахом ли король игрока
+            isKingInCheck(player) {
+                // Найти короля игрока
+                let kingPos = null;
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = this.board[row][col];
+                        if (piece && piece.type === 'king' && piece.player === player) {
+                            kingPos = {row, col};
+                        }
+                    }
+                }
+                if (!kingPos) return false; // Король отсутствует (например, уже взят)
+                // Проверить, может ли фигура противника атаковать эту клетку
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = this.board[row][col];
+                        if (piece && piece.player !== player && piece.type !== 'checker') {
+                            if (this.isValidMove(row, col, kingPos.row, kingPos.col)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+
+            // Проверка, есть ли хоть один легальный ход у игрока (не приводит к шаху)
+            hasAnyLegalMove(player) {
+                for (let fromRow = 0; fromRow < 8; fromRow++) {
+                    for (let fromCol = 0; fromCol < 8; fromCol++) {
+                        const piece = this.board[fromRow][fromCol];
+                        if (piece && piece.player === player && piece.type !== 'checker') {
+                            for (let toRow = 0; toRow < 8; toRow++) {
+                                for (let toCol = 0; toCol < 8; toCol++) {
+                                    if ((fromRow !== toRow || fromCol !== toCol) && this.isValidMove(fromRow, fromCol, toRow, toCol)) {
+                                        // Симулируем ход
+                                        const backupFrom = this.board[fromRow][fromCol];
+                                        const backupTo = this.board[toRow][toCol];
+                                        this.board[toRow][toCol] = backupFrom;
+                                        this.board[fromRow][fromCol] = null;
+                                        const inCheck = this.isKingInCheck(player);
+                                        // Откатываем
+                                        this.board[fromRow][fromCol] = backupFrom;
+                                        this.board[toRow][toCol] = backupTo;
+                                        if (!inCheck) {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+
+            // Сбросить выделение короля
+            clearKingHighlights() {
+                document.querySelectorAll('.check-king, .mate-king, .stalemate-king').forEach(el => {
+                    el.classList.remove('check-king', 'mate-king', 'stalemate-king');
+                });
+            }
+
+            // Выделить клетку с королём
+            highlightKingSquare(row, col, type) {
+                const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (square) {
+                    square.classList.add(type);
+                }
+            }
+
+            // Выделить фигуру для карт
+            highlightPieceForCard(row, col, cardType) {
+                const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (square) {
+                    switch(cardType) {
+                        case 'freeze':
+                            square.classList.add('frozen-piece');
+                            break;
+                        case 'teleport':
+                            square.classList.add('teleporting-piece');
+                            break;
+                        case 'clone':
+                            square.classList.add('cloning-piece');
+                            break;
+                        case 'moveOne':
+                            square.classList.add('moving-piece');
+                            break;
+                        case 'swap':
+                            square.classList.add('swapping-piece');
+                            break;
+                    }
+                }
+            }
+
+            // Очистить выделения карт
+            clearCardHighlights() {
+                document.querySelectorAll('.frozen-piece, .teleporting-piece, .cloning-piece, .moving-piece, .swapping-piece').forEach(el => {
+                    el.classList.remove('frozen-piece', 'teleporting-piece', 'cloning-piece', 'moving-piece', 'swapping-piece');
+                });
+            }
+
+            // Модифицировать checkGameEnd для выделения
+            checkGameEnd() {
+                this.clearKingHighlights();
+                const player = this.currentPlayer;
+                let kingPos = null;
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = this.board[row][col];
+                        if (piece && piece.type === 'king' && piece.player === player) {
+                            kingPos = {row, col};
+                        }
+                    }
+                }
+                if (!this.isKingInCheck(player)) {
+                    if (!this.hasAnyLegalMove(player)) {
+                        if (kingPos) this.highlightKingSquare(kingPos.row, kingPos.col, 'stalemate-king');
+                        this.addLogEntry('system', 'Пат! Ничья.');
+                        alert('Пат! Ничья.');
+                        return true;
+                    }
+                } else {
+                    if (!this.hasAnyLegalMove(player)) {
+                        if (kingPos) this.highlightKingSquare(kingPos.row, kingPos.col, 'mate-king');
+                        this.addLogEntry('system', `Мат! Победитель: Игрок ${player === 1 ? 2 : 1}`);
+                        alert(`Мат! Победитель: Игрок ${player === 1 ? 2 : 1}`);
+                        return true;
+                    } else {
+                        if (kingPos) this.highlightKingSquare(kingPos.row, kingPos.col, 'check-king');
+                        this.addLogEntry('system', 'Шах!');
+                    }
+                }
+                return false;
+            }
+
+            // Вызвать clearKingHighlights в начале makeMove
         }
 
         // Инициализация игры при загрузке страницы
@@ -1962,4 +2615,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
