@@ -39,6 +39,8 @@ body {
 /* Секции */
 section {
   padding: 80px 0;
+  background: transparent !important;
+  transition: opacity 0.7s, filter 0.7s;
 }
 
 .section-title {
@@ -1100,4 +1102,32 @@ footer {
     padding: 8px 16px;
     font-size: 13px;
   }
+}
+
+#global-animated-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(120deg, #0f2027, #232526, #1a2980, #232526, #191654, #000000);
+  background-size: 400% 400%;
+  animation: animated-bg-gradient 18s ease-in-out infinite;
+}
+@keyframes animated-bg-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.section-active {
+  opacity: 1 !important;
+  filter: blur(0) !important;
+  z-index: 2;
+}
+.section-faded {
+  opacity: 0.45 !important;
+  filter: blur(8px) !important;
+  z-index: 1;
 } 

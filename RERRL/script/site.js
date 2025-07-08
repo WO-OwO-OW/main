@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setupMobileMenu();
   setupSmoothScrolling();
   updateCurrentYear();
+  setupSectionFadeBlur();
 });
 
 // Инициализация маски для телефона
@@ -370,4 +371,34 @@ function updateCurrentYear() {
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
+}
+
+// Fade/blur секций при скролле
+function setupSectionFadeBlur() {
+  const sections = Array.from(document.querySelectorAll('section'));
+  function updateSections() {
+    let wh = window.innerHeight;
+    let minDist = Infinity;
+    let activeIdx = 0;
+    sections.forEach((sec, i) => {
+      const rect = sec.getBoundingClientRect();
+      const center = rect.top + rect.height/2;
+      const dist = Math.abs(center - wh/2);
+      if (dist < minDist) {
+        minDist = dist;
+        activeIdx = i;
+      }
+    });
+    sections.forEach((sec, i) => {
+      sec.classList.remove('section-active', 'section-faded');
+      if (i === activeIdx) {
+        sec.classList.add('section-active');
+      } else if (i === activeIdx - 1 || i === activeIdx + 1) {
+        sec.classList.add('section-faded');
+      }
+    });
+  }
+  window.addEventListener('scroll', updateSections);
+  window.addEventListener('resize', updateSections);
+  setTimeout(updateSections, 200);
 } 
