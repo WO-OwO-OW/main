@@ -1,4 +1,4 @@
- const images = ["img1.jpg", "img2.jpg", "img3.jpg"];
+ const images = ["1_poz.png", "2_poz.png", "3_poz.jpg"];
   let index = 0;
   setInterval(() => {
     index = (index + 1) % images.length;
