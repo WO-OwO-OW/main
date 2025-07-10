@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  display: flex;
+}
+
+.sidebar {
+  width: 35vw;
+  height: 100vh;
+  position: fixed;
+  background-color: #f8f5f0;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.sidebar img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin: 10px 0;
+}
+
+.sidebar nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+}
+
+.main-content {
+  margin-left: 30vw;
+  padding: 40px;
+}
