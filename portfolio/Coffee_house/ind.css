@@ -1,41 +1,94 @@
 body {
   margin: 0;
   display: flex;
+  background-color: #000; /* предотвращает мигание */
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .sidebar {
-  width: 35vw;
-  height: 100vh;
+  position: relative;
   position: fixed;
-  background-color: #f8f5f0;
+  width: 40vw;
+  height: 100vh;
+  overflow: hidden;
   padding: 20px;
   box-sizing: border-box;
-  overflow: hidden;
+  color: #fff;
 }
 
-.sidebar img {
+/* Фоновые слои */
+.bg-layer {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 1s ease;
+  z-index: -2;
 }
 
+#bg1 { opacity: 1; }
+#bg2 { opacity: 0; }
+
+/* Затемняющий слой */
+.overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.sidebar:hover .overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Навигация */
 .sidebar nav ul {
   list-style: none;
   padding: 0;
+  margin-top: 60px;
 }
 
 .sidebar nav ul li {
-  margin: 10px 0;
+  margin: 14px 0;
 }
 
 .sidebar nav ul li a {
   text-decoration: none;
-  color: #333;
+  color: #ffcc66;
   font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s;
 }
 
+.sidebar nav ul li a:hover {
+  color: #ffffff;
+}
+
+/* Правая часть — основной контент */
 .main-content {
-  margin-left: 30vw;
+   margin-left: 40vw;
+  width: 60vw;
+  min-height: 100vh;
   padding: 40px;
+  background-color: #1a1a1a;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.main-content section {
+  margin-bottom: 60px;
+}
+
+.main-content h1,
+.main-content h2 {
+  color: #ffb300;
 }
