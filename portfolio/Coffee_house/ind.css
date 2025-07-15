@@ -8,10 +8,24 @@ html {
   scroll-behavior: smooth;
 }
 
+
+.logo {             /*Лого в боковой панели*/
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.logo img {
+  width: 80px;
+  height: auto;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+}
+
+
 .sidebar {
   position: relative;
   position: fixed;
-  width: 40vw;
+  width: 38vw;
   height: 100vh;
   overflow: hidden;
   padding: 20px;
@@ -75,7 +89,7 @@ html {
 
 /* Правая часть — основной контент */
 .main-content {
-   margin-left: 40vw;
+   margin-left: 38vw;
   width: 60vw;
   min-height: 100vh;
   padding: 40px;
