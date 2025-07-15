@@ -16,7 +16,7 @@ html {
 }
 
 .logo img {
-  width: 80px;
+  width: 250px;
   height: auto;
   filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
 }
@@ -90,7 +90,7 @@ html {
 /* Правая часть — основной контент */
 .main-content {
    margin-left: 38vw;
-  width: 60vw;
+  width: 62vw;
   min-height: 100vh;
   padding: 40px;
   background-color: #1a1a1a;
