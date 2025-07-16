@@ -7,16 +7,26 @@ const TELEGRAM_CONFIG = {
 document.addEventListener('DOMContentLoaded', function() {
   initMaskedInput();
   
-  // Скрываем все карточки кроме лендингов при загрузке
+  // Скрываем все карточки кроме первой категории при загрузке
   const projectCards = document.querySelectorAll('.project-card');
-  projectCards.forEach(card => {
-    if (card.dataset.category !== 'landing') {
-      card.style.display = 'none';
-    }
-  });
+  if (window.location.pathname.includes('apps.html')) {
+    projectCards.forEach(card => {
+      if (card.dataset.category !== 'mobile') {
+        card.style.display = 'none';
+      } else {
+        card.style.display = 'block';
+      }
+    });
+  } else {
+    projectCards.forEach(card => {
+      if (card.dataset.category !== 'landing') {
+        card.style.display = 'none';
+      }
+    });
+  }
   
   setupProjectFilters();
-  setupProjectCarousel(); // Инициализируем карусель для лендингов по умолчанию
+  setupProjectCarousel(); // Инициализируем карусель для первой категории по умолчанию
   setupReviewsCarousel();
   setupFormValidation();
   setupMobileMenu();
