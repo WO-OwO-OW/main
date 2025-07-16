@@ -2,6 +2,7 @@ body {
   margin: 0;
   display: flex;
   background-color: #000; /* предотвращает мигание */
+  
 }
 
 html {
@@ -12,7 +13,7 @@ html {
 .logo {             /*Лого в боковой панели*/
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 40px;
+  
 }
 
 .logo img {
@@ -21,6 +22,11 @@ html {
   filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
 }
 
+.tagline {
+  font-family: 'Pacifico', cursive;
+  font-size: 25px;
+  color: #fff2cafc; 
+}
 
 .sidebar {
   position: relative;
@@ -67,6 +73,7 @@ html {
 /* Навигация */
 .sidebar nav ul {
   list-style: none;
+  text-align: center;
   padding: 0;
   margin-top: 60px;
 }
@@ -77,8 +84,9 @@ html {
 
 .sidebar nav ul li a {
   text-decoration: none;
-  color: #ffcc66;
-  font-size: 18px;
+  font-family: 'League Spartan', sans-serif;
+  color: #fff2cafc;
+  font-size: 35px;
   font-weight: bold;
   transition: color 0.3s;
 }
@@ -93,16 +101,17 @@ html {
   width: 62vw;
   min-height: 100vh;
   padding: 40px;
-  background-color: #1a1a1a;
-  color: #fff;
+  background-color: #d35812;
+  color: #fff2cafc;
   box-sizing: border-box;
 }
 
-.main-content section {
-  margin-bottom: 60px;
-}
-
-.main-content h1,
-.main-content h2 {
-  color: #ffb300;
+.communication_panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #1225d3;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
