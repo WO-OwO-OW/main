@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RERRL — Разработка приложений и программ</title>
+  <link rel="stylesheet" href="./css/site.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body { background: var(--dark); color: var(--text); }
+    .section-title { font-size: 2.5rem; color: var(--primary); text-align: center; margin-bottom: 2rem; }
+    .section-divider { width: 60px; height: 4px; background: var(--primary); margin: 0 auto 2.5rem; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div id="global-animated-bg"></div>
+  <!-- Навигация -->
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">RERRL</div>
+      <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
+      <nav class="nav-links">
+        <a href="site.html" class="nav-apps"><i class="fas fa-globe"></i> Веб-сайты</a>
+        <a href="#about"><i class="fas fa-info-circle"></i> О нас</a>
+        <a href="#services"><i class="fas fa-cogs"></i> Услуги</a>
+        <a href="#prices"><i class="fas fa-tags"></i> Тарифы</a>
+        <a href="#portfolio"><i class="fas fa-briefcase"></i> Наши работы</a>
+        <a href="#reviews"><i class="fas fa-star"></i> Отзывы</a>
+        <a href="#contact" class="cta-button"><i class="fas fa-paper-plane"></i> Оставить заявку</a>
+        <a href="tel:+77475091236" class="phone">
+          <i class="fas fa-phone phone-icon"></i>
+          <span class="phone-text">+7 747 509 12 36</span>
+        </a>
+        <div class="social-icons">
+          <a href="https://wa.me/77475091236" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://t.me/rerrl_kz" class="telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero секция -->
+  <section class="hero" data-aos="fade-up">
+    <div class="container">
+      <h1>Создаём приложения и программы для всех платформ</h1>
+      <p>Профессиональная разработка под Windows, Android, iOS, Web и другие</p>
+      <a href="#contact" class="hero-button">Оставить заявку</a>
+    </div>
+  </section>
+
+  <!-- О нас -->
+  <section id="about" class="about" data-aos="fade-up">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>О нас</h2>
+          <p>RERRL — команда профессиональных разработчиков с более чем 5-летним опытом. Мы создаём современные, удобные и производительные приложения и программы для любых задач и платформ.</p>
+          <ul>
+            <li><i class="fas fa-check"></i> Более 50 успешных приложений и программ</li>
+            <li><i class="fas fa-check"></i> Индивидуальный подход к каждому проекту</li>
+            <li><i class="fas fa-check"></i> Поддержка и развитие после релиза</li>
+          </ul>
+        </div>
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1170&q=80" alt="Наша команда">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Услуги -->
+  <section id="services" class="services" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Наши услуги</h2>
+      <div class="section-divider"></div>
+      <div class="service-cards" data-aos="zoom-in" data-aos-delay="200">
+        <div class="service-card">
+          <i class="fas fa-mobile-alt"></i>
+          <h3>Мобильные приложения</h3>
+          <p>Разработка под Android и iOS</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-desktop"></i>
+          <h3>Десктопные программы</h3>
+          <p>Windows, Mac, Linux</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-globe"></i>
+          <h3>Web-приложения</h3>
+          <p>Современные сервисы и SPA</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-plug"></i>
+          <h3>Интеграции и API</h3>
+          <p>Взаимодействие с любыми сервисами</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-sync-alt"></i>
+          <h3>Поддержка и обновления</h3>
+          <p>Долгосрочное сопровождение</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <h3>Публикация и запуск</h3>
+          <p>Размещение в Google Play, App Store, на сервере</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Тарифы -->
+  <section id="prices" class="prices" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Наши тарифы</h2>
+      <div class="section-divider"></div>
+      <div class="price-cards">
+        <div class="price-card">
+          <div class="price-header">
+            <h3>Базовый</h3>
+            <p>Простое приложение или программа</p>
+          </div>
+          <div class="price-amount">
+            <span class="currency">₸</span>
+            <span class="amount">60 000</span>
+            <span class="period">от</span>
+          </div>
+          <div class="price-features">
+            <div class="feature">1 платформа</div>
+            <div class="feature">Базовый функционал</div>
+            <div class="feature">Техническая поддержка 1 месяц</div>
+          </div>
+          <a href="#contact" class="price-button">Заказать</a>
+        </div>
+        <div class="price-card featured">
+          <div class="popular-badge">Популярно</div>
+          <div class="price-header">
+            <h3>Стандарт</h3>
+            <p>Мультиплатформенное приложение</p>
+          </div>
+          <div class="price-amount">
+            <span class="currency">₸</span>
+            <span class="amount">180 000</span>
+            <span class="period">от</span>
+          </div>
+          <div class="price-features">
+            <div class="feature">2+ платформы</div>
+            <div class="feature">Расширенный функционал</div>
+            <div class="feature">Техническая поддержка 3 месяца</div>
+          </div>
+          <a href="#contact" class="price-button">Заказать</a>
+        </div>
+        <div class="price-card">
+          <div class="price-header">
+            <h3>Премиум</h3>
+            <p>Индивидуальное решение</p>
+          </div>
+          <div class="price-amount">
+            <span class="currency">₸</span>
+            <span class="amount">350 000</span>
+            <span class="period">от</span>
+          </div>
+          <div class="price-features">
+            <div class="feature">Любые платформы</div>
+            <div class="feature">Уникальный дизайн</div>
+            <div class="feature">Приоритетная поддержка</div>
+          </div>
+          <a href="#contact" class="price-button">Заказать</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Примеры приложений и программ -->
+  <section id="portfolio" class="projects" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Примеры приложений и программ</h2>
+      <div class="section-divider"></div>
+      <div class="project-filters" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
+        <button class="active" data-category="mobile">Мобильные</button>
+        <button data-category="desktop">Десктопные</button>
+        <button data-category="web">Web-приложения</button>
+      </div>
+      <div class="project-carousel">
+        <div class="carousel-container">
+          <div class="carousel-track">
+            <!-- Пример 1 -->
+            <div class="project-card" data-category="mobile">
+              <div class="project-image"><img src="img/app1.jpg" alt="App 1"></div>
+              <div class="project-info">
+                <h3>TaskMaster</h3>
+                <p>Менеджер задач для Android и iOS</p>
+                <a href="#" class="project-link" target="_blank">Google Play</a>
+                <a href="#" class="project-link" target="_blank">App Store</a>
+              </div>
+            </div>
+            <!-- Пример 2 -->
+            <div class="project-card" data-category="mobile">
+              <div class="project-image"><img src="img/app2.jpg" alt="App 2"></div>
+              <div class="project-info">
+                <h3>FitTrack</h3>
+                <p>Фитнес-трекер для Android</p>
+                <a href="#" class="project-link" target="_blank">Google Play</a>
+              </div>
+            </div>
+            <!-- Пример 3 -->
+            <div class="project-card" data-category="desktop">
+              <div class="project-image"><img src="img/app3.jpg" alt="App 3"></div>
+              <div class="project-info">
+                <h3>NotePro</h3>
+                <p>Заметки и организация для Windows/Mac</p>
+                <a href="#" class="project-link" target="_blank">Скачать для Windows</a>
+                <a href="#" class="project-link" target="_blank">Скачать для Mac</a>
+              </div>
+            </div>
+            <!-- Пример 4 -->
+            <div class="project-card" data-category="desktop">
+              <div class="project-image"><img src="img/app4.jpg" alt="App 4"></div>
+              <div class="project-info">
+                <h3>PhotoEdit</h3>
+                <p>Фоторедактор для Windows</p>
+                <a href="#" class="project-link" target="_blank">Скачать для Windows</a>
+              </div>
+            </div>
+            <!-- Пример 5 -->
+            <div class="project-card" data-category="web">
+              <div class="project-image"><img src="img/app5.jpg" alt="App 5"></div>
+              <div class="project-info">
+                <h3>OnlineShop</h3>
+                <p>Веб-магазин для малого бизнеса</p>
+                <a href="#" class="project-link" target="_blank">Открыть сайт</a>
+              </div>
+            </div>
+            <!-- Пример 6 -->
+            <div class="project-card" data-category="web">
+              <div class="project-image"><img src="img/app6.jpg" alt="App 6"></div>
+              <div class="project-info">
+                <h3>EduPlatform</h3>
+                <p>Образовательная платформа</p>
+                <a href="#" class="project-link" target="_blank">Открыть сайт</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="carousel-dots"></div>
+    </div>
+  </section>
+
+  <!-- Отзывы -->
+  <section id="reviews" class="reviews" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Отзывы клиентов</h2>
+      <div class="section-divider"></div>
+      <div class="reviews-carousel">
+        <div class="reviews-container">
+          <div class="reviews-track">
+            <div class="review-card">
+              <div class="review-header">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Клиент" class="review-avatar">
+                <div class="review-info">
+                  <h4>Алексей К.</h4>
+                  <p>Разработчик стартапа</p>
+                </div>
+              </div>
+              <p class="review-text">"Мобильное приложение было реализовано быстро и качественно. Отличная поддержка!"</p>
+              <div class="review-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-header">
+                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Клиент" class="review-avatar">
+                <div class="review-info">
+                  <h4>Мария П.</h4>
+                  <p>Владелец онлайн-школы</p>
+                </div>
+              </div>
+              <p class="review-text">"Платформа для обучения работает стабильно, ученики довольны. Спасибо за индивидуальный подход!"</p>
+              <div class="review-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-header">
+                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Клиент" class="review-avatar">
+                <div class="review-info">
+                  <h4>Игорь С.</h4>
+                  <p>Владелец магазина</p>
+                </div>
+              </div>
+              <p class="review-text">"Программа для учета товаров упростила работу магазина. Всё понятно и удобно!"</p>
+              <div class="review-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="reviews-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="reviews-next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="reviews-dots"></div>
+    </div>
+  </section>
+
+  <!-- Форма заявки -->
+  <section id="contact" class="contact" data-aos="fade-up">
+    <div class="container">
+      <h2 class="section-title">Оставьте заявку</h2>
+      <div class="section-divider"></div>
+      <form id="request-form" style="max-width: 600px; margin: 0 auto; background-color: var(--card-bg); padding: 40px; border-radius: 8px; border: 1px solid var(--card-border);">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Ваш email" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" name="phone" id="phone" placeholder="+7 (___) ___-__-__" required>
+        </div>
+        <div class="form-group">
+          <select name="service" required>
+            <option value="" disabled selected>Выберите услугу</option>
+            <option value="mobile">Мобильное приложение</option>
+            <option value="desktop">Десктопная программа</option>
+            <option value="web">Web-приложение</option>
+            <option value="integration">Интеграция/API</option>
+            <option value="support">Поддержка</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder="Опишите ваш проект" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Отправить заявку</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Всплывающее окно -->
+  <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl p-8 max-w-md mx-4 text-center animate__animated animate__zoomIn">
+      <div class="text-green-500 text-6xl mb-4">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Спасибо!</h3>
+      <p class="text-gray-600 mb-6">Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.</p>
+      <button onclick="document.getElementById('successModal').classList.add('hidden')" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-secondary transition duration-300">
+        Закрыть
+      </button>
+    </div>
+  </div>
+
+  <!-- Подвал -->
+  <footer>
+    <div class="container" data-aos="fade-up">
+      <div class="footer-content">
+        <div class="footer-logo">RERRL</div>
+        <div class="footer-contacts">
+          <p><i class="fas fa-phone"></i> <a href="tel:+77475091236">+7 747 509 12 36</a></p>
+          <p><i class="fas fa-envelope"></i> <a href="mailto:rerrl714@gmail.com">rerrl714@gmail.com</a></p>
+        </div>
+        <div class="footer-social">
+          <a href="https://wa.me/77475091236" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://t.me/rerrl_kz" class="telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> RERRL. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/imask"></script>
+  <script src="./script/site.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html> 
