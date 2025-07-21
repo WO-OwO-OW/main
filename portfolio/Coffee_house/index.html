@@ -24,18 +24,44 @@
 
 
  <nav>
-  <ul>
-    <li><a href="#home">Главная</a></li>
-    <li><a href="#menu">Меню</a></li>
-    <li><a href="#gallery">Галерея</a></li>
-    <li><a href="#contact">Контакты</a></li>
+   <ul>
+    <li onclick="showSection('home')">Главная</li>
+    <li onclick="showSection('menu')">Меню</li>
+    <li onclick="showSection('gallery')">Галерея</li>
+    <li onclick="showSection('contact')">Контакты</li>
    </ul>
-  </nav>
+ </nav>
 
  </div>
 
 <div class="main-content">
-   <div class="communication_panel"></div>
+  
+  <section id="home" class="content-section"> 
+   <div class="main-header">
+     <div class="header-socials">
+       <a href="https://web.whatsapp.com/" target="_blank" title="whatsapp"><img src="img/what_icon.png" alt="whatsapp" class="social-icon"></a>
+       <a href="https://t.me" target="_blank" title="Telegram"><img src="img/tg_icon.png" alt="Telegram" class="social-icon"></a>
+       <a href="https://instagram.com" target="_blank" title="Instagram"><img src="img/Insta_icon.png" alt="Instagram" class="social-icon"></a>
+     </div>
+     <div class="header-info">
+       <a class="phone" href="tel:+79991234567">+7 (999) 123-45-67</a>
+       <span class="worktime">Пн-Вс: 10:00–22:00</span>
+     </div>
+     <button class="nearby-btn">МЫ РЯДОМ</button>
+   </div>
+
+
+
+  </section>
+    
+    
+
+  <section id="menu" class="content-section">Меню</section>
+
+  <section id="contact" class="content-section">Контакты</section>
+
+  <section id="gallery" class="content-section">Галерея</section>
+
 
 </div>
 

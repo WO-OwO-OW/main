@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = function () {    /*СЛАЙДЕР*/
   const images = [
     "img/1_poz.png",
     "img/2_poz.png",
@@ -6,11 +6,12 @@ window.onload = function () {
   ];
   let index = 0;
   let showingBg1 = true;
-
+   
   const bg1 = document.getElementById("bg1");
   const bg2 = document.getElementById("bg2");
 
   bg1.style.backgroundImage = `url('${images[index]}')`;
+  showSection('home');
 
   setInterval(() => {
     index = (index + 1) % images.length;
@@ -31,3 +32,14 @@ window.onload = function () {
     };
   }, 4000);
 };
+
+  /*ПЕРЕКЛЮЧЕНИЕ МЕЖДУ РАЗДЕЛАМИ*/
+function showSection(id) {
+  const sections = document.querySelectorAll('.content-section');
+  sections.forEach(sec => sec.classList.remove('active'));
+
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+  }
+}
