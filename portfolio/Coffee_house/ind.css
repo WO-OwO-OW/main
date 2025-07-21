@@ -196,8 +196,52 @@ html {
 
 
 
-  
+ .slogan {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 75px;
+  color: #fff2cafc;
+  font-weight: 700;
+  line-height: 1.2;
+}
 
+.slogan span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff2cafc;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 60px;
+  color: #b6422d;
+  margin-top: 10px;
+  padding: 18px 20px 14px 20px;
+  border-radius: 18px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slogan .heart {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 40px;
+  color: #b6422d;
+  vertical-align: middle;
+}
+
+
+
+.discount-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  color: #fff2cafc;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+.discount-value {
+ font-weight: bold;
+}
 
 
 
