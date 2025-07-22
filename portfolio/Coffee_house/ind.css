@@ -65,10 +65,10 @@ html {
   z-index: -1;
   pointer-events: none;
 }
-
 .sidebar:hover .overlay {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 
 /* Навигация */
 .sidebar nav ul {
@@ -77,12 +77,10 @@ html {
   padding: 0;
   margin-top: 60px;
 }
-
 .sidebar nav ul li {
   margin: 14px 0;
   cursor: default;
 }
-
 .sidebar nav ul li  {
   text-decoration: none;
   font-family: 'League Spartan', sans-serif;
@@ -92,7 +90,6 @@ html {
   transition: color 0.3s;
   cursor: default;
 }
-
 .sidebar nav ul li:hover {
   color: #ffffff;
   cursor: default;
@@ -196,14 +193,13 @@ html {
 
 
 
- .slogan {
+ .slogan {                       /*СЛОГАН*/
   font-family: 'League Spartan', sans-serif;
   font-size: 75px;
   color: #fff2cafc;
   font-weight: 700;
   line-height: 1.2;
 }
-
 .slogan span {
   display: inline-flex;
   align-items: center;
@@ -217,7 +213,6 @@ html {
   border-radius: 18px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-
 .slogan .heart {
   background: none;
   padding: 0;
@@ -229,7 +224,7 @@ html {
 
 
 
-.discount-banner {
+.discount-banner {          /*БАННЕР С СКИДКОЙ*/
   display: flex;
   align-items: center;
   gap: 10px;
@@ -246,4 +241,25 @@ html {
 
 
 
+
+
+.order-button {
+  margin-top: 90px;
+  padding: 12px 30px;
+  background-color: #fff2cafc;
+  color: #b6422d;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px; /* полностью округлённые края */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.order-button:hover {
+ transform: scale(0.97);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
