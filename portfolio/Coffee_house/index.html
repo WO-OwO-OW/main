@@ -57,30 +57,45 @@
        <div class="discount-banner"><span class="discount-value">Каждую пятницу вас ждут специальные предложения и скидки 20% — не пропустите!</div>
    </div>
 
-   <button class="order-button">ЗАКАЗАТЬ ДОСТАВКУ</button>
+      <button class="order-button" id="orderButton">ЗАКАЗАТЬ ДОСТАВКУ</button>      
  
+      <section class="advantages">
+               <h2>МЫ <span  style="text-decoration: underline; font-weight: bold; color: #fff2cafc;">ВЫГОДНО</span> ОТЛИЧАЕМСЯ ОТ КОНКУРЕНТОВ</h2>
+        <div class="advantage-grid">
+          <div class="advantage-card">
+            <h3>Свежее мясо</h3>
+            <p>Никаких заморозок и полуфабрикатов — только свежие продукты каждый день.</p>
+          </div>
+          <div class="advantage-card">
+            <h3>Фирменные соусы</h3>
+            <p>Уникальные рецепты, которые делают наш донер по-настоящему особенным.</p>
+          </div>
+          <div class="advantage-card">
+            <h3>Большие порции</h3>
+            <p>Мы не жалеем начинки — сытно, вкусно, по-настоящему!</p>
+          </div>
+          <div class="advantage-card">
+           <h3>Скидка 20% по пятницам</h3>
+           <p>Каждую пятницу — выгодные предложения для всех гостей.</p>
+          </div>
+        </div>
+      </section>
 
-  <section class="advantages">
-  <h2>МЫ <span  style="text-decoration: underline; font-weight: bold; color: #fff2cafc;">ВЫГОДНО</span> ОТЛИЧАЕМСЯ ОТ КОНКУРЕНТОВ</h2>
-  <div class="advantage-grid">
-    <div class="advantage-card">
-      <h3>Свежее мясо</h3>
-      <p>Никаких заморозок и полуфабрикатов — только свежие продукты каждый день.</p>
-    </div>
-    <div class="advantage-card">
-      <h3>Фирменные соусы</h3>
-      <p>Уникальные рецепты, которые делают наш донер по-настоящему особенным.</p>
-    </div>
-    <div class="advantage-card">
-      <h3>Большие порции</h3>
-      <p>Мы не жалеем начинки — сытно, вкусно, по-настоящему!</p>
-    </div>
-    <div class="advantage-card">
-      <h3>Скидка 20% по пятницам</h3>
-      <p>Каждую пятницу — выгодные предложения для всех гостей.</p>
-    </div>
+     <!-- Модальное окно формы -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-form">
+    <h2>Оформить заказ</h2>
+    <form id="orderForm">
+      <input type="text" placeholder="Ваше имя" name="name" required>
+      <input type="tel" placeholder="Телефон" name="phone" required>
+      <textarea placeholder="Я буду..." name="order" required></textarea>
+      <button type="submit">Отправить</button>
+      <p id="formMessage" class="form-message" style="display:none;">Заявка отправлена ✅</p>
+    </form>
+    <span class="close-modal" id="closeModalBtn">&times;</span>
   </div>
-</section>
+</div>
+
 
 
 

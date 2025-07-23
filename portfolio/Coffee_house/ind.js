@@ -43,3 +43,33 @@ function showSection(id) {
     target.classList.add('active');
   }
 }
+
+
+
+
+
+ 
+
+
+const modalOverlay = document.getElementById("modalOverlay");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const orderForm = document.getElementById("orderForm");
+const formMessage = document.getElementById("formMessage");
+
+// Кнопка "ЗАКАЗАТЬ ДОСТАВКУ"
+document.getElementById("orderButton").addEventListener("click", () => {
+  modalOverlay.style.display = "flex";
+});
+
+// Кнопка закрытия (крестик)
+closeModalBtn.addEventListener("click", () => {
+  modalOverlay.style.display = "none";
+});
+
+// Обработка отправки формы
+orderForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  modalOverlay.style.display = "none";
+  alert("Заявка отправлена ✅");
+  orderForm.reset();
+});
