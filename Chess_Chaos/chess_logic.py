@@ -3,48 +3,48 @@ import chess
 class ChessGame:
     def __init__(self):
         self.board = chess.Board()
-        self.player_color = chess.WHITE
 
-    def is_over(self):
-        return self.board.is_game_over()
-
-    def is_player_turn(self):
-        return self.board.turn == self.player_color
-
-    def player_move(self, move_uci):
-        try:
-            move = chess.Move.from_uci(move_uci)
-            if move in self.board.legal_moves:
-                self.board.push(move)
-                return True
-            else:
-                return False
-        except Exception:
-            return False
-
-    def ai_move(self, move_uci):
-        try:
-            move = chess.Move.from_uci(move_uci)
-            if move in self.board.legal_moves:
-                self.board.push(move)
-                return True
-            else:
-                return False
-        except Exception:
-            return False
-
-    def get_fen(self):
-        return self.board.fen()
-
-    def display_board(self):
-        return str(self.board)
-
-    def get_winner(self):
-        if self.board.is_checkmate():
-            return "Чёрные" if self.board.turn == chess.WHITE else "Белые"
-        elif self.board.is_stalemate():
-            return "Ничья (пат)"
-        elif self.board.is_insufficient_material():
-            return "Ничья (недостаточно фигур)"
+    def make_move(self, move):
+        # move = {'from': [x1, y1], 'to': [x2, y2]}
+        fx, fy = move['from']
+        tx, ty = move['to']
+        # Преобразуем координаты в UCI (например, e2e4)
+        from_square = chess.square(fx, 7 - fy)
+        to_square = chess.square(tx, 7 - ty)
+        uci_move = chess.Move(from_square, to_square)
+        if uci_move in self.board.legal_moves:
+            self.board.push(uci_move)
+            return 'ok'
         else:
-            return "Ничья или неизвестно" 
+            return 'illegal'
+
+    def get_board(self):
+        # Возвращает доску в виде списка списков (для фронта)
+        board_matrix = [['' for _ in range(8)] for _ in range(8)]
+        for square in chess.SQUARES:
+            piece = self.board.piece_at(square)
+            if piece:
+                x = chess.square_file(square)
+                y = 7 - chess.square_rank(square)
+                board_matrix[y][x] = piece.symbol()
+        return board_matrix
+
+    def is_check(self):
+        return self.board.is_check()
+
+    def is_checkmate(self):
+        return self.board.is_checkmate()
+
+    def turn(self):
+        return 'white' if self.board.turn == chess.WHITE else 'black'
+
+    def get_legal_moves(self):
+        moves = []
+        for move in self.board.legal_moves:
+            fx, fy = chess.square_file(move.from_square), 7 - chess.square_rank(move.from_square)
+            tx, ty = chess.square_file(move.to_square), 7 - chess.square_rank(move.to_square)
+            moves.append({'from': [fx, fy], 'to': [tx, ty]})
+        return moves
+
+    def reset_game(self):
+        self.board.reset() 

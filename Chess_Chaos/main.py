@@ -1,25 +1,53 @@
+from flask import Flask, render_template, request, jsonify
 from chess_logic import ChessGame
 from ai_api import get_ai_move
 
+app = Flask(__name__)
+game = ChessGame()
 
-def main():
-    game = ChessGame()
-    print("Добро пожаловать в Chess Chaos!")
-    while not game.is_over():
-        print(game.display_board())
-        if game.is_player_turn():
-            move = input("Ваш ход (например, e2e4): ")
-            if not game.player_move(move):
-                print("Некорректный ход. Попробуйте снова.")
-        else:
-            print("Ходит ИИ...")
-            ai_move = get_ai_move(game.get_fen())
-            if not game.ai_move(ai_move):
-                print("ИИ сгенерировал некорректный ход: ", ai_move)
-                break
-    print(game.display_board())
-    print("Игра окончена! Победитель:", game.get_winner())
+@app.route('/')
+def index():
+    return render_template('chess.html')
 
+@app.route('/move', methods=['POST'])
+def move():
+    data = request.json
+    move = data['move']
+    result = game.make_move(move)
+    return jsonify({
+        'board': game.get_board(),
+        'result': result,
+        'turn': game.turn(),
+        'is_check': game.is_check(),
+        'is_checkmate': game.is_checkmate(),
+        'legal_moves': game.get_legal_moves()
+    })
 
-if __name__ == "__main__":
-    main() 
+@app.route('/ai_move', methods=['POST'])
+def ai_move():
+    data = request.json or {}
+    skill = int(data.get('skill', 10))
+    move = get_ai_move(game, skill_level=skill)
+    game.make_move(move)
+    return jsonify({
+        'board': game.get_board(),
+        'ai_move': move,
+        'turn': game.turn(),
+        'is_check': game.is_check(),
+        'is_checkmate': game.is_checkmate(),
+        'legal_moves': game.get_legal_moves()
+    })
+
+@app.route('/reset', methods=['POST'])
+def reset():
+    game.reset_game()
+    return jsonify({
+        'board': game.get_board(),
+        'turn': game.turn(),
+        'is_check': game.is_check(),
+        'is_checkmate': game.is_checkmate(),
+        'legal_moves': game.get_legal_moves()
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True) 

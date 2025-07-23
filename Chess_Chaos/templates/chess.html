@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chess Chaos</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='chess.css') }}">
+</head>
+<body>
+  <h1>Chess Chaos</h1>
+  <div id="status" style="margin-bottom: 10px; font-weight: bold;"></div>
+  <div id="board"></div>
+  <button id="ai-move">AI Move</button>
+  <script src="{{ url_for('static', filename='chess.js') }}"></script>
+</body>
+</html> 

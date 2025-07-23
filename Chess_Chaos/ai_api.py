@@ -1,17 +1,12 @@
-import requests
+import chess.engine
 
-def get_ai_move(fen):
-    """
-    Получить ход ИИ через API. Возвращает строку в формате UCI (например, e2e4).
-    Замените URL и параметры на свои.
-    """
-    url = "https://your-ai-api-endpoint.com/move"
-    payload = {"fen": fen}
-    try:
-        response = requests.post(url, json=payload, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        return data.get("move", "")
-    except Exception as e:
-        print("Ошибка при обращении к AI API:", e)
-        return "" 
+STOCKFISH_PATH = "E:/Users/RERRL/Documents/VS code/Github/Zortum/main/Chess_Chaos/stockfish/stockfish.exe"
+
+def get_ai_move(game, skill_level=10):
+    with chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH) as engine:
+        engine.configure({"Skill Level": skill_level})
+        result = engine.play(game.board, chess.engine.Limit(time=0.1))
+        move = result.move
+        fx, fy = chess.square_file(move.from_square), 7 - chess.square_rank(move.from_square)
+        tx, ty = chess.square_file(move.to_square), 7 - chess.square_rank(move.to_square)
+        return {'from': [fx, fy], 'to': [tx, ty]} 
