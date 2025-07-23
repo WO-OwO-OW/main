@@ -73,3 +73,19 @@ orderForm.addEventListener("submit", (e) => {
   alert("Заявка отправлена ✅");
   orderForm.reset();
 });
+
+
+
+
+
+
+
+
+  document.querySelector('.nearby-btn').addEventListener('click', () => {
+    document.getElementById('mapModal').style.display = 'flex';
+  });
+
+  document.getElementById('closeMapBtn').addEventListener('click', () => {
+    document.getElementById('mapModal').style.display = 'none';
+  });
+
