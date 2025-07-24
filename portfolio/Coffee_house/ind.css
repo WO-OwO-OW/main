@@ -454,7 +454,6 @@ html {
 
 
 .menu-title {
-  font-size: 36px;
   margin-bottom: 40px;
   color: #000;
 }
@@ -478,28 +477,34 @@ html {
 
 .menu-image {
   width: 100%;
-  height: 180px;
+  height: 400px;
   object-fit: cover;
-  border-bottom: 2px solid #eee;
+  margin-bottom: 20px;
+  border-radius: 18px;
 }
 
 .menu-block h3 {
-  font-size: 24px;
-  padding: 15px 20px 10px;
+  font-size: 35px;
+  
   color: #fff2cafc;
 }
 
 .menu-items {
   list-style: none;
-  padding: 0 20px 20px;
-  margin: 0;
-   border-radius: 18px;
-  border: 2px solid #fff2cafc;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  padding: 0;
+  width: 50%; /* Каждая колонка занимает 50% контейнера */
 }
-
+.menu-items-container {
+  display: flex;
+  justify-content: space-between; /* Равномерное распределение */
+  
+  border: 2px solid #fff2cafc;
+  border-radius: 18px;
+  padding: 20px;
+  flex-wrap: wrap; /* Чтобы на мобильных складывалось */
+}
 .menu-items li {
-  margin-bottom: 15px;
+  margin: 20px;
   font-size: 15px;
   color: #fff2cafc;
 }
@@ -509,4 +514,11 @@ html {
   float: right;
   color: #fff2cafc;
 }
+
+
+
+
+
+
+
 
