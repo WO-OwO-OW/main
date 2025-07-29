@@ -491,7 +491,7 @@ html {
 
 .menu-items {
   list-style: none;
-  padding: 0;
+  
   width: 50%; /* Каждая колонка занимает 50% контейнера */
 }
 .menu-items-container {
@@ -516,6 +516,35 @@ html {
 }
 
 
+
+.menu-item-line {
+  display: flex;
+  align-items: flex-end;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.item-name,
+.item-price {
+  white-space: nowrap;
+  color: #fff2cafc;
+}
+
+.item-price {
+  font-weight: bold;
+}
+
+.dots {
+  flex-grow: 1;
+  background-image: radial-gradient(currentColor 1.5px, transparent 1.5px);
+  background-size: 6px 4px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+  height: 1em;
+  margin: 0 6px;
+  color: rgba(255, 242, 202, 0.3); /* тусклый цвет точек */
+}
 
 
 
