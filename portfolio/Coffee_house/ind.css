@@ -500,20 +500,11 @@ html {
   
   border: 2px solid #fff2cafc;
   border-radius: 18px;
-  padding: 20px;
+  padding: 10px;
   flex-wrap: wrap; /* Чтобы на мобильных складывалось */
 }
-.menu-items li {
-  margin: 20px;
-  font-size: 15px;
-  color: #fff2cafc;
-}
 
-.menu-items span {
-  font-weight: bold;
-  float: right;
-  color: #fff2cafc;
-}
+
 
 
 
@@ -522,7 +513,8 @@ html {
   align-items: flex-end;
   font-family: 'League Spartan', sans-serif;
   font-size: 20px;
-  margin-bottom: 8px;
+  margin: 10px;
+  
 }
 
 .item-name,
