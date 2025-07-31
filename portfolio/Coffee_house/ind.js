@@ -1,12 +1,8 @@
-window.onload = function () {    /*СЛАЙДЕР*/
-  const images = [
-    "img/1_poz.png",
-    "img/2_poz.png",
-    "img/3_poz.jpg"
-  ];
+window.onload = function () {
+  const images = ["img/1_poz.png", "img/2_poz.png", "img/3_poz.jpg"];
   let index = 0;
   let showingBg1 = true;
-   
+
   const bg1 = document.getElementById("bg1");
   const bg2 = document.getElementById("bg2");
 
@@ -33,15 +29,14 @@ window.onload = function () {    /*СЛАЙДЕР*/
   }, 4000);
 };
 
+
   /*ПЕРЕКЛЮЧЕНИЕ МЕЖДУ РАЗДЕЛАМИ*/
 function showSection(id) {
-  const sections = document.querySelectorAll('.content-section');
-  sections.forEach(sec => sec.classList.remove('active'));
-
+  document.querySelectorAll('.content-section').forEach(sec => 
+    sec.classList.remove('active')
+  );
   const target = document.getElementById(id);
-  if (target) {
-    target.classList.add('active');
-  }
+  if (target) target.classList.add('active');
 }
 
 
@@ -54,19 +49,15 @@ function showSection(id) {
 const modalOverlay = document.getElementById("modalOverlay");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const orderForm = document.getElementById("orderForm");
-const formMessage = document.getElementById("formMessage");
 
-// Кнопка "ЗАКАЗАТЬ ДОСТАВКУ"
 document.getElementById("orderButton").addEventListener("click", () => {
   modalOverlay.style.display = "flex";
 });
 
-// Кнопка закрытия (крестик)
 closeModalBtn.addEventListener("click", () => {
   modalOverlay.style.display = "none";
 });
 
-// Обработка отправки формы
 orderForm.addEventListener("submit", (e) => {
   e.preventDefault();
   modalOverlay.style.display = "none";
@@ -78,14 +69,12 @@ orderForm.addEventListener("submit", (e) => {
 
 
 
-
-
-
-  document.querySelector('.nearby-btn').addEventListener('click', () => {
+document.querySelectorAll('.nearby-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
     document.getElementById('mapModal').style.display = 'flex';
   });
+});
 
-  document.getElementById('closeMapBtn').addEventListener('click', () => {
-    document.getElementById('mapModal').style.display = 'none';
-  });
-
+document.getElementById('closeMapBtn').addEventListener('click', () => {
+  document.getElementById('mapModal').style.display = 'none';
+});
