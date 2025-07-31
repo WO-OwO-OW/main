@@ -485,8 +485,8 @@ html {
 
 .menu-block h3 {
   font-size: 35px;
-  
   color: #fff2cafc;
+  font-family: 'League Spartan', sans-serif;
 }
 
 .menu-items {
@@ -521,6 +521,7 @@ html {
 .item-price {
   white-space: nowrap;
   color: #fff2cafc;
+    font-weight: bold;
 }
 
 .item-price {
@@ -538,8 +539,25 @@ html {
   color: rgba(255, 242, 202, 0.3); /* тусклый цвет точек */
 }
 
+.menu-items-container h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff2ca;
+  text-align: left;
+  padding-left: 25%; /* выравнивание по левому краю списка */
+  margin: 5px; /* отступы сверху и снизу */
 
+}
 
+.description{
+  font-family: 'League Spartan', sans-serif;
+  font-size: 16px;
+  color: #fff2cafc;
+  margin: 10px;
+  
+  
+}
 
 
 
