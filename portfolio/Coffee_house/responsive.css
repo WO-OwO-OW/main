@@ -52,7 +52,7 @@
     z-index: 1001;
     border-radius: 50%;
     background: #fff2cafc;
-    display: block; /* показываем по умолчанию */
+    
   }
 
   .burger-btn:hover {
@@ -200,3 +200,6 @@
     line-height: 1.1;
   }
 }
+
+
+

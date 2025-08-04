@@ -121,15 +121,7 @@ document.getElementById('closeMapBtn').addEventListener('click', () => {
   const overlay = document.getElementById('overlay');
   const sidebarLinks = sidebar.querySelectorAll('li');
 
-  function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.style.display = 'block';
-  }
-
-  function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.style.display = 'none';
-  }
+  
 
   burgerBtn.addEventListener('click', openSidebar);
   overlay.addEventListener('click', closeSidebar);
@@ -141,10 +133,6 @@ document.getElementById('closeMapBtn').addEventListener('click', () => {
     });
   });
 
-link.addEventListener('click', (e) => {
-  e.preventDefault();
-  closeSidebar();
-});
 
 
 
