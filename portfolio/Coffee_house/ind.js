@@ -45,11 +45,10 @@ function showSection(id) {
 
  
 
-
-const modalOverlay = document.getElementById("modalOverlay");
+// Модальное окно для заказа
+const modalOverlay = document.getElementById("modalOverlay");   
 const closeModalBtn = document.getElementById("closeModalBtn");
 const orderForm = document.getElementById("orderForm");
-
 document.getElementById("orderButton").addEventListener("click", () => {
   modalOverlay.style.display = "flex";
 });
@@ -68,8 +67,8 @@ orderForm.addEventListener("submit", (e) => {
 
 
 
-
-document.querySelectorAll('.nearby-btn').forEach(btn => {
+/* Добавление обработчика событий для кнопок "Найти рядом" */
+document.querySelectorAll('.nearby-btn').forEach(btn => {   
   btn.addEventListener('click', () => {
     document.getElementById('mapModal').style.display = 'flex';
   });
@@ -78,3 +77,38 @@ document.querySelectorAll('.nearby-btn').forEach(btn => {
 document.getElementById('closeMapBtn').addEventListener('click', () => {
   document.getElementById('mapModal').style.display = 'none';
 });
+
+
+
+
+
+
+
+
+
+  const modal = document.getElementById("imageModal");     // Модальное окно для изображений
+  const modalImg = document.getElementById("modalImage");
+  const close = document.querySelector(".close");
+
+  // Найти все изображения внутри .gallery и навесить обработчик
+  document.querySelectorAll(".gallery img").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.style.display = "block";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  // Закрыть по крестику
+  close.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Закрыть по клику вне изображения
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+

@@ -479,7 +479,6 @@ html {
   margin-bottom: 40px;
   color: #000;
 }
-
 .menu-sections {
   font-family: 'League Spartan', sans-serif;
   display: flex;
@@ -487,16 +486,12 @@ html {
   align-items: center;
   gap: 40px;
 }
-
 .menu-block {
-
   border-radius: 18px;
-  
   width: 100%;
   overflow: hidden;
   text-align: left;
 }
-
 .menu-image {
   width: 100%;
   height: 400px;
@@ -504,50 +499,39 @@ html {
   margin-bottom: 20px;
   border-radius: 18px;
 }
-
 .menu-block h3 {
   font-size: 35px;
   color: #fff2cafc;
   font-family: 'League Spartan', sans-serif;
 }
-
 .menu-items {
   list-style: none;
-  
   width: 50%; /* Каждая колонка занимает 50% контейнера */
 }
 .menu-items-container {
   display: flex;
   justify-content: space-between; /* Равномерное распределение */
-  
   border: 2px solid #fff2cafc;
   border-radius: 18px;
   padding: 10px;
   flex-wrap: wrap; /* Чтобы на мобильных складывалось */
 }
-
-
-
 .menu-item-line {
   display: flex;
   align-items: flex-end;
   font-family: 'League Spartan', sans-serif;
   font-size: 20px;
   margin: 10px;
-  
 }
-
 .item-name,
 .item-price {
   white-space: nowrap;
   color: #fff2cafc;
     font-weight: bold;
 }
-
 .item-price {
   font-weight: bold;
 }
-
 .dots {
   flex-grow: 1;
   background-image: radial-gradient(currentColor 1.5px, transparent 1.5px);
@@ -558,7 +542,6 @@ html {
   margin: 0 6px;
   color: rgba(255, 242, 202, 0.3); /* тусклый цвет точек */
 }
-
 .menu-items-container h3 {
   font-family: 'League Spartan', sans-serif;
   font-size: 20px;
@@ -567,24 +550,19 @@ html {
   text-align: left;
   padding-left: 25%; /* выравнивание по левому краю списка */
   margin: 5px; /* отступы сверху и снизу */
-
 }
-
 .description{
   font-family: 'League Spartan', sans-serif;
   font-size: 16px;
   color: #fff2cafc;
   margin: 10px;
-  
 }
  /***************************************************************************************************/
-
- .contacts_section{
+ .contacts_section{                    /*РАЗДЕЛ КОНТАКТЫ*/
   height: 100vh;
   color: #fff2cafc; /* Цвет текста */
   font-family: 'League Spartan', sans-serif;
  }
-
  .contact-info{
   display: flex;
   width: 100%;
@@ -593,7 +571,6 @@ html {
  }
  .contact-info_1{
   width: 50%;
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -616,3 +593,90 @@ html {
   width: 100%;
   height: 80%;
  }
+/**************************************************************************************/
+
+/* контейнер всей галереи */
+.gallery{
+  display: grid;
+  grid-template-columns: 3fr 2fr;  /* левая колонка 60%, правая 40% */
+  grid-auto-rows: auto;
+  gap: 20px;                       /* одинаковый отступ везде */
+}
+
+/* левая часть — 4 карточки 2×2 */
+.gallery-grid_1{
+  display:block;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px; /* отступы между карточками */
+
+}
+/* вертикальное фото (справа) */
+.gallery-grid_2 img{
+  
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  transition:.3s;
+}
+/* нижняя полоса во всю ширину (обе колонки) */
+.gallery-grid_3{
+  grid-column:1 / -1;              /* тянем на всю ширину сетки */
+}
+.gallery-grid_3 img{
+  width:100%;
+  height:100%;                    /* можно подобрать под макет */
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  transition:.3s;
+}
+/* общие стили для всех картинок */
+.gallery img{
+  width:100%;
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  transition:transform .25s ease;
+}
+.gallery img:hover{transform:scale(1.01);}
+
+/* адаптив — одна колонка на узких экранах */
+@media(max-width:780px){
+  .gallery{grid-template-columns:1fr;}
+  .gallery-grid_3{grid-column:auto;}
+}
+
+
+.modal {          /*МОДАЛЬНОЕ ОКНО*/
+  display: none; 
+  position: fixed; 
+  z-index: 999; 
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.8);
+}
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 10px;
+}
+.close {
+  position: absolute;
+  top: 30px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close:hover {
+  color: #d35812;
+}
