@@ -112,3 +112,56 @@ document.getElementById('closeMapBtn').addEventListener('click', () => {
   });
 
 
+
+
+
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const sidebarLinks = sidebar.querySelectorAll('li');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.style.display = 'block';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.style.display = 'none';
+  }
+
+  burgerBtn.addEventListener('click', openSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // Навешиваем слушатели на каждую ссылку в сайдбаре
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeSidebar();
+    });
+  });
+
+link.addEventListener('click', (e) => {
+  e.preventDefault();
+  closeSidebar();
+});
+
+
+
+
+
+
+
+
+
+function openSidebar() {
+  sidebar.classList.add('open');
+  overlay.style.display = 'block';
+  burgerBtn.style.display = 'none';
+}
+
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.style.display = 'none';
+  burgerBtn.style.display = 'block';
+}

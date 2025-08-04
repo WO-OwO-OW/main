@@ -505,6 +505,7 @@ html {
   font-family: 'League Spartan', sans-serif;
 }
 .menu-items {
+  
   list-style: none;
   width: 50%; /* Каждая колонка занимает 50% контейнера */
 }

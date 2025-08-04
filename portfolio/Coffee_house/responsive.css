@@ -1,0 +1,198 @@
+/* ========== ОБЩИЕ СТИЛИ ДЛЯ АДАПТАЦИИ ========== */
+
+/* Стили для устройств до 1024px (планшеты и меньше) */
+@media (max-width: 1024px) {
+  /* Контейнер сайдбара */
+  .sidebar {
+    display: none; /* изначально скрыт */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #222;
+    color: white;
+    padding: 40px 20px;
+    z-index: 1000;
+    transform: translateX(-100%); /* уезжает за экран */
+    transition: transform 0.3s ease;
+    font-size: 500px; /* увеличиваем шрифт для лучшей читаемости */
+  }
+
+  .menu-item-line{
+    font-size: 40px; /* увеличиваем шрифт для лучшей читаемости */
+    
+  }
+
+ .menu-block h3{
+    font-size: 40px; /* увеличиваем шрифт для лучшей читаемости */
+ }
+
+  /* Открытый сайдбар */
+  .sidebar.open {
+    display: block;
+    transform: translateX(0); /* появляется с анимацией */
+  }
+
+ 
+
+  /* Кнопка-бургер */
+  .burger-btn {
+    position: fixed;
+    top: 11%;
+    left: 90%;
+    font-size: 50px;
+    background: none;
+    border: none;
+    color: #d35812;
+    z-index: 1001;
+    border-radius: 50%;
+    background: #fff2cafc;
+    display: block; /* показываем по умолчанию */
+  }
+
+  .burger-btn:hover {
+    background-color: #393535;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .burger-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Прячем бургер, если сайдбар открыт */
+  .sidebar.open + .burger-btn {
+    display: none;
+  }
+
+  /* Главный контент подстраивается под отсутствие сайдбара */
+  .main-content {
+    margin-left: 0;
+    width: 100vw;
+    padding: 20px;
+  }
+
+  /* Блок с пунктами меню в колонку */
+  .menu-items-container {
+    flex-direction: column;
+  }
+
+  
+  .menu-items{
+     list-style: none;
+     width: auto; /* Каждая колонка занимает 50% контейнера */
+  }
+
+
+  /* Галерея адаптируется под одну колонку */
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ========== ПЛАНШЕТЫ (до 768px) ========== */
+@media (max-width: 768px) {
+  .header-socials {
+    gap: 10px;
+  }
+
+  .social-icon {
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+  }
+
+  .header-info {
+    font-size: 16px;
+  }
+
+  .nearby-btn,
+  .order-button {
+    font-size: 18px;
+    padding: 10px 24px;
+  }
+
+  .slogan {
+    font-size: 48px;
+  }
+
+  .discount-banner {
+    font-size: 22px;
+  }
+
+  .advantages h2 {
+    font-size: 36px;
+  }
+
+  .advantage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-image {
+    height: 250px;
+  }
+}
+
+
+/* ========== МОБИЛЬНЫЕ (до 480px) ========== */
+@media (max-width: 480px) {
+  nav ul li {
+    font-size: 24px;
+    margin: 8px 0;
+  }
+
+  .header-info {
+    display: none;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .menu-items-container,
+  .advantage-grid {
+    padding: 0;
+    gap: 20px;
+  }
+
+  .menu-items {
+    width: 100%;
+  }
+
+  .item-name,
+  .item-price {
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .gallery-grid_1 {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid_2 img,
+  .gallery-grid_3 img {
+    height: auto;
+  }
+}
+
+
+/* ========== САМЫЕ МАЛЕНЬКИЕ ЭКРАНЫ (до 320px) ========== */
+@media (max-width: 320px) {
+  .order-button,
+  .nearby-btn {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+
+  .slogan {
+    font-size: 36px;
+    line-height: 1.1;
+  }
+}
